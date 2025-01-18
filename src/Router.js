@@ -22,9 +22,9 @@ export default function Router() {
           <Route path="/Home/Gallery/Display" element={<HomeDisplay />} />
 
           {/* Event */}
-          <Route path="/Evenement" element={<Event />} />
-          <Route path="/Evenement/Gallery" element={<EventGallery />} />
-          <Route path="/Evenement/Gallery/Display" element={<EventDisplay />} />
+          <Route path="/Event" element={<Event />} />
+          <Route path="/Event/Gallery" element={<EventGallery />} />
+          <Route path="/Eventement/Gallery/Display" element={<EventDisplay />} />
 
           {/* Media */}
           <Route path="/Media" element={<Media />} />
