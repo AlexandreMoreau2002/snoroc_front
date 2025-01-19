@@ -1,11 +1,25 @@
 // front/src/Router.js
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { HelmetProvider } from 'react-helmet-async' // Import du HelmetProvider
+import { HelmetProvider } from 'react-helmet-async'
 
 // Imports des composants
-import {  Home,  HomeGallery,  HomeDisplay,  Event,  EventGallery,  EventDisplay,  Media,  MediaGallery,  MediaDisplay,  About,  Contact, Profile,} from './pages/visitor/export'
+import {
+  Home,
+  HomeGallery,
+  HomeDisplay,
+  Event,
+  EventGallery,
+  EventDisplay,
+  Media,
+  MediaGallery,
+  MediaDisplay,
+  About,
+  Contact,
+  Profile,
+} from './pages/visitor/export'
 import { LegalNotice, TermsOfService } from './pages/visitor/export'
+import { Signup, ForgotPassword } from './pages/visitor/export'
 import { Header, Footer } from './components/export'
 
 export default function Router() {
@@ -24,7 +38,10 @@ export default function Router() {
           {/* Event */}
           <Route path="/Event" element={<Event />} />
           <Route path="/Event/Gallery" element={<EventGallery />} />
-          <Route path="/Eventement/Gallery/Display" element={<EventDisplay />} />
+          <Route
+            path="/Eventement/Gallery/Display"
+            element={<EventDisplay />}
+          />
 
           {/* Media */}
           <Route path="/Media" element={<Media />} />
@@ -32,13 +49,17 @@ export default function Router() {
           <Route path="/Media/Gallery/Display" element={<MediaDisplay />} />
 
           {/* other */}
-          <Route path="/A propos" element={<About />} />
+          <Route path="/A-propos" element={<About />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path="/Profil" element={<Profile />} />
 
           {/* footer nav */}
-          <Route path="/Mentions légales" element={<LegalNotice />} />
+          <Route path="/Mentions-legales" element={<LegalNotice />} />
           <Route path="/CGU" element={<TermsOfService />} />
+
+          {/* User */}
+          <Route path="/Signup" element={<Signup />} />
+          <Route path="/ForgotPassword" element={<ForgotPassword />} />
 
           {/* Error 404 */}
           <Route path="/*" element={<Home />} />

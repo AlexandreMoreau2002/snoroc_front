@@ -58,7 +58,7 @@ export default function Header() {
             Média
           </NavLink>
           <NavLink
-            to="/A propos"
+            to="/A-propos"
             className={({ isActive }) =>
               isActive
                 ? 'header__nav__link header__nav__link--active'

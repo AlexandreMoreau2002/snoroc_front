@@ -30,10 +30,10 @@ export default function Footer() {
             {/* <a href="#"></a> */}
           </i>
 
-          <NavLink to="/LegalNotice" className="footer__nav__link">
+          <NavLink to="/Mentions-legales" className="footer__nav__link">
             Mentions légales
           </NavLink>
-          <NavLink to="/TermsOfService" className="footer__nav__link">
+          <NavLink to="/CGU" className="footer__nav__link">
             Cgu
           </NavLink>
 

@@ -36,14 +36,11 @@
 }
 
 body {
-  height: 1000px;
   background-color: #1E1E1E;
   color: #F1F1F6;
 }
 
 .header__nav {
-  text-align: center;
-  white-space: nowrap;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -51,6 +48,8 @@ body {
   gap: 15px;
   height: auto;
   padding: 10% 8%;
+  text-align: center;
+  white-space: nowrap;
 }
 .header__nav__link {
   font-family: "Asap Condensed", sans-serif;
@@ -71,6 +70,18 @@ body {
 }
 .header__nav__link:hover::after, .header__nav__link.active::after {
   transform: scaleX(1);
+}
+.header__nav__link--active::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 3px;
+  margin-top: 6px;
+  border-radius: 0 50% 0 0;
+  background-color: #1B74E4;
+  transform: scaleX(1);
+  transition: transform 0.25s;
+  transform-origin: left;
 }
 
 @media screen and (max-width: 480px) {
@@ -119,7 +130,7 @@ body {
     background-position: 49% -150px;
     background-repeat: no-repeat;
     background-size: 375%;
-    box-shadow: inset 0px 0px 95px 120px #1E1E1E;
+    box-shadow: inset 0px 0px 95px 120px #1e1e1e;
     height: 25%;
   }
   .header button {
@@ -133,7 +144,7 @@ body {
   .header {
     background-position: 50% 24%;
     background-size: cover;
-    box-shadow: inset 0px 50px 117px 140px #1E1E1E;
+    box-shadow: inset 0px 50px 117px 140px #1e1e1e;
   }
   .header button {
     display: inline-block;
@@ -146,7 +157,7 @@ body {
   .header {
     background-position: 50% 24%;
     background-size: cover;
-    box-shadow: inset 0px 50px 117px 140px #1E1E1E;
+    box-shadow: inset 0px 50px 117px 140px #1e1e1e;
     height: 366px;
   }
   .header__nav__link__logo {
@@ -160,6 +171,72 @@ body {
     display: none;
   }
 }
+.footer {
+  margin: 0 auto;
+  text-align: center;
+  width: 50%;
+}
+
+.login {
+  width: 600px;
+  margin: 50px auto;
+}
+.login__title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.login__hr {
+  color: #F1F1F6;
+  margin: 30px 0;
+}
+.login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.login__form-group {
+  display: flex;
+  flex-direction: column;
+}
+.login__input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+}
+.login__input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+.login__error-message {
+  color: red;
+  font-size: 16px;
+}
+.login__button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  width: fit-content;
+  margin: 8px auto;
+  padding: 0.75rem 1rem;
+}
+.login__button:hover {
+  background-color: #0056b3;
+}
+.login__text {
+  color: #F1F1F6;
+  margin: 20px 0;
+}
+.login__link {
+  color: #1B74E4;
+  margin-left: 5px;
+  text-decoration: none;
+}
+
 .actus {
   font-size: 30px;
   text-align: center;
@@ -173,11 +250,49 @@ body {
   width: 10%;
 }
 
-.footer {
-  bottom: 0;
+.profile__loading {
   text-align: center;
-  height: 150px;
-  width: 100%;
+  font-size: 16px;
+  color: #666;
+}
+.profile__title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+.profile__details {
+  margin-bottom: 20px;
+  line-height: 1.6;
+  color: #555;
+}
+.profile__detail {
+  margin: 5px 0;
+  font-size: 14px;
+}
+.profile__detail strong {
+  color: #333;
+}
+.profile__no-data {
+  text-align: center;
+  color: #999;
+  margin-top: 20px;
+}
+.profile__actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+.profile__logout-button {
+  padding: 10px 20px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.profile__logout-button:hover {
+  background-color: #d93636;
 }
 
 /*# sourceMappingURL=index.css.map */

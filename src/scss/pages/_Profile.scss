@@ -1,0 +1,55 @@
+.profile {
+
+  &__loading {
+    text-align: center;
+    font-size: 16px;
+    color: #666;
+  }
+
+  &__title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  &__details {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    color: #555;
+  }
+
+  &__detail {
+    margin: 5px 0;
+    font-size: 14px;
+
+    strong {
+      color: #333;
+    }
+  }
+
+  &__no-data {
+    text-align: center;
+    color: #999;
+    margin-top: 20px;
+  }
+
+  &__actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__logout-button {
+    padding: 10px 20px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+
+    &:hover {
+      background-color: #d93636;
+    }
+  }
+}
