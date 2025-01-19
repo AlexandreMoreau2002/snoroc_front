@@ -1,11 +1,11 @@
 // src/services/user/getProfile.js
 import axiosInstance from '../axiosConfig'
 
-const getProfile = async (userId) => {
+const getProfile = async () => {
   try {
-    const response = await axiosInstance.get(`/user/profile`, {
+    const response = await axiosInstance.get('/user/profile', {
       headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_JWT_TOKEN}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     })
     return response.data
