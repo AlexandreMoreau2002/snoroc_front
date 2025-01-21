@@ -1,7 +1,8 @@
+// src/components/Footer.jsx
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
-// import Logo from '../asset/Logo.webp';
+import Logo from '../asset/Logo.webp'
 
 export default function Footer() {
   return (
@@ -16,34 +17,49 @@ export default function Footer() {
             referrerPolicy="no-referrer"
           />
         </Helmet>
-
-        <nav className="footer__nav">
-          <i className="footer__nav__logo--fb fa-brands fa-square-facebook">
-            {/* <a href="#"></a> */}
-          </i>
-
-          <i className="footer__nav__logo--insta fa-brands fa-square-instagram">
-            {/* <a href="#"></a> */}
-          </i>
-
-          <i className="footer__nav__logo--twitter fa-brands fa-square-twitter">
-            {/* <a href="#"></a> */}
-          </i>
-
-          <NavLink to="/Mentions-legales" className="footer__nav__link">
+        <div className="footer__left">
+          <NavLink to="/Mentions-legales" className="footer__link">
             Mentions légales
           </NavLink>
-          <NavLink to="/CGU" className="footer__nav__link">
-            Cgu
+          <NavLink to="/CGU" className="footer__link">
+            CGU
           </NavLink>
+          <a
+            href="https://facebook.com"
+            className="footer__social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="fa-brands fa-facebook"></i>
+          </a>
+          <a
+            href="https://instagram.com"
+            className="footer__social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="fa-brands fa-instagram"></i>
+          </a>
+        </div>
 
-          <p>
+        <Link to='/' className="footer__logo">
+          <img src={Logo} alt="Logo Snoroc" />
+        </Link>
+
+        <div className="footer__right">
+          <a
+            href="https://twitter.com"
+            className="footer__social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="fa-brands fa-twitter"></i>
+          </a>
+          <p className="footer__copyright-text">
             Copyright © 2023 Snoroc. Tous droits réservés. Tous les
             enregistrements musicaux sont protégés par le droit d'auteur.
           </p>
-
-          <Link to="/">{/* <img src={Logo} alt="img logo" /> */}</Link>
-        </nav>
+        </div>
       </footer>
     </HelmetProvider>
   )

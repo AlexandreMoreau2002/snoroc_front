@@ -1,6 +1,9 @@
 // front/src/scss/components/_header.scss
 .header {
   background-image: url(../asset/headerbg.jpg);
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0px 25px 65px 140px $black;
 
   button > #header__close {
     display: none;
@@ -10,7 +13,6 @@
     position: absolute;
     top: 21px;
     right: 26px;
-    width: 15%;
   }
 }
 
