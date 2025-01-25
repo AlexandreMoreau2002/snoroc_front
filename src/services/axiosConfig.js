@@ -1,6 +1,6 @@
 // front/src/services/axiosConfig.js
 import axios from 'axios'
-import { mockUsers } from './mock/mockData'
+import { mockUsers, mockNews } from './mock/mockData'
 
 const axiosInstance = (() => {
   console.log('ENV :', process.env.REACT_APP_ENV)
@@ -15,6 +15,11 @@ const axiosInstance = (() => {
         if (url.includes('/user/profile')) {
           return Promise.resolve({
             data: mockUsers[0],
+          })
+        }
+        if (url.includes('/news/getall')) {
+          return Promise.resolve({
+            data: mockNews,
           })
         }
 
