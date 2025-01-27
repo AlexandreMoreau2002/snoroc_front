@@ -1,13 +1,14 @@
 // front/src/scss/main.scss
-@import './config/import';
 @import './config/var';
-@import './config/bouton';
 @import './config/base';
+@import './config/import';
+@import './config/bouton';
 
-@import './components/headerNav';
+@import './components/login';
 @import './components/header';
 @import './components/footer';
-@import './components/login';
+@import './components/headerNav';
+@import './components/createNewsForm';
 
 @import './pages/home';
 @import './pages/about';

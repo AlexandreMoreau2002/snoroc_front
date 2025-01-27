@@ -27,13 +27,8 @@
   &__input {
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid $white;
     border-radius: 15px;
-
-    &:focus {
-      outline: none;
-      border-color: #007bff;
-    }
   }
 
   &__error-message {
@@ -42,16 +37,14 @@
   }
 
   &__button {
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
+    background-color: $blue;
+    color: $white;
     border: none;
     border-radius: 15px;
     cursor: pointer;
     font-size: 16px;
-    width: fit-content;
     margin: 8px auto;
-    padding: .75rem 1rem ;
+    padding: 0.75rem 1rem;
 
     &:hover {
       background-color: #0056b3;

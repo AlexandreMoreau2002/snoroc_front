@@ -1,0 +1,90 @@
+.create-news {
+  width: 600px;
+  height: 400px;
+  margin: 100px auto;
+
+  &__title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  &__hr {
+    color: $white;
+    margin: 30px 0;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  &__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__form-group-file-input {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__form-label {
+    margin: 5px 0;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  &__input,
+  &__textarea {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 15px;
+    resize: none;
+  }
+
+  &__file-label {
+    background-color: $blue;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: $white;
+    padding: 10px 20px;
+    border-radius: 15px;
+  }
+
+  &__file-input {
+    display: none;
+    padding: 12px 0;
+  }
+
+  &__button {
+    align-self: flex-end;
+    background-color: $blue;
+    color: $white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 8px 0;
+    padding: 0.75rem 1rem;
+  }
+
+  &__error-message {
+    color: red;
+    font-size: 16px;
+  }
+
+  &__success-message {
+    background-color: #4caf50;
+    color: $white;
+    font-size: 16px;
+    border-radius: 15px;
+  }
+}

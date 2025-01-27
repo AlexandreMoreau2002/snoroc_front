@@ -1,6 +1,6 @@
 // src/pages/visitor/User/Profile.jsx
 import React, { useEffect, useState } from 'react'
-import Login from '../../components/login'
+import { Login } from '../../components/export'
 import { useAuth } from '../../context/AuthContext'
 import getProfile from '../../services/user/getProfile'
 
