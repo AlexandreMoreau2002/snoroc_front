@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@300;400;700&family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;700&display=swap");
+:root {
+  --main-color: #1b74e4;
+}
+
 *,
 ::before,
 ::after {
@@ -8,8 +12,8 @@
 }
 
 body {
-  background-color: #1E1E1E;
-  color: #F1F1F6;
+  background-color: #1e1e1e;
+  color: #f1f1f6;
 }
 
 .header > button {
@@ -22,7 +26,7 @@ body {
   justify-content: center;
   align-items: center;
   appearance: none;
-  color: #1B74E4;
+  color: var(--main-color);
   height: 50px;
   width: 50px;
   opacity: 1;
@@ -34,7 +38,7 @@ body {
   justify-content: center;
   align-items: center;
   appearance: none;
-  color: #1B74E4;
+  color: var(--main-color);
   height: 50px;
   width: 50px;
   opacity: 1;
@@ -52,7 +56,7 @@ body {
   margin-bottom: 20px;
 }
 .login__hr {
-  color: #F1F1F6;
+  color: #f1f1f6;
   margin: 30px 0;
 }
 .login__form {
@@ -67,7 +71,7 @@ body {
 .login__input {
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #F1F1F6;
+  border: 1px solid #f1f1f6;
   border-radius: 15px;
 }
 .login__error-message {
@@ -75,8 +79,8 @@ body {
   font-size: 16px;
 }
 .login__button {
-  background-color: #1B74E4;
-  color: #F1F1F6;
+  background-color: #1b74e4;
+  color: #f1f1f6;
   border: none;
   border-radius: 15px;
   cursor: pointer;
@@ -88,11 +92,11 @@ body {
   background-color: #0056b3;
 }
 .login__text {
-  color: #F1F1F6;
+  color: #f1f1f6;
   margin: 20px 0;
 }
 .login__link {
-  color: #1B74E4;
+  color: #1b74e4;
   margin-left: 5px;
   text-decoration: none;
 }
@@ -101,7 +105,7 @@ body {
   background-image: url(../asset/headerbg.jpg);
   background-size: cover;
   background-position: center;
-  box-shadow: inset 0px 25px 65px 140px #1E1E1E;
+  box-shadow: inset 0px 25px 65px 140px #1e1e1e;
 }
 .header button > #header__close {
   display: none;
@@ -194,7 +198,7 @@ body {
 }
 .footer__link, .footer__social-link {
   font-size: 30px;
-  color: #1B74E4;
+  color: var(--main-color);
   text-decoration: none;
 }
 .footer__copyright-text {
@@ -217,7 +221,7 @@ body {
 }
 .header__nav__link {
   font-family: "Asap Condensed", sans-serif;
-  color: #F1F1F6;
+  color: #f1f1f6;
   text-decoration: none;
 }
 .header__nav__link::after {
@@ -227,7 +231,7 @@ body {
   height: 3px;
   margin-top: 6px;
   border-radius: 0 50% 0 0;
-  background-color: #1B74E4;
+  background-color: var(--main-color);
   transform: scaleX(0);
   transition: transform 0.25s;
   transform-origin: left;
@@ -242,7 +246,7 @@ body {
   height: 3px;
   margin-top: 6px;
   border-radius: 0 50% 0 0;
-  background-color: #1B74E4;
+  background-color: var(--main-color);
   transform: scaleX(1);
   transition: transform 0.25s;
   transform-origin: left;
@@ -286,7 +290,7 @@ body {
   margin-bottom: 20px;
 }
 .create-news__hr {
-  color: #F1F1F6;
+  color: #f1f1f6;
   margin: 30px 0;
 }
 .create-news__form {
@@ -319,12 +323,12 @@ body {
   resize: none;
 }
 .create-news__file-label {
-  background-color: #1B74E4;
+  background-color: var(--main-color);
   display: flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  color: #F1F1F6;
+  color: #f1f1f6;
   padding: 10px 20px;
   border-radius: 15px;
 }
@@ -334,8 +338,8 @@ body {
 }
 .create-news__button {
   align-self: flex-end;
-  background-color: #1B74E4;
-  color: #F1F1F6;
+  background-color: var(--main-color);
+  color: #f1f1f6;
   border: none;
   border-radius: 15px;
   cursor: pointer;
@@ -349,7 +353,7 @@ body {
 }
 .create-news__success-message {
   background-color: #4caf50;
-  color: #F1F1F6;
+  color: #f1f1f6;
   font-size: 16px;
   border-radius: 15px;
 }
