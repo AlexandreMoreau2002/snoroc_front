@@ -1,11 +1,17 @@
 import { Helmet } from 'react-helmet-async'
 import React, { useEffect, useState } from 'react'
-import getAllNews from '../../../services/news/getAllNews'
+import getAllNews from '../../services/news/getAllNews'
+import { useNavigate } from 'react-router-dom'
+
+import { useAuth } from '../../context/AuthContext'
 
 export default function Home() {
   const [mainActu, setMainActu] = useState(null)
   const [newsData, setNewsData] = useState([])
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
+  const { isAdmin } = useAuth()
+  console.log('is admin : ', isAdmin)
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -76,6 +82,14 @@ export default function Home() {
               ))}
             </div>
           </>
+        )}
+        {isAdmin && (
+          <button
+            className="admin-button"
+            onClick={() => navigate('/createNews')}
+          >
+            Ajouter
+          </button>
         )}
       </div>
     </>

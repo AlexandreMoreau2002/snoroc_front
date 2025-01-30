@@ -1,6 +1,6 @@
 // front/src/services/axiosConfig.js
 import axios from 'axios'
-import { mockUsers, mockNews } from './mock/mockData'
+import { mockLogin, mockUsers, mockNews } from './mock/mockData'
 
 const axiosInstance = (() => {
   console.log('ENV :', process.env.REACT_APP_ENV)
@@ -27,6 +27,13 @@ const axiosInstance = (() => {
       },
       post: async (url, data) => {
         console.log(`[Mock POST]: Appel simulé à ${url} avec les données`, data)
+
+        if (url.includes('/user/login')) {
+          return Promise.resolve({
+            ...mockLogin,
+          })
+        }
+
         return Promise.resolve({
           data: {
             success: true,

@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@300;400;700&family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;700&display=swap");
 :root {
-  --main-color: #1b74e4;
+  --role-color: #1b74e4;
 }
 
 *,
@@ -26,7 +26,7 @@ body {
   justify-content: center;
   align-items: center;
   appearance: none;
-  color: var(--main-color);
+  color: var(--role-color);
   height: 50px;
   width: 50px;
   opacity: 1;
@@ -38,7 +38,7 @@ body {
   justify-content: center;
   align-items: center;
   appearance: none;
-  color: var(--main-color);
+  color: var(--role-color);
   height: 50px;
   width: 50px;
   opacity: 1;
@@ -198,7 +198,7 @@ body {
 }
 .footer__link, .footer__social-link {
   font-size: 30px;
-  color: var(--main-color);
+  color: var(--role-color);
   text-decoration: none;
 }
 .footer__copyright-text {
@@ -231,7 +231,7 @@ body {
   height: 3px;
   margin-top: 6px;
   border-radius: 0 50% 0 0;
-  background-color: var(--main-color);
+  background-color: var(--role-color);
   transform: scaleX(0);
   transition: transform 0.25s;
   transform-origin: left;
@@ -246,7 +246,7 @@ body {
   height: 3px;
   margin-top: 6px;
   border-radius: 0 50% 0 0;
-  background-color: var(--main-color);
+  background-color: var(--role-color);
   transform: scaleX(1);
   transition: transform 0.25s;
   transform-origin: left;
@@ -323,7 +323,7 @@ body {
   resize: none;
 }
 .create-news__file-label {
-  background-color: var(--main-color);
+  background-color: var(--role-color);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -338,7 +338,7 @@ body {
 }
 .create-news__button {
   align-self: flex-end;
-  background-color: var(--main-color);
+  background-color: var(--role-color);
   color: #f1f1f6;
   border: none;
   border-radius: 15px;
@@ -433,6 +433,16 @@ body {
   line-height: 1.4;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
 }
+.actus .admin-button {
+  background-color: var(--role-color);
+  color: #f1f1f6;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 8px auto;
+  padding: 0.75rem 1rem;
+}
 @media (max-width: 768px) {
   .actus .news-item {
     flex: 1 1 calc(50% - 20px);
@@ -482,7 +492,7 @@ body {
 }
 .profile__logout-button {
   padding: 10px 20px;
-  background-color: #ff4d4d;
+  background-color: var(--role-color);
   color: white;
   border: none;
   border-radius: 5px;

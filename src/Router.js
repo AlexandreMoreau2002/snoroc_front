@@ -6,18 +6,14 @@ import { HelmetProvider } from 'react-helmet-async'
 // Imports des composants
 import {
   Home,
-  HomeGallery,
-  HomeDisplay,
   Event,
-  EventGallery,
-  EventDisplay,
   Media,
-  MediaGallery,
-  MediaDisplay,
   About,
   Contact,
   Profile,
 } from './pages/visitor/export'
+import { CreateNews } from './pages/admin/export.js'
+import PrivateRoute from './components/PrivateRoute'
 import { LegalNotice, TermsOfService } from './pages/visitor/export'
 import { Signup, ForgotPassword } from './pages/visitor/export'
 import { Header, Footer } from './components/export'
@@ -32,21 +28,15 @@ export default function Router() {
         <Routes>
           {/* Home */}
           <Route path="/" element={<Home />} />
-          <Route path="/Home/Gallery" element={<HomeGallery />} />
-          <Route path="/Home/Gallery/Display" element={<HomeDisplay />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/createNews" element={<CreateNews />} />
+          </Route>
 
           {/* Event */}
           <Route path="/Event" element={<Event />} />
-          <Route path="/Event/Gallery" element={<EventGallery />} />
-          <Route
-            path="/Eventement/Gallery/Display"
-            element={<EventDisplay />}
-          />
 
           {/* Media */}
           <Route path="/Media" element={<Media />} />
-          <Route path="/Media/Gallery" element={<MediaGallery />} />
-          <Route path="/Media/Gallery/Display" element={<MediaDisplay />} />
 
           {/* other */}
           <Route path="/A-propos" element={<About />} />

@@ -22,7 +22,7 @@
       height: 3px;
       margin-top: 6px;
       border-radius: 0 50% 0 0;
-      background-color: var(--main-color);
+      background-color: var(--role-color);
       transform: scaleX(0);
       transition: transform 0.25s;
       transform-origin: left;
@@ -40,7 +40,7 @@
       height: 3px;
       margin-top: 6px;
       border-radius: 0 50% 0 0;
-      background-color: var(--main-color);
+      background-color: var(--role-color);
       transform: scaleX(1);
       transition: transform 0.25s;
       transform-origin: left;

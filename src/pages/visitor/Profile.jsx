@@ -1,15 +1,13 @@
 // src/pages/visitor/User/Profile.jsx
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Login } from '../../components/export'
 import { useAuth } from '../../context/AuthContext'
 import getProfile from '../../services/user/getProfile'
-import { ThemeContext } from '../../context/ThemeContext'
 
 export default function UserProfile() {
   const { token, logout } = useAuth()
   const [userData, setUserData] = useState(null)
   const [loading, setLoading] = useState(true)
-  const { toggleTheme } = useContext(ThemeContext)
 
   useEffect(() => {
     if (!token) {
@@ -22,15 +20,7 @@ export default function UserProfile() {
       setLoading(true)
       try {
         const response = await getProfile()
-        const isAdmin = response.isAdmin
-        console.log('isAdmin : ', isAdmin)
         setUserData(response)
-
-        if (isAdmin) {
-          toggleTheme('red') // Thème admin
-        } else {
-          toggleTheme('blue') // Thème utilisateur
-        }
       } catch (error) {
         console.error(
           'Erreur lors de la récupération de l’utilisateur :',
@@ -43,17 +33,12 @@ export default function UserProfile() {
     }
 
     fetchUser()
-  }, [token, toggleTheme])
+  }, [token])
 
-  // Fonction pour gérer la déconnexion
   const handleLogout = () => {
-    if (userData?.isAdmin) {
-      toggleTheme('blue')
-    }
     logout()
   }
 
-  // Affiche uniquement le composant Login si l'utilisateur n'est pas connecté
   if (!token) {
     return <Login />
   }

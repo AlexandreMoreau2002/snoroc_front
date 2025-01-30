@@ -13,8 +13,8 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const token = await postLogin(email, password)
-      login(token)
+      const response = await postLogin(email, password)
+      login(response)
       console.log('Connexion réussie')
     } catch (error) {
       setErrorMessage('Email ou mot de passe incorrect.')

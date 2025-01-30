@@ -7,7 +7,7 @@ const postLogin = async (email, password) => {
       email,
       password,
     })
-    return response.accessToken
+    return response
   } catch (error) {
     console.error('Erreur lors de la tentative de connexion :', error)
     throw error

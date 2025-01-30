@@ -1,4 +1,16 @@
 // src/services/mocks/mockData.js
+
+export const mockLogin = {
+  accessToken: process.env.REACT_APP_TOKEN,
+  user: {
+    id: 1,
+    firstname: 'Alex',
+    lastname: 'Dev',
+    email: 'pricedelu@gmail.com',
+    isAdmin: true,
+  },
+}
+
 export const mockUsers = [
   {
     id: 1,

@@ -1,7 +1,7 @@
 // front/src/pages/visitor/export.js
-import { Home, HomeGallery, HomeDisplay } from './Home/export'
-import { Event, EventGallery, EventDisplay } from './Event/export'
-import { Media, MediaGallery, MediaDisplay } from './Media/export'
+import Home from './Home'
+import Event from './Event'
+import Media from './Media'
 
 import About from './About'
 import Signup from './Signup'
@@ -12,8 +12,6 @@ import ForgotPassword from './ForgotPassword'
 import LegalNotice from './LegalNotice'
 import TermsOfService from './TermsOfService'
 
+export { Home, Event, Media }
 export { LegalNotice, TermsOfService }
-export { Home, HomeGallery, HomeDisplay }
-export { Event, EventGallery, EventDisplay }
-export { Media, MediaGallery, MediaDisplay }
-export { About, Contact, Profile, Signup, ForgotPassword }  
+export { About, Contact, Profile, Signup, ForgotPassword }

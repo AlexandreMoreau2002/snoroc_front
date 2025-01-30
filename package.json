@@ -17,6 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "dev": "react-scripts start && sass --watch src/scss/main.scss src/css/index.css",
     "sass": "sass --watch src/scss/main.scss src/css/index.css",
     "build": "react-scripts build",
     "test": "react-scripts test",
