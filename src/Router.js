@@ -1,6 +1,6 @@
 // front/src/Router.js
 import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 
 // Imports des composants
@@ -52,7 +52,7 @@ export default function Router() {
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
 
           {/* Error 404 */}
-          <Route path="/*" element={<Home />} />
+          <Route path="/*" element={<Navigate to="/home" replace />} />
         </Routes>
         <Footer />
       </BrowserRouter>

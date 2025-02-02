@@ -1,31 +1,16 @@
-// code reutilisable pour tout les boutons juste en dessous :
+// code reutilisable pour tout les boutons
 
-@mixin btnBase {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  appearance: none;
-  color: var(--role-color);
-  height: 50px;
-  width: 50px;
-  opacity: 1;
-}
-
-.header > button {
+@mixin button($bg-color: var(--role-color)) {
+  background-color: $bg-color;
+  color: $white;
   border: none;
-  background: none;
-}
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0.5rem 1.5rem;
+  margin: 46px 0;
 
-.header {
-  #header__menu {
-    @include btnBase;
-    font-size: 55px;
-    text-align: center;
-  }
-
-  #header__close {
-    @include btnBase;
-    font-size: 55px;
-    text-align: center;
+  &:hover {
+    filter: brightness(1.2);
   }
 }

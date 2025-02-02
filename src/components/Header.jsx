@@ -1,10 +1,11 @@
 // front/src/components/Header.jsx
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import Logo from '../asset/Logo.webp'
 
 export default function Header() {
+  const location = useLocation()
   return (
     <HelmetProvider>
       <header className="header">
@@ -30,7 +31,9 @@ export default function Header() {
           <NavLink
             to="/"
             className={({ isActive }) =>
-              isActive
+              isActive ||
+              location.pathname === '/' ||
+              location.pathname === '/home'
                 ? 'header__nav__link header__nav__link--active'
                 : 'header__nav__link'
             }

@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { postNews } from '../../services/news/postNews'
 
-
 export default function CreateNews() {
+  const navigate = useNavigate()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [thumbnail, setThumbnail] = useState(null)
@@ -93,9 +94,14 @@ export default function CreateNews() {
         {successMessage && (
           <p className="create-news__success-message">{successMessage}</p>
         )}
-        <button type="submit" className="create-news__button">
-          Envoyer
-        </button>
+        <div className='create-news--btn'>
+          <button className="return" onClick={() => navigate('/home')}>
+            Retour
+          </button>
+          <button type="submit" className="submit">
+            Envoyer
+          </button>
+        </div>
       </form>
     </div>
   )
