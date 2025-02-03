@@ -28,6 +28,7 @@ body {
 .login__hr {
   color: #f1f1f6;
   margin: 30px 0;
+  margin-bottom: 60px;
 }
 .login__form {
   display: flex;
@@ -37,6 +38,7 @@ body {
 .login__form-group {
   display: flex;
   flex-direction: column;
+  gap: 30px;
 }
 .login__input {
   padding: 10px;
@@ -45,8 +47,11 @@ body {
   border-radius: 15px;
 }
 .login__error-message {
-  color: red;
+  background-color: red;
+  padding: 0.5rem 1.5rem;
+  color: #f1f1f6;
   font-size: 16px;
+  border-radius: 15px;
 }
 .login__button {
   background-color: var(--role-color);
@@ -56,8 +61,8 @@ body {
   cursor: pointer;
   font-size: 16px;
   padding: 0.5rem 1.5rem;
-  margin: 46px 0;
-  margin: 8px auto;
+  margin: 0;
+  margin: auto;
   padding: 0.75rem 1.5rem;
 }
 .login__button:hover {
@@ -252,6 +257,7 @@ body {
 .create-news__hr {
   color: #f1f1f6;
   margin: 30px 0;
+  margin-bottom: 60px;
 }
 .create-news__form {
   display: flex;
@@ -309,7 +315,7 @@ body {
   cursor: pointer;
   font-size: 16px;
   padding: 0.5rem 1.5rem;
-  margin: 46px 0;
+  margin: 0;
 }
 .create-news--btn .return:hover,
 .create-news--btn .submit:hover {
@@ -328,6 +334,98 @@ body {
   color: #f1f1f6;
   font-size: 16px;
   border-radius: 15px;
+}
+
+.request-email {
+  width: 600px;
+  height: 400px;
+  margin: 100px auto;
+}
+.request-email__title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.request-email__separator {
+  color: #f1f1f6;
+  margin: 30px 0;
+  margin-bottom: 60px;
+  margin-bottom: 60px;
+}
+.request-email__form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.request-email__input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+}
+.request-email .test {
+  display: flex;
+  justify-content: space-between;
+}
+.request-email .test .request-email__button,
+.request-email .test .return {
+  background-color: var(--role-color);
+  color: #f1f1f6;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0.5rem 1.5rem;
+  margin: 0;
+}
+.request-email .test .request-email__button:hover,
+.request-email .test .return:hover {
+  filter: brightness(1.2);
+}
+
+.reset-password {
+  width: 600px;
+  height: 400px;
+  margin: 100px auto;
+}
+.reset-password__title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.reset-password__hr {
+  color: #f1f1f6;
+  margin: 30px 0;
+  margin-bottom: 60px;
+}
+.reset-password__form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.reset-password__input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #f1f1f6;
+  border-radius: 15px;
+}
+.reset-password__error {
+  background-color: red;
+  padding: 0.5rem 1.5rem;
+  color: #f1f1f6;
+  font-size: 16px;
+  border-radius: 15px;
+}
+.reset-password__button {
+  background-color: var(--role-color);
+  color: #f1f1f6;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0.5rem 1.5rem;
+  margin: 0;
+  margin-left: auto;
+}
+.reset-password__button:hover {
+  filter: brightness(1.2);
 }
 
 .actus {
@@ -359,9 +457,8 @@ body {
   margin-top: 10px;
 }
 .actus .page__title {
-  font-size: 2rem;
-  margin-bottom: 20px;
   text-align: center;
+  margin-bottom: 20px;
 }
 .actus .news-list {
   display: flex;
@@ -414,7 +511,8 @@ body {
   cursor: pointer;
   font-size: 16px;
   padding: 0.5rem 1.5rem;
-  margin: 46px 0;
+  margin: 0;
+  margin: 30px auto;
   position: absolute;
   right: 0;
   transform: translateX(-75%);
@@ -448,7 +546,6 @@ body {
 .profile__title {
   text-align: center;
   margin-bottom: 20px;
-  color: #333;
 }
 .profile__details {
   margin-bottom: 20px;
@@ -480,10 +577,17 @@ body {
   cursor: pointer;
   font-size: 16px;
   padding: 0.5rem 1.5rem;
-  margin: 46px 0;
+  margin: 0;
 }
 .profile__logout-button:hover {
   filter: brightness(1.2);
+}
+
+.forgot-password {
+  position: relative;
+  padding: 60px;
+  margin: 0 auto;
+  max-width: 1160px;
 }
 
 /*# sourceMappingURL=index.css.map */

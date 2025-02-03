@@ -1,8 +1,5 @@
 .actus {
-  position: relative;
-  padding: 60px;
-  margin: 0 auto;
-  max-width: 1160px;
+  @include container;
 
   .main-actus {
     background-size: cover;
@@ -31,9 +28,7 @@
   }
 
   .page__title {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    text-align: center;
+    @include title;
   }
 
   .news-list {
@@ -86,7 +81,8 @@
   }
 
   .admin-button {
-    @include button();
+    @include button;
+    margin: 30px auto;
     position: absolute;
     right: 0;
     transform: translateX(-75%);

@@ -1,16 +1,12 @@
 .create-news {
-  width: 600px;
-  height: 400px;
-  margin: 100px auto;
+  @include card;
 
   &__title {
-    text-align: center;
-    margin-bottom: 20px;
+    @include title;
   }
 
   &__hr {
-    color: $white;
-    margin: 30px 0;
+    @include hr;
   }
 
   &__form {
@@ -70,16 +66,12 @@
 
     .return,
     .submit {
-      @include button();
+      @include button;
     }
   }
 
   &__error-message {
-    background-color: red;
-    padding: 0.5rem 1.5rem;
-    color: $white;
-    font-size: 16px;
-    border-radius: 15px;
+    @include error;
   }
 
   &__success-message {

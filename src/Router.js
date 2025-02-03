@@ -28,6 +28,8 @@ export default function Router() {
         <Routes>
           {/* Home */}
           <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/news" element={<Home />} />
           <Route element={<PrivateRoute />}>
             <Route path="/createNews" element={<CreateNews />} />
           </Route>

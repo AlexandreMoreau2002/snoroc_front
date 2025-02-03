@@ -6,9 +6,7 @@
   }
 
   &__title {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
+    @include title;
   }
 
   &__details {

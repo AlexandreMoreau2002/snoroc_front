@@ -1,0 +1,34 @@
+.request-email {
+  @include card;
+
+  &__title {
+    @include title;
+  }
+
+  &__separator {
+    @include hr;
+    margin-bottom: 60px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  &__input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+  }
+
+  .test {
+    display: flex;
+    justify-content: space-between;
+
+    .request-email__button,
+    .return {
+      @include button;
+    }
+  }
+}
