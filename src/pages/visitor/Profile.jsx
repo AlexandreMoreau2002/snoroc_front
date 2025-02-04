@@ -1,13 +1,21 @@
 // src/pages/visitor/User/Profile.jsx
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Login } from '../../components/export'
 import { useAuth } from '../../context/AuthContext'
 import getProfile from '../../services/user/getProfile'
+import patchUpdateNewsletter from '../../services/user/patchUpdateNewsletter'
 
 export default function UserProfile() {
+  const { user } = useAuth()
+  const userId = user?.id
+  const navigate = useNavigate()
   const { token, logout } = useAuth()
-  const [userData, setUserData] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [userData, setUserData] = useState(null)
+  const [newsletter, setNewsletter] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
     if (!token) {
@@ -21,6 +29,7 @@ export default function UserProfile() {
       try {
         const response = await getProfile()
         setUserData(response)
+        setNewsletter(response.newsletter || false)
       } catch (error) {
         console.error(
           'Erreur lors de la récupération de l’utilisateur :',
@@ -35,8 +44,30 @@ export default function UserProfile() {
     fetchUser()
   }, [token])
 
+  const updateNewsletter = async () => {
+    try {
+      await patchUpdateNewsletter(userId, newsletter)
+      setSuccessMessage('Préférences mises à jour avec succès !')
+      setErrorMessage('')
+      setTimeout(() => {
+        setSuccessMessage('')
+      }, 3000)
+    } catch (error) {
+      console.error("error lors de l'update", error)
+      setErrorMessage('Impossible de mettre à jour les préférences.')
+      setSuccessMessage('')
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 3000)
+    }
+  }
+
   const handleLogout = () => {
     logout()
+  }
+
+  const handleNewsletterChange = () => {
+    setNewsletter((prev) => !prev)
   }
 
   if (!token) {
@@ -49,50 +80,65 @@ export default function UserProfile() {
 
   return (
     <div className="profile">
-      <h1 className="profile__title">Profil utilisateur</h1>
-      {userData ? (
-        <div className="profile__details">
-          <p className="profile__detail">
-            <strong>Civilité :</strong> {userData.civility}
-          </p>
-          <p className="profile__detail">
-            <strong>Prénom :</strong> {userData.firstname}
-          </p>
-          <p className="profile__detail">
-            <strong>Nom :</strong> {userData.lastname}
-          </p>
-          <p className="profile__detail">
-            <strong>Email :</strong> {userData.email}
-          </p>
-          <p className="profile__detail">
-            <strong>Téléphone :</strong> {userData.userPhone}
-          </p>
-          <p className="profile__detail">
-            <strong>Administrateur :</strong> {userData.isAdmin ? 'Oui' : 'Non'}
-          </p>
-          <p className="profile__detail">
-            <strong>Vérifié :</strong> {userData.isVerified ? 'Oui' : 'Non'}
-          </p>
-          <p className="profile__detail">
-            <strong>Newsletter :</strong> {userData.newsletter ? 'Oui' : 'Non'}
-          </p>
-          <p className="profile__detail">
-            <strong>Créé le :</strong>{' '}
-            {new Date(userData.createdAt).toLocaleString()}
-          </p>
-          <p className="profile__detail">
-            <strong>Mis à jour le :</strong>{' '}
-            {new Date(userData.updatedAt).toLocaleString()}
-          </p>
-        </div>
-      ) : (
-        <p className="profile__no-data">Aucune donnée utilisateur trouvée.</p>
-      )}
-      <div className="profile__actions">
-        <button onClick={handleLogout} className="profile__logout-button">
-          Se déconnecter
-        </button>
+      <h1 className="profile__title profile__title--notification">
+        Notifications
+      </h1>
+      <hr className="profile__divider" />
+      <div className="profile__notifications">
+        <input
+          type="checkbox"
+          id="notif"
+          name="notif"
+          checked={newsletter}
+          onChange={handleNewsletterChange}
+          className="profile__checkbox"
+        />
+        <label htmlFor="notif" className="profile__label">
+          Je souhaite recevoir les actualités et les évènements par mail.
+        </label>
       </div>
+      <button
+        onClick={updateNewsletter}
+        className="profile__button profile__button--update"
+      >
+        Mettre à jour
+      </button>
+      {errorMessage && <p className="profile__error-message">{errorMessage}</p>}
+      {successMessage && (
+        <p className="profile__success-message">{successMessage}</p>
+      )}
+      <h1 className="profile__title profile__title--info">
+        Informations personnelles
+      </h1>
+      <hr className="profile__divider" />
+      <div className="profile__info">
+        <p className="profile__info-item">
+          {userData?.lastname || 'Non renseigné'}
+        </p>
+        <p className="profile__info-item">
+          {userData?.firstname || 'Non renseigné'}
+        </p>
+        <p className="profile__info-item">
+          {userData?.email || 'Non renseigné'}
+        </p>
+        <p className="profile__info-item">
+          {userData?.userPhone || 'Non renseigné'}
+        </p>
+      </div>
+
+      <button
+        onClick={() => navigate('/ResetPassword')}
+        className="profile__button profile__button--password"
+      >
+        Modifier mon mot de passe
+      </button>
+
+      <button
+        onClick={handleLogout}
+        className="profile__button profile__button--logout"
+      >
+        Se déconnecter
+      </button>
     </div>
   )
 }

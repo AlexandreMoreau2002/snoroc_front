@@ -28,9 +28,15 @@ export default function CreateNews() {
       const response = await postNews(formData)
       setSuccessMessage(response.message)
       setErrorMessage('')
+      setTimeout(() => {
+        setSuccessMessage('')
+      }, 3000)
     } catch (error) {
       setErrorMessage("Erreur lors de la création de l'actualité.")
       setSuccessMessage('')
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 3000)
     }
   }
 
@@ -94,7 +100,7 @@ export default function CreateNews() {
         {successMessage && (
           <p className="create-news__success-message">{successMessage}</p>
         )}
-        <div className='create-news--btn'>
+        <div className="create-news--btn">
           <button className="return" onClick={() => navigate('/home')}>
             Retour
           </button>

@@ -1,42 +1,118 @@
 .profile {
-  &__loading {
-    text-align: center;
-    font-size: 16px;
-    color: #666;
+  @include card;
+  height: auto;
+
+  &__title--info {
+    margin-top: 40px;
   }
 
-  &__title {
+  &__title--info,
+  &__title--notification {
     @include title;
   }
 
-  &__details {
-    margin-bottom: 20px;
-    line-height: 1.6;
-    color: #555;
+  &__divider {
+    @include hr;
   }
 
-  &__detail {
-    margin: 5px 0;
-    font-size: 14px;
+  &__checkbox {
+    margin-right: 15px;
+    transform: translate(5px, 5px);
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: $black;
+    border: 2px solid $white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease-in-out;
 
-    strong {
-      color: #333;
+    &:checked {
+      background-color: var(--role-color);
+      border-color: var(--role-color);
+    }
+
+    &:checked::before {
+      content: '✔';
+      color: $white;
+      font-size: 14px;
+      font-weight: bold;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
   }
 
-  &__no-data {
-    text-align: center;
-    color: #999;
-    margin-top: 20px;
-  }
-
-  &__actions {
-    margin-top: 20px;
+  &__notifications {
     display: flex;
-    justify-content: center;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 100%;
   }
 
-  &__logout-button {
-    @include button();
+  &__success-message {
+    @include success;
+    margin: 20px auto;
+  }
+
+  &__error-message {
+    @include error;
+    margin: 20px auto;
+  }
+
+  &__label {
+    font-size: 24px;
+    margin: 0;
+    flex: 1;
+  }
+
+  &__info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 30px 15px;
+
+    margin: 25px auto;
+
+    &-item {
+      color: $black;
+      background-color: $white;
+      border-radius: 15px;
+      padding: 10px;
+    }
+  }
+
+  &__button {
+    @include button;
+
+    &--update {
+      display: block;
+      margin-top: 40px;
+      margin-left: auto;
+    }
+
+    &--password {
+      display: block;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      margin-left: auto;
+    }
+
+    &--logout {
+      display: block;
+      margin: auto;
+    }
+  }
+
+  &__loading {
+    text-align: center;
+    font-size: 16px;
+    color: $white;
   }
 }
