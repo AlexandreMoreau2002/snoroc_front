@@ -8,7 +8,7 @@ import patchUpdateNewsletter from '../../services/user/patchUpdateNewsletter'
 
 export default function UserProfile() {
   const { user } = useAuth()
-  const userId = user?.id
+  const userId = user.id
   const navigate = useNavigate()
   const { token, logout } = useAuth()
   const [loading, setLoading] = useState(true)

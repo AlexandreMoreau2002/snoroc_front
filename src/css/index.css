@@ -667,6 +667,64 @@ body {
   color: #f1f1f6;
 }
 
+.reset-password {
+  width: 700px;
+  min-height: 400px;
+  height: auto;
+  margin: 100px auto;
+}
+.reset-password__title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.reset-password__separator {
+  color: #f1f1f6;
+  margin: 30px 0;
+  margin-bottom: 60px;
+}
+.reset-password__form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.reset-password__input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #f1f1f6;
+  border-radius: 15px;
+}
+.reset-password__error {
+  background-color: red;
+  padding: 0.5rem 1.5rem;
+  color: #f1f1f6;
+  font-size: 16px;
+  border-radius: 15px;
+}
+.reset-password__success {
+  background-color: #4caf50;
+  padding: 0.5rem 1.5rem;
+  color: #f1f1f6;
+  font-size: 16px;
+  border-radius: 15px;
+}
+.reset-password-action {
+  display: flex;
+  justify-content: space-between;
+}
+.reset-password-action__button, .reset-password-action__return {
+  background-color: var(--role-color);
+  color: #f1f1f6;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0.5rem 1.5rem;
+  margin: 0;
+}
+.reset-password-action__button:hover, .reset-password-action__return:hover {
+  filter: brightness(1.2);
+}
+
 .forgot-password {
   position: relative;
   padding: 60px;
