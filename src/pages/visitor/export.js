@@ -8,10 +8,13 @@ import Signup from './Signup'
 import Contact from './Contact'
 import Profile from './Profile'
 import ForgotPassword from './ForgotPassword'
+import ResetPassword from './ResetPassword'
+import VerifyEmail from './VerifyEmail'
+
 
 import LegalNotice from './LegalNotice'
 import TermsOfService from './TermsOfService'
 
 export { Home, Event, Media }
 export { LegalNotice, TermsOfService }
-export { About, Contact, Profile, Signup, ForgotPassword }
+export { About, Contact, Profile, Signup, ForgotPassword, ResetPassword, VerifyEmail }

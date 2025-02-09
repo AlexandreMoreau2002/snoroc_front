@@ -3,28 +3,31 @@ import React from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 
-// Imports des composants
+// imports des composants
+import { Header, Footer, PrivateRoute } from './components/export'
+
+// Imports des pages admin
+import { CreateNews } from './pages/admin/export.js'
+
+// Imports des pages classiques
 import {
   Home,
   Event,
   Media,
   About,
+  Signup,
   Contact,
   Profile,
+  LegalNotice,
+  VerifyEmail,
+  ResetPassword,
+  ForgotPassword,
+  TermsOfService,
 } from './pages/visitor/export'
-import { CreateNews } from './pages/admin/export.js'
-import PrivateRoute from './components/PrivateRoute'
-import { LegalNotice, TermsOfService } from './pages/visitor/export'
-import { Signup, ForgotPassword } from './pages/visitor/export'
-import { Header, Footer } from './components/export'
-import ResetPassword from './pages/visitor/ResetPassword.jsx'
-import VerifyEmail from './pages/visitor/VerifyEmail.jsx'
 
 export default function Router() {
   return (
     <HelmetProvider>
-      {' '}
-      {/* Ajouté */}
       <BrowserRouter>
         <Header />
         <Routes>
