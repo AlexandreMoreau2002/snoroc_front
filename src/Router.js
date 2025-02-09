@@ -18,6 +18,7 @@ import { LegalNotice, TermsOfService } from './pages/visitor/export'
 import { Signup, ForgotPassword } from './pages/visitor/export'
 import { Header, Footer } from './components/export'
 import ResetPassword from './pages/visitor/ResetPassword.jsx'
+import VerifyEmail from './pages/visitor/VerifyEmail.jsx'
 
 export default function Router() {
   return (
@@ -52,7 +53,8 @@ export default function Router() {
 
           {/* User */}
           <Route path="/Signup" element={<Signup />} />
-          <Route path='/ResetPassword' element={<ResetPassword />} />
+          <Route path="VerifyEmail" element={<VerifyEmail />} />
+          <Route path="/ResetPassword" element={<ResetPassword />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
 
           {/* Error 404 */}
