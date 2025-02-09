@@ -1,5 +1,6 @@
 // src/pages/visitor/Signup.jsx
 import React, { useState } from 'react'
+import { useAuth } from '../../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 import postSignUp from '../../services/user/postSignUp'
 
@@ -14,9 +15,10 @@ const Signup = () => {
     confirmPassword: '',
     newsletter: true,
   })
+  const navigate = useNavigate()
+  const { setSignupEmail } = useAuth()
   const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
-  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -33,7 +35,7 @@ const Signup = () => {
   }
 
   const formatPhoneNumber = (phone) => {
-    if (phone.startsWith('07') || phone.startsWith('06')) {
+    if (phone.startsWith('0')) {
       return '+33' + phone.slice(1)
     }
     return phone
@@ -66,6 +68,7 @@ const Signup = () => {
 
     try {
       await postSignUp(userData)
+      setSignupEmail(userData.email)
 
       setErrorMessage('')
       setSuccessMessage('Inscription réussie ! Redirection en cours...')

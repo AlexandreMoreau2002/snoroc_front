@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
     return storedUser ? JSON.parse(storedUser) : null
   })
   const [isAdmin, setIsAdmin] = useState(user?.isAdmin || false)
+  const [email, setEmail] = useState(localStorage.getItem('email'))
   const { toggleTheme } = useTheme()
 
   useEffect(() => {
@@ -35,8 +36,15 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('user')
   }
 
+  const setSignupEmail = (userEmail) => {
+    setEmail(userEmail)
+    localStorage.setItem('email', userEmail)
+  }
+
   return (
-    <AuthContext.Provider value={{ token, user, isAdmin, login, logout }}>
+    <AuthContext.Provider
+      value={{ token, user, isAdmin, login, logout, email, setSignupEmail }}
+    >
       {children}
     </AuthContext.Provider>
   )

@@ -1,0 +1,41 @@
+.verify-email {
+  @include card;
+
+  &__title {
+    @include title;
+  }
+
+  &__hr {
+    @include hr;
+  }
+
+  &__form {
+    @include formGroup;
+    align-items: center;
+  }
+
+  &__form-label {
+    @include text;
+  }
+
+  &__inputs {
+    display: flex;
+    gap: 15px;
+  }
+
+  &__input {
+    @include input;
+    width: 50px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  &__error {
+    @include error;
+  }
+
+  &__success {
+    @include success;
+  }
+}
