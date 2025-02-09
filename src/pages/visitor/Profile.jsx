@@ -31,10 +31,8 @@ export default function UserProfile() {
         setUserData(response)
         setNewsletter(response.newsletter || false)
       } catch (error) {
-        console.error(
-          'Erreur lors de la récupération de l’utilisateur :',
-          error
-        )
+        console.log('Erreur : ', error.message)
+        setErrorMessage(error.message)
         setUserData(null)
       } finally {
         setLoading(false)
@@ -53,8 +51,8 @@ export default function UserProfile() {
         setSuccessMessage('')
       }, 3000)
     } catch (error) {
-      console.error("error lors de l'update", error)
-      setErrorMessage('Impossible de mettre à jour les préférences.')
+      console.log('Erreur : ', error.message)
+      setErrorMessage(error.message)
       setSuccessMessage('')
       setTimeout(() => {
         setErrorMessage('')
@@ -91,7 +89,7 @@ export default function UserProfile() {
           name="notif"
           checked={newsletter}
           onChange={handleNewsletterChange}
-          className="profile__checkbox"
+          className="profile__notifications__checkbox"
         />
         <label htmlFor="notif" className="profile__label">
           Je souhaite recevoir les actualités et les évènements par mail.

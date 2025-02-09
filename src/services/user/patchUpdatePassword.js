@@ -9,20 +9,18 @@ const patchUpdatePassword = async (id, currentPassword, newPassword) => {
       {
         id,
         currentPassword,
-        newPassword
+        newPassword,
       },
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
-        }
+        },
       }
     )
     return response
   } catch (error) {
-    console.error(
-      'Erreur lors de la tentative de changement de mot de passe : ',
-      error
-    )
+    console.error('Erreur : ', error.response?.data.message)
+    throw new Error(error.response?.data.message)
   }
 }
 

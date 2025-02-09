@@ -4,6 +4,11 @@
   --role-color: #1b74e4;
 }
 
+::placeholder {
+  font-size: 20px;
+  transform: translateY(2.5px);
+}
+
 *,
 ::before,
 ::after {
@@ -24,6 +29,7 @@ body {
   margin: 100px auto;
 }
 .login__title {
+  font-size: 32px;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -32,12 +38,7 @@ body {
   margin: 30px 0;
   margin-bottom: 60px;
 }
-.login__form {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-.login__form-group {
+.login__form, .login__form-group {
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -47,6 +48,7 @@ body {
   font-size: 16px;
   border: 1px solid #f1f1f6;
   border-radius: 15px;
+  height: 50px;
 }
 .login__error-message {
   background-color: red;
@@ -61,7 +63,7 @@ body {
   border: none;
   border-radius: 15px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 24px;
   padding: 0.5rem 1.5rem;
   margin: 0;
   margin: auto;
@@ -71,10 +73,12 @@ body {
   filter: brightness(1.2);
 }
 .login__text {
+  font-size: 24px;
   color: #f1f1f6;
   margin: 20px 0;
 }
 .login__link {
+  font-size: 24px;
   color: #1b74e4;
   margin-left: 5px;
   text-decoration: none;
@@ -254,6 +258,7 @@ body {
   margin: 100px auto;
 }
 .create-news__title {
+  font-size: 32px;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -280,7 +285,7 @@ body {
 }
 .create-news__form-label {
   margin: 5px 0;
-  font-size: 16px;
+  font-size: 24px;
   font-weight: bold;
   margin-bottom: 5px;
 }
@@ -316,7 +321,7 @@ body {
   border: none;
   border-radius: 15px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 24px;
   padding: 0.5rem 1.5rem;
   margin: 0;
 }
@@ -324,14 +329,14 @@ body {
 .create-news--btn .submit:hover {
   filter: brightness(1.2);
 }
-.create-news__error-message {
+.create-news__error {
   background-color: red;
   padding: 0.5rem 1.5rem;
   color: #f1f1f6;
   font-size: 16px;
   border-radius: 15px;
 }
-.create-news__success-message {
+.create-news__success {
   background-color: #4caf50;
   padding: 0.5rem 1.5rem;
   color: #f1f1f6;
@@ -346,6 +351,7 @@ body {
   margin: 100px auto;
 }
 .request-email__title {
+  font-size: 32px;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -360,28 +366,44 @@ body {
   flex-direction: column;
   gap: 30px;
 }
-.request-email__input {
-  padding: 8px;
-  border: 1px solid #ccc;
+.request-email__form__error {
+  background-color: red;
+  padding: 0.5rem 1.5rem;
+  color: #f1f1f6;
+  font-size: 16px;
   border-radius: 15px;
 }
-.request-email .test {
+.request-email__form__success {
+  background-color: #4caf50;
+  padding: 0.5rem 1.5rem;
+  color: #f1f1f6;
+  font-size: 16px;
+  border-radius: 15px;
+}
+.request-email__input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #f1f1f6;
+  border-radius: 15px;
+  height: 50px;
+}
+.request-email__actions {
   display: flex;
   justify-content: space-between;
 }
-.request-email .test .request-email__button,
-.request-email .test .return {
+.request-email__actions .request-email__button-submit,
+.request-email__actions .request-email__button-return {
   background-color: var(--role-color);
   color: #f1f1f6;
   border: none;
   border-radius: 15px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 24px;
   padding: 0.5rem 1.5rem;
   margin: 0;
 }
-.request-email .test .request-email__button:hover,
-.request-email .test .return:hover {
+.request-email__actions .request-email__button-submit:hover,
+.request-email__actions .request-email__button-return:hover {
   filter: brightness(1.2);
 }
 
@@ -392,6 +414,7 @@ body {
   margin: 100px auto;
 }
 .reset-password__title {
+  font-size: 32px;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -410,6 +433,7 @@ body {
   font-size: 16px;
   border: 1px solid #f1f1f6;
   border-radius: 15px;
+  height: 50px;
 }
 .reset-password__error {
   background-color: red;
@@ -424,7 +448,7 @@ body {
   border: none;
   border-radius: 15px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 24px;
   padding: 0.5rem 1.5rem;
   margin: 0;
   margin-left: auto;
@@ -462,6 +486,7 @@ body {
   margin-top: 10px;
 }
 .actus .page__title {
+  font-size: 32px;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -514,7 +539,7 @@ body {
   border: none;
   border-radius: 15px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 24px;
   padding: 0.5rem 1.5rem;
   margin: 0;
   margin: 30px auto;
@@ -543,28 +568,82 @@ body {
   width: 10%;
 }
 
-.profile {
+.signup {
   width: 700px;
   min-height: 400px;
   height: auto;
   margin: 100px auto;
-  height: auto;
 }
-.profile__title--info {
-  margin-top: 40px;
-}
-.profile__title--info, .profile__title--notification {
+.signup__title {
+  font-size: 32px;
   text-align: center;
   margin-bottom: 20px;
 }
-.profile__divider {
+.signup__hr {
   color: #f1f1f6;
   margin: 30px 0;
   margin-bottom: 60px;
 }
-.profile__checkbox {
-  margin-right: 15px;
-  transform: translate(5px, 5px);
+.signup__form__group__user-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 30px 15px;
+  margin: 25px auto;
+  margin: 30px auto;
+}
+.signup__form__group__user-info__input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #f1f1f6;
+  border-radius: 15px;
+  height: 50px;
+}
+.signup__form__group__password {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin: 30px auto;
+}
+.signup__form__group__password__input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #f1f1f6;
+  border-radius: 15px;
+  height: 50px;
+}
+.signup__form__input {
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  border: 1px solid #f1f1f6;
+  border-radius: 15px;
+  font-size: 20px;
+}
+.signup__form__actions {
+  display: flex;
+}
+.signup__form__actions--submit {
+  background-color: var(--role-color);
+  color: #f1f1f6;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 24px;
+  padding: 0.5rem 1.5rem;
+  margin: 0;
+  margin: 25px auto;
+}
+.signup__form__actions--submit:hover {
+  filter: brightness(1.2);
+}
+.signup__form__group--checkbox {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+.signup__form__group--checkbox__checkbox {
   appearance: none;
   width: 20px;
   height: 20px;
@@ -578,11 +657,11 @@ body {
   position: relative;
   transition: all 0.2s ease-in-out;
 }
-.profile__checkbox:checked {
+.signup__form__group--checkbox__checkbox:checked {
   background-color: var(--role-color);
   border-color: var(--role-color);
 }
-.profile__checkbox:checked::before {
+.signup__form__group--checkbox__checkbox:checked::before {
   content: "✔";
   color: #f1f1f6;
   font-size: 14px;
@@ -591,6 +670,100 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.signup__form__group--checkbox__label {
+  font-size: 24px;
+  color: #f1f1f6;
+  margin: 20px 0;
+  cursor: pointer;
+}
+.signup__success {
+  background-color: #4caf50;
+  padding: 0.5rem 1.5rem;
+  color: #f1f1f6;
+  font-size: 16px;
+  border-radius: 15px;
+}
+.signup__error {
+  background-color: red;
+  padding: 0.5rem 1.5rem;
+  color: #f1f1f6;
+  font-size: 16px;
+  border-radius: 15px;
+}
+.signup__subtitle, .signup__form__label, .signup__terms, .signup__login {
+  font-size: 24px;
+  color: #f1f1f6;
+  margin: 20px 0;
+}
+.signup__terms__link, .signup__login__link {
+  font-size: 24px;
+  color: #1b74e4;
+  margin-left: 5px;
+  text-decoration: none;
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.profile {
+  width: 700px;
+  min-height: 400px;
+  height: auto;
+  margin: 100px auto;
+  height: auto;
+}
+.profile__title--info {
+  margin-top: 40px;
+}
+.profile__title--info, .profile__title--notification {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.profile__divider {
+  color: #f1f1f6;
+  margin: 30px 0;
+  margin-bottom: 60px;
+}
+.profile__notifications {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+.profile__notifications__checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #1e1e1e;
+  border: 2px solid #f1f1f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+.profile__notifications__checkbox:checked {
+  background-color: var(--role-color);
+  border-color: var(--role-color);
+}
+.profile__notifications__checkbox:checked::before {
+  content: "✔";
+  color: #f1f1f6;
+  font-size: 14px;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.profile__notifications__label {
+  font-size: 24px;
+  color: #f1f1f6;
+  margin: 20px 0;
+  cursor: pointer;
 }
 .profile__notifications {
   display: flex;
@@ -628,6 +801,7 @@ body {
   margin: 25px auto;
 }
 .profile__info-item {
+  font-size: 20px;
   color: #1e1e1e;
   background-color: #f1f1f6;
   border-radius: 15px;
@@ -639,7 +813,7 @@ body {
   border: none;
   border-radius: 15px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 24px;
   padding: 0.5rem 1.5rem;
   margin: 0;
 }
@@ -674,6 +848,7 @@ body {
   margin: 100px auto;
 }
 .reset-password__title {
+  font-size: 32px;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -692,6 +867,7 @@ body {
   font-size: 16px;
   border: 1px solid #f1f1f6;
   border-radius: 15px;
+  height: 50px;
 }
 .reset-password__error {
   background-color: red;
@@ -717,7 +893,7 @@ body {
   border: none;
   border-radius: 15px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 24px;
   padding: 0.5rem 1.5rem;
   margin: 0;
 }

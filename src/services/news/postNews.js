@@ -10,7 +10,7 @@ export const postNews = async (formData) => {
     })
     return response
   } catch (error) {
-    console.error("Erreur lors de la création de l'actualité :", error)
-    throw error
+    console.error('Erreur : ', error.message)
+    throw new Error(error.message)
   }
 }

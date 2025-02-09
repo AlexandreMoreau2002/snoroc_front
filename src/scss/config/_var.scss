@@ -5,6 +5,11 @@
   --role-color: #1b74e4;
 }
 
+::placeholder {
+  font-size: 20px;
+  transform: translateY(2.5px);
+}
+
 // Couleur :
 $white: #f1f1f6;
 $black: #1e1e1e;

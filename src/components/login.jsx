@@ -17,7 +17,7 @@ export default function Login() {
       login(response)
       console.log('Connexion réussie')
     } catch (error) {
-      setErrorMessage('Email ou mot de passe incorrect.')
+      setErrorMessage(error.message)
     }
   }
 

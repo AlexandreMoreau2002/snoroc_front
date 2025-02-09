@@ -14,11 +14,8 @@ const patchUpdateNewsletter = async (id, newsletter) => {
     )
     return response
   } catch (error) {
-    console.error(
-      'Erreur lors du changement de préférence de notification :',
-      error
-    )
-    throw error
+    console.error('Erreur : ', error.response?.data.message)
+    throw new Error(error.response?.data.message)
   }
 }
 

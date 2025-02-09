@@ -15,37 +15,8 @@
     @include hr;
   }
 
-  &__checkbox {
-    margin-right: 15px;
-    transform: translate(5px, 5px);
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: $black;
-    border: 2px solid $white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.2s ease-in-out;
-
-    &:checked {
-      background-color: var(--role-color);
-      border-color: var(--role-color);
-    }
-
-    &:checked::before {
-      content: '✔';
-      color: $white;
-      font-size: 14px;
-      font-weight: bold;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+  &__notifications {
+    @include newsletter;
   }
 
   &__notifications {
@@ -73,14 +44,10 @@
   }
 
   &__info {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, auto);
-    gap: 30px 15px;
-
-    margin: 25px auto;
+    @include formGrid;
 
     &-item {
+      font-size: 20px;
       color: $black;
       background-color: $white;
       border-radius: 15px;

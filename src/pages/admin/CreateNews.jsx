@@ -19,6 +19,23 @@ export default function CreateNews() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setErrorMessage('')
+
+    if (!title.trim()) {
+      setErrorMessage('Veuillez mettre un titre.')
+      return
+    }
+
+    if (!content.trim()) {
+      setErrorMessage('Veuillez mettre une description.')
+      return
+    }
+
+    if (!thumbnail) {
+      setErrorMessage('Veuillez sélectionner une image.')
+      return
+    }
+
     const formData = new FormData()
     formData.append('title', title)
     formData.append('content', content)
@@ -30,13 +47,11 @@ export default function CreateNews() {
       setErrorMessage('')
       setTimeout(() => {
         setSuccessMessage('')
-      }, 3000)
+      }, 5000)
     } catch (error) {
-      setErrorMessage("Erreur lors de la création de l'actualité.")
+      console.log('Erreur : ', error.message)
+      setErrorMessage(error.message)
       setSuccessMessage('')
-      setTimeout(() => {
-        setErrorMessage('')
-      }, 3000)
     }
   }
 
@@ -47,11 +62,9 @@ export default function CreateNews() {
       <form onSubmit={handleSubmit} className="create-news__form">
         <div className="create-news__form-group">
           <label htmlFor="title" className="create-news__form-label">
-            {' '}
-            Titre *{' '}
+            Titre *
           </label>
           <input
-            required
             id="title"
             type="text"
             value={title}
@@ -62,11 +75,9 @@ export default function CreateNews() {
         </div>
         <div className="create-news__form-group">
           <label htmlFor="content" className="create-news__form-label">
-            {' '}
-            Description *{' '}
+            Description *
           </label>
           <textarea
-            required
             id="content"
             value={content}
             placeholder="Description"
@@ -76,12 +87,11 @@ export default function CreateNews() {
         </div>
         <div className="create-news__form-group-file">
           <label htmlFor="thumbnail" className="create-news__form-label">
-            {' '}
-            Photo *{' '}
+            Photo *
           </label>
           <div className="create-news__form-group-file-input">
             <input
-              required
+              name="thumbnail"
               id="thumbnail"
               type="file"
               accept="image/*"
@@ -94,11 +104,9 @@ export default function CreateNews() {
             <span>{fileName}</span>
           </div>
         </div>
-        {errorMessage && (
-          <p className="create-news__error-message">{errorMessage}</p>
-        )}
+        {errorMessage && <p className="create-news__error">{errorMessage}</p>}
         {successMessage && (
-          <p className="create-news__success-message">{successMessage}</p>
+          <p className="create-news__success">{successMessage}</p>
         )}
         <div className="create-news--btn">
           <button className="return" onClick={() => navigate('/home')}>

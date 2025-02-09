@@ -9,8 +9,8 @@ const postLogin = async (email, password) => {
     })
     return response
   } catch (error) {
-    console.error('Erreur lors de la tentative de connexion :', error)
-    throw error
+    console.error('Erreur :', error.response?.data.message)
+    throw new Error(error.response?.data.message)
   }
 }
 

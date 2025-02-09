@@ -10,8 +10,8 @@ const getProfile = async () => {
     })
     return response.data
   } catch (error) {
-    console.error('Erreur lors de la récupération du profil :', error)
-    throw error
+    console.error('Erreur : ', error.response?.data.message)
+    throw new Error(error.response?.data.message)
   }
 }
 

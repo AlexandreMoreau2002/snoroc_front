@@ -36,9 +36,9 @@ const ResetPassword = () => {
         navigate('/Profil')
       }, 5000)
     } catch (error) {
-      setErrorMessage('Erreur lors du changement de mot de passe')
       setSuccessMessage('')
-      console.error('Erreur lors du changement de mot de passe :', error)
+      console.log('Erreur : ', error.message)
+      setErrorMessage(error.message)
     }
   }
 
