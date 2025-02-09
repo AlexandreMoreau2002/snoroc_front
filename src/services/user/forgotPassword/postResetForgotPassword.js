@@ -9,8 +9,8 @@ const postResetForgotPassword = async (email, resetToken, newPassword) => {
     })
     return response
   } catch (error) {
-    console.error('Erreur lors du changement de mot de passe :', error)
-    throw error
+    console.error('Erreur : ', error.response?.data.message)
+    throw new Error(error.response?.data.message)
   }
 }
 

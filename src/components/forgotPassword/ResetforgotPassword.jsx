@@ -1,40 +1,52 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { usePasswordReset } from '../../context/PasswordResetContext'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import postResetForgotPassword from '../../services/user/forgotPassword/postResetForgotPassword'
 
 export default function ResetPassword() {
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+  const { email, setEmail } = usePasswordReset()
   const [searchParams] = useSearchParams()
   const resetToken = searchParams.get('token')
-  const navigate = useNavigate()
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+
+  useEffect(() => {
+    if (!email) {
+      const storedEmail = localStorage.getItem('resetEmail')
+      if (storedEmail) {
+        setEmail(storedEmail)
+      }
+    }
+  }, [email, setEmail])
 
   const handleResetPassword = async (e) => {
     e.preventDefault()
-    setError('')
+    setErrorMessage('')
 
     if (!resetToken) {
-      setError('Le lien de réinitialisation est invalide ou expiré.')
+      setErrorMessage('Le lien de réinitialisation est invalide ou expiré.')
       return
     }
 
     if (password !== confirmPassword) {
-      setError('Les mots de passe ne correspondent pas !')
+      setErrorMessage('Les mots de passe ne correspondent pas !')
       return
     }
 
     setLoading(true)
 
     try {
-      await postResetForgotPassword(resetToken, password)
+      console.log(email)
+
+      await postResetForgotPassword(email, resetToken, password)
+      setErrorMessage('')
       navigate('/Profil')
     } catch (error) {
-      console.error('Erreur lors de la réinitialisation :', error)
-      setError(
-        'Échec de la réinitialisation du mot de passe. Vérifiez le lien et réessayez.'
-      )
+      console.log('Erreur : ', error.message)
+      setErrorMessage(error.message)
     } finally {
       setLoading(false)
     }
@@ -65,9 +77,9 @@ export default function ResetPassword() {
           disabled={loading}
         />
 
-        {error && (
+        {errorMessage && (
           <p className="reset-password__error" aria-live="polite">
-            {error}
+            {errorMessage}
           </p>
         )}
 

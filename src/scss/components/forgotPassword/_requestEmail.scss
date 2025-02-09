@@ -11,23 +11,27 @@
   }
 
   &__form {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+    @include formGroup;
+
+    &__error {
+      @include error;
+    }
+
+    &__success {
+      @include success;
+    }
   }
 
   &__input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 15px;
+    @include input;
   }
 
-  .test {
+  &__actions {
     display: flex;
     justify-content: space-between;
 
-    .request-email__button,
-    .return {
+    .request-email__button-submit,
+    .request-email__button-return {
       @include button;
     }
   }

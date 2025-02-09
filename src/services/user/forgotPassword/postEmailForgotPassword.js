@@ -9,7 +9,8 @@ const postEmailForgotPassword = async (email) => {
     })
     return response
   } catch (error) {
-    console.error("Erreur lors de la tentative d'envois de l'email :", error)
+    console.error('Erreur : ', error.response?.data.message)
+    throw new Error(error.response?.data.message)
   }
 }
 
