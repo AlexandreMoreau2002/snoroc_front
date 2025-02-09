@@ -59,8 +59,23 @@ const axiosInstance = (() => {
       return response
     },
     (error) => {
-      console.error('Erreur dans l’intercepteur Axios :', error)
-      return Promise.reject(error)
+      console.log('Erreur Axios interceptée:', error)
+
+      if (
+        error.code === 'ERR_NETWORK' ||
+        error.message.includes('ERR_CONNECTION_REFUSED')
+      ) {
+        return Promise.reject({
+          message: 'Le serveur est inaccessible. Veuillez réessayer plus tard.',
+        })
+      }
+      return Promise.reject({
+        message:
+          error.response?.data?.message ||
+          error.response?.message ||
+          error.message ||
+          'Une erreur inconnue est survenue.',
+      })
     }
   )
 

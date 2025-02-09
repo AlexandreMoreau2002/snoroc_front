@@ -1,0 +1,73 @@
+.signup {
+  @include card;
+
+  &__title {
+    @include title;
+  }
+
+  &__hr {
+    @include hr;
+  }
+
+  &__form__group__user-info {
+    @include formGrid;
+    margin: 30px auto;
+
+    &__input {
+      @include input;
+    }
+  }
+
+  &__form__group__password {
+    @include formGroup;
+    margin: 30px auto;
+
+    &__input {
+      @include input;
+    }
+  }
+
+  &__form__input {
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    border: 1px solid $white;
+    border-radius: 15px;
+    font-size: 20px;
+  }
+
+  &__form__actions {
+    display: flex;
+
+    &--submit {
+      @include button;
+      margin: 25px auto;
+    }
+  }
+
+  &__form__group--checkbox {
+    @include newsletter;
+  }
+
+  &__success {
+    @include success;
+  }
+
+  &__error {
+    @include error;
+  }
+
+  &__subtitle,
+  &__form__label,
+  &__terms,
+  &__login {
+    @include text;
+  }
+
+  &__terms__link,
+  &__login__link {
+    @include textLink;
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+}
