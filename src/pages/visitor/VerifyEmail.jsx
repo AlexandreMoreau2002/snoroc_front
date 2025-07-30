@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import postVerifyEmail from '../../services/user/postVerifyEmail'
 
 export default function VerifyEmail() {
-  const { email } = useAuth()
+  const { email, login } = useAuth()
   const inputsRef = useRef([])
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
@@ -52,11 +52,23 @@ export default function VerifyEmail() {
         email,
         emailVerificationToken: verificationCode.join(''),
       })
-
-      setSuccessMessage(response.message)
-      setTimeout(() => {
-        navigate('/news')
-      }, 5000)
+      // Si la réponse contient un token et des infos utilisateur, connecter automatiquement
+      if (response.data && response.data.accessToken && response.data.user) {
+        login({
+          accessToken: response.data.accessToken,
+          user: response.data.user
+        })
+        setSuccessMessage('Email vérifié avec succès ! Connexion automatique...')
+        setTimeout(() => {
+          navigate('/news')
+        }, 2000)
+      } else {
+        // Fallback si pas de données de connexion
+        setSuccessMessage(response.data?.message || 'Email vérifié avec succès !')
+        setTimeout(() => {
+          navigate('/login')
+        }, 3000)
+      }
     } catch (error) {
       setErrorMessage(error.message)
       setLoading(false)

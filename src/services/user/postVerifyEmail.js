@@ -6,7 +6,7 @@ const postVerifyEmail = async (data) => {
     return response
   } catch (error) {
     console.log(error)
-    throw new Error(error.message)
+    throw new Error(error.response?.data?.message || error.message)
   }
 }
 
