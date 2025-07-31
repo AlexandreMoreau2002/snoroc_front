@@ -16,7 +16,7 @@ const Signup = () => {
     newsletter: true,
   })
   const navigate = useNavigate()
-  const { setSignupEmail } = useAuth()
+  const { setSignupEmail, login } = useAuth()
   const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
 
@@ -67,15 +67,25 @@ const Signup = () => {
     }
 
     try {
-      await postSignUp(userData)
+      const response = await postSignUp(userData)
       setSignupEmail(userData.email)
 
-      setErrorMessage('')
-      setSuccessMessage('Inscription réussie ! Redirection en cours...')
+      // Si le backend retourne un token, connecter automatiquement l'utilisateur
+      if (response.accessToken && response.user) {
+        login({ accessToken: response.accessToken, user: response.user })
+        setSuccessMessage('Inscription réussie ! Redirection en cours...')
+        setTimeout(() => {
+          navigate('/verifyEmail')
+        }, 2000)
+      } else {
+        // Fallback si pas de token (ancien comportement)
+        setSuccessMessage('Inscription réussie ! Redirection en cours...')
+        setTimeout(() => {
+          navigate('/verifyEmail')
+        }, 5000)
+      }
 
-      setTimeout(() => {
-        navigate('/verifyEmail')
-      }, 5000)
+      setErrorMessage('')
     } catch (error) {
       console.log('Erreur : ', error.message)
       setErrorMessage(error.message)
