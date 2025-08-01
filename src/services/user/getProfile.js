@@ -1,5 +1,6 @@
 // src/services/user/getProfile.js
 import axiosInstance from '../axiosConfig'
+import { ApiResponse } from '../../utils/apiResponseHandler'
 
 const getProfile = async () => {
   try {
@@ -8,10 +9,21 @@ const getProfile = async () => {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     })
-    return response.data
+    
+    const apiResponse = new ApiResponse(response)
+    
+    if (!apiResponse.isSuccess()) {
+      throw new Error(apiResponse.getError().message)
+    }
+    
+    return apiResponse.getData()
   } catch (error) {
-    console.error('Erreur : ', error.response?.data.message)
-    throw new Error(error.response?.data.message)
+    if (error.response?.data) {
+      const apiResponse = new ApiResponse(error.response.data)
+      throw new Error(apiResponse.getError().message)
+    }
+    
+    throw new Error(error.message || 'Erreur de connexion')
   }
 }
 

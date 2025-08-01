@@ -5,17 +5,26 @@ import { useAuth } from '../context/AuthContext'
 import postLogin from '../services/user/postLogin'
 
 export default function Login() {
+  const { login } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
-  const { login } = useAuth()
+  const [successMessage, setSuccessMessage] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setErrorMessage('')
+    setSuccessMessage('')
+    
     try {
-      const response = await postLogin(email, password)
-      login(response)
-      console.log('Connexion réussie')
+      const data = await postLogin(email, password)
+      
+      if (data.accessToken && data.user) {
+        login({ accessToken: data.accessToken, user: data.user })
+        setSuccessMessage('Connexion réussie ! Redirection en cours...')
+      } else {
+        setErrorMessage('Données de connexion invalides')
+      }
     } catch (error) {
       setErrorMessage(error.message)
     }
@@ -49,6 +58,7 @@ export default function Login() {
           />
         </div>
         {errorMessage && <p className="login__error-message">{errorMessage}</p>}
+        {successMessage && <p className="login__success-message">{successMessage}</p>}
         <button type="submit" className="login__button">
           Se connecter
         </button>

@@ -1,17 +1,15 @@
 import { Helmet } from 'react-helmet-async'
-import React, { useEffect, useState } from 'react'
-import getAllNews from '../../services/news/getAllNews'
 import { useNavigate } from 'react-router-dom'
-
+import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
+import getAllNews from '../../services/news/getAllNews'
 
 export default function Home() {
-  const [mainActu, setMainActu] = useState(null)
+  const { isAdmin } = useAuth()
+  const navigate = useNavigate()
   const [newsData, setNewsData] = useState([])
   const [loading, setLoading] = useState(true)
-  const navigate = useNavigate()
-  const { isAdmin } = useAuth()
-  console.log('is admin : ', isAdmin)
+  const [mainActu, setMainActu] = useState(null)
 
   useEffect(() => {
     const fetchNews = async () => {

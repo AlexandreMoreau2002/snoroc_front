@@ -14,15 +14,15 @@ export default function RequestEmail() {
     e.preventDefault()
     setEmail(inputEmail)
     localStorage.setItem('resetEmail', inputEmail)
+    setErrorMessage('')
+    setSuccessMessage('')
 
     try {
-      const response = await postEmailForgotPassword(inputEmail)
-      setErrorMessage('')
-      setSuccessMessage(response.message)
-
+      const data = await postEmailForgotPassword(inputEmail)
+      setSuccessMessage(data.message || 'Email de réinitialisation envoyé avec succès')
       setEmail(inputEmail)
     } catch (error) {
-      console.log('Erreur : ', error.message)
+      console.error('Erreur envoi email:', error.message)
       setErrorMessage(error.message)
     }
   }

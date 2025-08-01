@@ -1,5 +1,6 @@
 // src/services/user/postSignUp.js
 import axiosInstance from '../axiosConfig'
+import { ApiResponse } from '../../utils/apiResponseHandler'
 
 const postSignUp = async (data) => {
   try {
@@ -8,11 +9,27 @@ const postSignUp = async (data) => {
         'Content-Type': 'application/json',
       },
     })
-
-    return response
+    
+    const apiResponse = new ApiResponse(response)
+    
+    if (!apiResponse.isSuccess()) {
+      throw new Error(apiResponse.getError().message)
+    }
+    
+    return apiResponse.getData()
+    
+    if (!apiResponse.isSuccess()) {
+      throw new Error(apiResponse.getError().message)
+    }
+    
+    return apiResponse.getData()
   } catch (error) {
-    console.error('Erreur : ', error.response?.data.message)
-    throw new Error(error.response?.data.message)
+    if (error.response?.data) {
+      const apiResponse = new ApiResponse(error.response.data)
+      throw new Error(apiResponse.getError().message)
+    }
+    
+    throw new Error(error.message || 'Erreur de connexion')
   }
 }
 

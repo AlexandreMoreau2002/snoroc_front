@@ -1,7 +1,7 @@
 // src/pages/visitor/User/Profile.jsx
-import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Login } from '../../components/export'
+import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import getProfile from '../../services/user/getProfile'
 import patchUpdateNewsletter from '../../services/user/patchUpdateNewsletter'
@@ -14,8 +14,8 @@ export default function UserProfile() {
   const [loading, setLoading] = useState(true)
   const [userData, setUserData] = useState(null)
   const [newsletter, setNewsletter] = useState(false)
-  const [successMessage, setSuccessMessage] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
 
   useEffect(() => {
     if (!token) {
@@ -26,12 +26,14 @@ export default function UserProfile() {
 
     const fetchUser = async () => {
       setLoading(true)
+      setErrorMessage('')
+      
       try {
-        const response = await getProfile()
-        setUserData(response)
-        setNewsletter(response.newsletter || false)
+        const data = await getProfile()
+        setUserData(data)
+        setNewsletter(data.newsletter || false)
       } catch (error) {
-        console.log('Erreur : ', error.message)
+        console.error('Erreur récupération profil:', error.message)
         setErrorMessage(error.message)
         setUserData(null)
       } finally {
@@ -43,20 +45,23 @@ export default function UserProfile() {
   }, [token])
 
   const updateNewsletter = async () => {
+    setErrorMessage('')
+    setSuccessMessage('')
+    
     try {
       await patchUpdateNewsletter(userId, newsletter)
       setSuccessMessage('Préférences mises à jour avec succès !')
-      setErrorMessage('')
+      
       setTimeout(() => {
         setSuccessMessage('')
-      }, 3000)
+      }, 2000)
     } catch (error) {
-      console.log('Erreur : ', error.message)
+      console.error('Erreur mise à jour newsletter:', error.message)
       setErrorMessage(error.message)
-      setSuccessMessage('')
+      
       setTimeout(() => {
         setErrorMessage('')
-      }, 3000)
+      }, 2000)
     }
   }
 

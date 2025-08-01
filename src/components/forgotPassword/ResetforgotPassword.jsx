@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { usePasswordReset } from '../../context/PasswordResetContext'
 import { useSearchParams, useNavigate } from 'react-router-dom'
+import { usePasswordReset } from '../../context/PasswordResetContext'
 import postResetForgotPassword from '../../services/user/forgotPassword/postResetForgotPassword'
 
 export default function ResetPassword() {
   const navigate = useNavigate()
-  const { email, setEmail } = usePasswordReset()
   const [searchParams] = useSearchParams()
   const resetToken = searchParams.get('token')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const { email, setEmail } = usePasswordReset()
   const [errorMessage, setErrorMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
   useEffect(() => {
@@ -25,6 +26,7 @@ export default function ResetPassword() {
   const handleResetPassword = async (e) => {
     e.preventDefault()
     setErrorMessage('')
+    setSuccessMessage('')
 
     if (!resetToken) {
       setErrorMessage('Le lien de réinitialisation est invalide ou expiré.')
@@ -39,13 +41,14 @@ export default function ResetPassword() {
     setLoading(true)
 
     try {
-      console.log(email)
-
-      await postResetForgotPassword(email, resetToken, password)
-      setErrorMessage('')
-      navigate('/Profil')
+      const data = await postResetForgotPassword(email, resetToken, password)
+      setSuccessMessage(data.message || 'Mot de passe réinitialisé avec succès !')
+      
+      setTimeout(() => {
+        navigate('/Profil')
+      }, 2000)
     } catch (error) {
-      console.log('Erreur : ', error.message)
+      console.error('Erreur réinitialisation:', error.message)
       setErrorMessage(error.message)
     } finally {
       setLoading(false)
@@ -80,6 +83,12 @@ export default function ResetPassword() {
         {errorMessage && (
           <p className="reset-password__error" aria-live="polite">
             {errorMessage}
+          </p>
+        )}
+
+        {successMessage && (
+          <p className="reset-password__success" aria-live="polite">
+            {successMessage}
           </p>
         )}
 

@@ -49,7 +49,7 @@ const Signup = () => {
       return
     }
 
-    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+    const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/
 
     if (!emailRegex.test(formData.email)) {
       alert("L'email n’est pas valide, veuillez entrer un email correct.")
@@ -67,28 +67,29 @@ const Signup = () => {
     }
 
     try {
-      const response = await postSignUp(userData)
+      const data = await postSignUp(userData)
       setSignupEmail(userData.email)
 
-      // Si le backend retourne un token, connecter automatiquement l'utilisateur
-      if (response.accessToken && response.user) {
-        login({ accessToken: response.accessToken, user: response.user })
-        setSuccessMessage('Inscription réussie ! Redirection en cours...')
+      if (data.accessToken && data.user) {
+        login({ accessToken: data.accessToken, user: data.user })
+        setSuccessMessage('Inscription réussie ! Connexion automatique en cours...')
+        setErrorMessage('')
+        
         setTimeout(() => {
           navigate('/verifyEmail')
         }, 2000)
       } else {
-        // Fallback si pas de token (ancien comportement)
-        setSuccessMessage('Inscription réussie ! Redirection en cours...')
+        setSuccessMessage('Inscription réussie ! Veuillez vérifier votre email.')
+        setErrorMessage('')
+        
         setTimeout(() => {
           navigate('/verifyEmail')
-        }, 5000)
+        }, 2000)
       }
-
-      setErrorMessage('')
     } catch (error) {
-      console.log('Erreur : ', error.message)
+      console.error('Erreur inscription:', error.message)
       setErrorMessage(error.message)
+      setSuccessMessage('')
     }
   }
 

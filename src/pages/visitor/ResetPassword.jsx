@@ -15,6 +15,8 @@ const ResetPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setErrorMessage('')
+    setSuccessMessage('')
 
     if (newPassword !== confirm) {
       console.error('Les mots de passe ne correspondent pas')
@@ -23,10 +25,9 @@ const ResetPassword = () => {
     }
 
     try {
-      await patchUpdatePassword(userId, password, newPassword)
+      const data = await patchUpdatePassword(userId, password, newPassword)
 
-      setSuccessMessage('Mot de passe mis à jour avec succès')
-      setErrorMessage('')
+      setSuccessMessage(data.message || 'Mot de passe mis à jour avec succès')
 
       setTimeout(() => {
         setPassword('')
@@ -34,10 +35,9 @@ const ResetPassword = () => {
         setConfirm('')
         setSuccessMessage('')
         navigate('/Profil')
-      }, 5000)
+      }, 2000)
     } catch (error) {
-      setSuccessMessage('')
-      console.log('Erreur : ', error.message)
+      console.error('Erreur mise à jour mot de passe:', error.message)
       setErrorMessage(error.message)
     }
   }
