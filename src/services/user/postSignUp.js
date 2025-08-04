@@ -18,11 +18,6 @@ const postSignUp = async (data) => {
     
     return apiResponse.getData()
     
-    if (!apiResponse.isSuccess()) {
-      throw new Error(apiResponse.getError().message)
-    }
-    
-    return apiResponse.getData()
   } catch (error) {
     if (error.response?.data) {
       const apiResponse = new ApiResponse(error.response.data)

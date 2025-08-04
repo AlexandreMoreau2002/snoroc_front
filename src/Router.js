@@ -28,7 +28,7 @@ import {
 export default function Router() {
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/snoroc_front">
         <Header />
         <Routes>
           {/* Home */}
