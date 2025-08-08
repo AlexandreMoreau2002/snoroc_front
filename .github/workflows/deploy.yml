@@ -16,7 +16,13 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - run: npm run build
+          cache-dependency-path: snoroc_front/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+        working-directory: snoroc_front
+      - name: Build
+        run: npm run build
+        working-directory: snoroc_front
         env:
           CI: true
           GENERATE_SOURCEMAP: false
