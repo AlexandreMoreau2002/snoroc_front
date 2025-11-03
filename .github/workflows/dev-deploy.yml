@@ -15,20 +15,30 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
+          cache-dependency-path: package-lock.json
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Log current version from package.json
+        run: |
+          node -p "require('./package.json').version" && echo "Logged version"
+
+      - name: Clean install
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install
 
       - name: Exposer la version applicative
         run: |
           VERSION=$(node -p "require('./package.json').version")
           echo "REACT_APP_VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "Set REACT_APP_VERSION=${VERSION}"
 
       - name: Build front
         run: |
@@ -43,6 +53,7 @@ jobs:
           set -euxo pipefail
           tar -czf snoroc_front.tar.gz build
           ls -lh snoroc_front.tar.gz
+          echo "Archive snoroc_front.tar.gz created"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -82,22 +93,17 @@ jobs:
           script: |
             set -euxo pipefail
             echo "🚀 Déploiement du front en cours..."
-
-            REMOTE_ROOT="/srv/snoroc_dev"
+            REMOTE_ROOT="/srv/snoroc-dev"
             PROJECT_DIR="${REMOTE_ROOT}/snoroc_front"
             ARCHIVE="/tmp/snoroc_front.tar.gz"
-
             mkdir -p "$PROJECT_DIR"
-
             if [ -d "${PROJECT_DIR}/build" ]; then
               BACKUP_DIR="${PROJECT_DIR}/build_$(date +%Y%m%d%H%M%S)"
               mv "${PROJECT_DIR}/build" "$BACKUP_DIR"
               echo "Ancienne version sauvegardée dans ${BACKUP_DIR}"
             fi
-
             tar -xzf "$ARCHIVE" -C "$PROJECT_DIR"
             rm -f "$ARCHIVE"
-
+            echo "Build extrait dans ${PROJECT_DIR}"
             sudo systemctl reload nginx
-
             echo "✅ Front déployé et Nginx rechargé"
