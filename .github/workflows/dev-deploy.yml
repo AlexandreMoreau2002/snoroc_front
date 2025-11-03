@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Exposer la version applicative
+        run: echo "REACT_APP_VERSION=$(node -p \"require('./package.json').version\")" >> $GITHUB_ENV
+
       - name: Build front
         run: |
           npm run build

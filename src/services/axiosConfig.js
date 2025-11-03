@@ -3,7 +3,11 @@ import axios from 'axios'
 import { mockLogin, mockUsers, mockNews } from './mock/mockData'
 
 const axiosInstance = (() => {
-  console.log('ENV :', process.env.REACT_APP_ENV)
+  const appEnv = process.env.REACT_APP_ENV
+  const appVersion = process.env.REACT_APP_VERSION || 'dev'
+
+  console.log('ENV :', appEnv)
+  console.log(`Version applicative : ${appVersion}`)
 
   if (process.env.REACT_APP_ENV === 'dev') {
     console.log('[Mock api]: Utilisation des données mockées.')
@@ -43,7 +47,7 @@ const axiosInstance = (() => {
     }
   }
 
-  console.log('[prod api]: Appels API.')
+  console.log(`[prod api v${appVersion}]: Appels API.`)
   const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
     headers: {
