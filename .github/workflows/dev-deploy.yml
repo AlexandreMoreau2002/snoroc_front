@@ -59,15 +59,20 @@ jobs:
 
       - name: Verify built version matches package.json
         run: |
-          # On suppose que ton build contient package.json ou version visible
-          BUILT_VERSION=$(grep -R "\"version\"" build/index.html || true)
+          set -euxo pipefail
           EXPECTED_VERSION=$(node -p "require('./package.json').version")
+          BUNDLE_FILE=$(find build/static/js -maxdepth 1 -type f -name "main*.js" | head -n1 || true)
           echo "Expected version: ${EXPECTED_VERSION}"
-          echo "Built version snippet: ${BUILT_VERSION}"
-          if ! echo "${BUILT_VERSION}" | grep -q "${EXPECTED_VERSION}"; then
-            echo "ERROR: Built version (${BUILT_VERSION}) does not match expected (${EXPECTED_VERSION})"
+          echo "Bundle file: ${BUNDLE_FILE}"
+          if [ -z "${BUNDLE_FILE}" ] || [ ! -f "${BUNDLE_FILE}" ]; then
+            echo "ERROR: Impossible de trouver le bundle principal dans build/static/js"
             exit 1
           fi
+          if ! grep -q "${EXPECTED_VERSION}" "${BUNDLE_FILE}"; then
+            echo "ERROR: Version ${EXPECTED_VERSION} introuvable dans ${BUNDLE_FILE}"
+            exit 1
+          fi
+          echo "Version ${EXPECTED_VERSION} détectée dans ${BUNDLE_FILE}"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
