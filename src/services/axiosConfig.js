@@ -4,7 +4,10 @@ import { mockLogin, mockUsers, mockNews } from './mock/mockData'
 
 const axiosInstance = (() => {
   const appEnv = process.env.REACT_APP_ENV
-  const appVersion = process.env.REACT_APP_VERSION || 'dev'
+  const appVersion =
+    process.env.REACT_APP_VERSION ||
+    process.env.npm_package_version ||
+    'dev'
 
   console.log('ENV :', appEnv)
   console.log(`Version applicative : ${appVersion}`)

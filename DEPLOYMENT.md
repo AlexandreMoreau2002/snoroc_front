@@ -15,7 +15,7 @@ Ce document résume le pipeline GitHub Actions et le déroulé du déploiement s
 1. **Build**
    - Checkout du code.
    - Installation Node.js 20 + cache npm.
-   - Injection de la variable `REACT_APP_VERSION` depuis `package.json`.
+   - Export de la variable `REACT_APP_VERSION` (et fallback automatique sur la version du `package.json` dans le code).
    - `npm ci` puis `npm run build` (sourcemaps désactivés).
    - Création et upload de `snoroc_front.tar.gz` contenant `build/`.
 2. **Deploy**
