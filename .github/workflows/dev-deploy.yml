@@ -44,11 +44,17 @@ jobs:
 
       - name: Build front
         run: |
+          echo "Building front with env vars..."
+          echo "REACT_APP_API_URL=${REACT_APP_API_URL}"
+          echo "REACT_APP_ENV=${REACT_APP_ENV}"
           npm run build
           ls -lh build
         env:
           CI: false
           GENERATE_SOURCEMAP: false
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+          REACT_APP_ENV: prod
+          REACT_APP_VERSION: ${{ env.REACT_APP_VERSION }}
 
       - name: Create deployment archive
         run: |
@@ -74,6 +80,7 @@ jobs:
         with:
           name: snoroc_front
           path: .
+
       - name: Verify artifact present
         run: |
           ls -lh .
@@ -111,12 +118,8 @@ jobs:
 
             mkdir -p "$PROJECT_DIR"
 
-            # S’assurer que permissions permettent le mv/extraction
             sudo chown -R ${{ secrets.SSH_USER }}:www-data "$PROJECT_DIR"
             sudo chmod -R 775 "$PROJECT_DIR"
-
-            echo "ls -lh ${PROJECT_DIR}"
-            ls -lh "$PROJECT_DIR"
 
             if [ -d "${PROJECT_DIR}/build" ]; then
               BACKUP_DIR="${PROJECT_DIR}/build_$(date +%Y%m%d%H%M%S)"
