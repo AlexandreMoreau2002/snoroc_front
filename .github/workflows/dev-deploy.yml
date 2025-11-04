@@ -105,19 +105,30 @@ jobs:
             REMOTE_ROOT="/srv/snoroc-dev"
             PROJECT_DIR="${REMOTE_ROOT}/snoroc_front"
             ARCHIVE="/tmp/snoroc_front.tar.gz"
+
             echo "PROJECT_DIR=${PROJECT_DIR}"
             echo "ARCHIVE=${ARCHIVE}"
+
             mkdir -p "$PROJECT_DIR"
+
+            # S’assurer que permissions permettent le mv/extraction
+            sudo chown -R ${{ secrets.SSH_USER }}:www-data "$PROJECT_DIR"
+            sudo chmod -R 775 "$PROJECT_DIR"
+
             echo "ls -lh ${PROJECT_DIR}"
             ls -lh "$PROJECT_DIR"
+
             if [ -d "${PROJECT_DIR}/build" ]; then
               BACKUP_DIR="${PROJECT_DIR}/build_$(date +%Y%m%d%H%M%S)"
               mv "${PROJECT_DIR}/build" "$BACKUP_DIR"
               echo "Ancienne version sauvegardée dans ${BACKUP_DIR}"
             fi
+
             tar -xzf "$ARCHIVE" -C "$PROJECT_DIR"
             rm -f "$ARCHIVE"
+
             echo "Build extrait dans ${PROJECT_DIR}"
             ls -lh "$PROJECT_DIR"
+
             sudo systemctl reload nginx
             echo "✅ Front déployé et Nginx rechargé"
