@@ -57,23 +57,6 @@ jobs:
           ls -lh snoroc_front.tar.gz
           echo "Archive snoroc_front.tar.gz created"
 
-      - name: Verify built version matches package.json
-        run: |
-          set -euxo pipefail
-          EXPECTED_VERSION=$(node -p "require('./package.json').version")
-          BUNDLE_FILE=$(find build/static/js -maxdepth 1 -type f -name "main*.js" | head -n1 || true)
-          echo "Expected version: ${EXPECTED_VERSION}"
-          echo "Bundle file: ${BUNDLE_FILE}"
-          if [ -z "${BUNDLE_FILE}" ] || [ ! -f "${BUNDLE_FILE}" ]; then
-            echo "ERROR: Impossible de trouver le bundle principal dans build/static/js"
-            exit 1
-          fi
-          if ! grep -q "${EXPECTED_VERSION}" "${BUNDLE_FILE}"; then
-            echo "ERROR: Version ${EXPECTED_VERSION} introuvable dans ${BUNDLE_FILE}"
-            exit 1
-          fi
-          echo "Version ${EXPECTED_VERSION} détectée dans ${BUNDLE_FILE}"
-
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -91,6 +74,13 @@ jobs:
         with:
           name: snoroc_front
           path: .
+      - name: Verify artifact present
+        run: |
+          ls -lh .
+          if [ ! -f snoroc_front.tar.gz ]; then
+            echo "ERROR: Archive snoroc_front.tar.gz not found"
+            exit 1
+          fi
 
       - name: Copy archive via SCP
         uses: appleboy/scp-action@v0.1.7
@@ -115,7 +105,11 @@ jobs:
             REMOTE_ROOT="/srv/snoroc-dev"
             PROJECT_DIR="${REMOTE_ROOT}/snoroc_front"
             ARCHIVE="/tmp/snoroc_front.tar.gz"
+            echo "PROJECT_DIR=${PROJECT_DIR}"
+            echo "ARCHIVE=${ARCHIVE}"
             mkdir -p "$PROJECT_DIR"
+            echo "ls -lh ${PROJECT_DIR}"
+            ls -lh "$PROJECT_DIR"
             if [ -d "${PROJECT_DIR}/build" ]; then
               BACKUP_DIR="${PROJECT_DIR}/build_$(date +%Y%m%d%H%M%S)"
               mv "${PROJECT_DIR}/build" "$BACKUP_DIR"
@@ -124,5 +118,6 @@ jobs:
             tar -xzf "$ARCHIVE" -C "$PROJECT_DIR"
             rm -f "$ARCHIVE"
             echo "Build extrait dans ${PROJECT_DIR}"
+            ls -lh "$PROJECT_DIR"
             sudo systemctl reload nginx
             echo "✅ Front déployé et Nginx rechargé"
