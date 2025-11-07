@@ -52,8 +52,8 @@ jobs:
         env:
           CI: false
           GENERATE_SOURCEMAP: false
-          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
-          REACT_APP_ENV: prod
+          REACT_APP_API_URL: ${{ vars.REACT_APP_API_URL }}
+          REACT_APP_ENV: ${{ vars.REACT_APP_ENV }}
           REACT_APP_VERSION: ${{ env.REACT_APP_VERSION }}
 
       - name: Create deployment archive
@@ -92,9 +92,9 @@ jobs:
       - name: Copy archive via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
+          host: ${{ vars.SSH_HOST }}
+          username: ${{ vars.SSH_USER }}
+          key: ${{ vars.SSH_KEY }}
           source: 'snoroc_front.tar.gz'
           target: '/tmp'
           rm: false
@@ -103,9 +103,9 @@ jobs:
       - name: Deploy front and reload Nginx
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
+          host: ${{ vars.SSH_HOST }}
+          username: ${{ vars.SSH_USER }}
+          key: ${{ vars.SSH_KEY }}
           script: |
             set -euxo pipefail
             echo "🚀 Déploiement du front en cours..."
