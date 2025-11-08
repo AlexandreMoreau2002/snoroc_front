@@ -12,6 +12,7 @@ jobs:
   build:
     name: Build front
     runs-on: ubuntu-latest
+    environment: snoroc-front-develop
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
