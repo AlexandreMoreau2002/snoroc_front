@@ -96,7 +96,7 @@ jobs:
         with:
           host: ${{ vars.SSH_HOST }}
           username: ${{ vars.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
+          key: ${{ vars.SSH_KEY }}
           source: 'snoroc_front.tar.gz'
           target: '/tmp'
           rm: false
