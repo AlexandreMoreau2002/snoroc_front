@@ -1,9 +1,30 @@
 // front/src/scss/components/_header.scss
+
 .header {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   background-image: url(../asset/headerbg.jpg);
   background-size: cover;
   background-position: center;
-  box-shadow: inset 0px 25px 65px 140px $black;
+  background-repeat: no-repeat;
+  background-color: $black;
+  box-shadow: inset 0px 25px 65px 80px rgba($black, 0.85);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba($black, 0.1) 0%,
+      rgba($black, 0.4) 35%,
+      rgba($black, 0.85) 70%,
+      $black 100%
+    );
+    z-index: -1;
+  }
 
   button > #header__close {
     display: none;
@@ -36,7 +57,7 @@
     background-position: 49% -150px;
     background-repeat: no-repeat;
     background-size: 375%;
-    box-shadow: inset 0px 0px 95px 120px #1e1e1e;
+    box-shadow: inset 0px 0px 95px 120px rgba($black, 0.85);
 
     height: 25%;
 
@@ -55,7 +76,7 @@
   .header {
     background-position: 50% 24%;
     background-size: cover;
-    box-shadow: inset 0px 50px 117px 140px #1e1e1e;
+    box-shadow: inset 0px 50px 117px 140px rgba($black, 0.8);
 
     button {
       display: inline-block;
@@ -72,7 +93,7 @@
   .header {
     background-position: 50% 24%;
     background-size: cover;
-    box-shadow: inset 0px 50px 117px 140px #1e1e1e;
+    box-shadow: inset 0px 50px 117px 140px rgba($black, 0.8);
 
     // remplacer par une valeur variable
     height: 366px;

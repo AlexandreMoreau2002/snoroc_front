@@ -85,10 +85,23 @@ body {
 }
 
 .header {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   background-image: url(../asset/headerbg.jpg);
   background-size: cover;
   background-position: center;
-  box-shadow: inset 0px 25px 65px 140px #1e1e1e;
+  background-repeat: no-repeat;
+  background-color: #1e1e1e;
+  box-shadow: inset 0px 25px 65px 80px rgba(30, 30, 30, 0.85);
+}
+.header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(30, 30, 30, 0.1) 0%, rgba(30, 30, 30, 0.4) 35%, rgba(30, 30, 30, 0.85) 70%, #1e1e1e 100%);
+  z-index: -1;
 }
 .header button > #header__close {
   display: none;
@@ -104,7 +117,7 @@ body {
     background-position: 49% -150px;
     background-repeat: no-repeat;
     background-size: 375%;
-    box-shadow: inset 0px 0px 95px 120px #1e1e1e;
+    box-shadow: inset 0px 0px 95px 120px rgba(30, 30, 30, 0.85);
     height: 25%;
   }
   .header button {
@@ -118,7 +131,7 @@ body {
   .header {
     background-position: 50% 24%;
     background-size: cover;
-    box-shadow: inset 0px 50px 117px 140px #1e1e1e;
+    box-shadow: inset 0px 50px 117px 140px rgba(30, 30, 30, 0.8);
   }
   .header button {
     display: inline-block;
@@ -131,7 +144,7 @@ body {
   .header {
     background-position: 50% 24%;
     background-size: cover;
-    box-shadow: inset 0px 50px 117px 140px #1e1e1e;
+    box-shadow: inset 0px 50px 117px 140px rgba(30, 30, 30, 0.8);
     height: 366px;
   }
   .header__nav__link__logo {
