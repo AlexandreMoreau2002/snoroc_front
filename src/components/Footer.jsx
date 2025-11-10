@@ -1,8 +1,7 @@
 // src/components/Footer.jsx
-import React from 'react'
+import Logo from '../asset/Logo.webp'
 import { Link, NavLink } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
-import Logo from '../asset/Logo.webp'
 
 export default function Footer() {
   return (
@@ -42,7 +41,7 @@ export default function Footer() {
           </a>
         </div>
 
-        <Link to='/' className="footer__logo">
+        <Link to="/" className="footer__logo">
           <img src={Logo} alt="Logo Snoroc" />
         </Link>
 
