@@ -1,101 +1,58 @@
 // front/src/components/Header.jsx
 import React from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { Helmet, HelmetProvider } from 'react-helmet-async'
 import Logo from '../asset/Logo.webp'
+import HeaderMobileNav from './HeaderMobileNav'
+
+const NAV_LINKS = [
+  {
+    label: 'Actus',
+    to: '/',
+    aliases: ['/home', '/news'],
+  },
+  { label: 'Event', to: '/Event' },
+  { label: 'Média', to: '/Media' },
+  { label: 'A propos', to: '/A-propos' },
+  { label: 'Contact', to: '/Contact' },
+  { label: 'Profil', to: '/Profil' },
+]
 
 export default function Header() {
   const location = useLocation()
+
+  const getLinkClassName = (isActive, aliases = []) =>
+    isActive || aliases?.includes(location.pathname)
+      ? 'header__nav__link header__nav__link--active'
+      : 'header__nav__link'
+
+  const renderNavLinks = (links) =>
+    links.map((link) => (
+      <NavLink
+        key={link.to}
+        to={link.to}
+        className={({ isActive }) => getLinkClassName(isActive, link.aliases)}
+      >
+        {link.label}
+      </NavLink>
+    ))
+
   return (
-    <HelmetProvider>
-      <header className="header">
-        <Helmet>
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-          />
-        </Helmet>
-
-        <button>
-          <span id="header__menu" className="material-symbols-outlined">
-            menu
-          </span>
-        </button>
-        <button>
-          <span id="header__close" className="material-symbols-outlined">
-            close
-          </span>
-        </button>
-
-        <nav className="header__nav">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              isActive ||
-              location.pathname === '/' ||
-              location.pathname === '/home'
-                ? 'header__nav__link header__nav__link--active'
-                : 'header__nav__link'
-            }
-          >
-            Actus
-          </NavLink>
-          <NavLink
-            to="/Event"
-            className={({ isActive }) =>
-              isActive
-                ? 'header__nav__link header__nav__link--active'
-                : 'header__nav__link'
-            }
-          >
-            Event
-          </NavLink>
-          <NavLink
-            to="/Media"
-            className={({ isActive }) =>
-              isActive
-                ? 'header__nav__link header__nav__link--active'
-                : 'header__nav__link'
-            }
-          >
-            Média
-          </NavLink>
-          <NavLink
-            to="/A-propos"
-            className={({ isActive }) =>
-              isActive
-                ? 'header__nav__link header__nav__link--active'
-                : 'header__nav__link'
-            }
-          >
-            A propos
-          </NavLink>
-          <NavLink
-            to="/Contact"
-            className={({ isActive }) =>
-              isActive
-                ? 'header__nav__link header__nav__link--active'
-                : 'header__nav__link'
-            }
-          >
-            Contact
-          </NavLink>
-          <NavLink
-            to="/Profil"
-            className={({ isActive }) =>
-              isActive
-                ? 'header__nav__link header__nav__link--active'
-                : 'header__nav__link'
-            }
-          >
-            Profil
-          </NavLink>
+    <header className="header">
+      <div className="header__desktop">
+        <nav className="header__nav header__nav--desktop header__nav--left">
+          {renderNavLinks(NAV_LINKS.slice(0, 3))}
         </nav>
 
-        <Link to="/">
-          <img src={Logo} alt="Logo" className="header__nav__link__logo" />
+        <Link to="/" className="header__logo-link header__logo-link--desktop">
+          <img src={Logo} alt="Logo" className="header__logo" />
         </Link>
-      </header>
-    </HelmetProvider>
+
+        <nav className="header__nav header__nav--desktop header__nav--right">
+          {renderNavLinks(NAV_LINKS.slice(3))}
+        </nav>
+      </div>
+
+      <HeaderMobileNav links={NAV_LINKS} />
+    </header>
   )
 }

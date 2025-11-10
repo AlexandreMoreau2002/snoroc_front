@@ -12,8 +12,6 @@ const postVerifyEmail = async (data) => {
     }
     
     return apiResponse.getData()
-    
-    return apiResponse.getData()
   } catch (error) {
     if (error.response?.data) {
       const apiResponse = new ApiResponse(error.response.data)

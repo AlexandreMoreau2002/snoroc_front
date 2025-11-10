@@ -2,6 +2,7 @@
 
 .header {
   position: relative;
+  z-index: 500;
   isolation: isolate;
   overflow: hidden;
   background-image: url(../asset/headerbg.jpg);
@@ -26,87 +27,178 @@
     z-index: -1;
   }
 
-  button > #header__close {
+  &__desktop {
     display: none;
   }
 
-  &__nav__link__logo {
+  &__mobile {
+    position: relative;
+    min-height: 420px;
+    padding-bottom: 40px;
+  }
+
+  &__logo-link {
     position: absolute;
     top: 21px;
     right: 26px;
+    z-index: 5;
+
+    &--desktop {
+      position: relative;
+      top: auto;
+      right: auto;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+    }
+
+    &--mobile {
+      display: inline-flex;
+    }
+  }
+
+  &__logo {
+    display: block;
+    height: 76px;
+    width: auto;
+  }
+
+  &__toggle {
+    position: absolute;
+    top: 21px;
+    left: 26px;
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    z-index: 2000;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    &__bars {
+      position: relative;
+      width: 24px;
+      height: 18px;
+    }
+
+    &__bar {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      border-radius: 2px;
+      background-color: $blue;
+      transition:
+        transform 0.25s ease,
+        opacity 0.2s ease,
+        width 0.2s ease;
+      transform-origin: center;
+    }
+
+    &__bar:nth-child(1) {
+      top: 0;
+    }
+
+    &__bar:nth-child(2) {
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      left: 0;
+    }
+
+    &__bar:nth-child(3) {
+      bottom: 0;
+    }
+
+    &--close {
+      .header__toggle__bar:nth-child(1) {
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+      }
+
+      .header__toggle__bar:nth-child(2) {
+        opacity: 0;
+      }
+
+      .header__toggle__bar:nth-child(3) {
+        bottom: auto;
+        top: 50%;
+        transform: translateY(-50%) rotate(-45deg);
+      }
+    }
   }
 }
 
-// debut de mise en place de la navbar responsive :
+@media screen and (max-width: 768px) {
+  .header {
+    position: relative;
+  }
+}
 
-// quand le header mobile est actif, display none du bouton menu, et inversement pour bouton close
-// .isActive {
-
-//     .header__menu {
-//         display: none;
-//     }
-
-//     .header__close {
-//         display: inline-block;
-//     }
-// }
-
-// mobile
 @media screen and (max-width: 480px) {
   .header {
     background-position: 49% -150px;
     background-repeat: no-repeat;
     background-size: 375%;
     box-shadow: inset 0px 0px 95px 120px rgba($black, 0.85);
-
-    height: 25%;
-
-    button {
-      display: inline-block;
-
-      position: absolute;
-      top: 21px;
-      left: 26px;
-    }
   }
 }
 
-// tablette
 @media screen and (min-width: 481px) and (max-width: 768px) {
   .header {
     background-position: 50% 24%;
     background-size: cover;
     box-shadow: inset 0px 50px 117px 140px rgba($black, 0.8);
-
-    button {
-      display: inline-block;
-
-      position: absolute;
-      top: 21px;
-      left: 26px;
-    }
   }
 }
 
-// ordinateur
 @media screen and (min-width: 769px) {
   .header {
     background-position: 50% 24%;
     background-size: cover;
     box-shadow: inset 0px 50px 117px 140px rgba($black, 0.8);
-
-    // remplacer par une valeur variable
     height: 366px;
 
-    &__nav__link__logo {
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%);
+    &__desktop {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 30px;
+      padding: 30px clamp(70px, 6vw, 160px) 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    &__mobile {
+      display: none;
+    }
+
+    &__logo-link--desktop {
+      position: relative;
+      top: auto;
+      right: auto;
+      left: auto;
+      transform: none;
+      justify-self: center;
+      display: flex;
+      justify-content: center;
+    }
+
+    &__logo-link--mobile {
+      display: none;
+    }
+
+    &__logo {
       height: 118px;
       width: 117px;
     }
 
-    button {
+    &__toggle {
       display: none;
     }
   }
