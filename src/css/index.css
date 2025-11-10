@@ -255,11 +255,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 60px;
-  padding-right: 60px;
+  padding: 0 60px;
   position: relative;
   bottom: -90px;
   width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+  margin: 0 auto;
   height: 118px;
 }
 .footer__left {
@@ -293,8 +295,11 @@ body {
 .footer__copyright-text {
   font-size: 14px;
   max-width: 350px;
+  max-width: 100%;
   text-align: left;
-  transform: translate(10%);
+  margin: 0;
+  transform: none;
+  display: none;
 }
 
 .header__nav {
@@ -697,8 +702,31 @@ body {
   filter: brightness(1.2);
 }
 @media (max-width: 768px) {
+  .actus {
+    padding: 0 20px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .actus .main-actus {
+    width: 100%;
+  }
+  .actus .main-actus-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .actus .news-list {
+    width: 100%;
+    justify-content: center;
+  }
   .actus .news-item {
     flex: 1 1 calc(50% - 20px);
+  }
+  .actus .news-item .news-content {
+    text-align: center;
   }
   .actus .admin-button {
     margin: 8px auto;
