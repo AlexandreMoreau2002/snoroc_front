@@ -1,0 +1,114 @@
+.contact {
+  @include card;
+  padding: clamp(30px, 6vw, 60px) 20px;
+
+  &__section {
+    text-align: center;
+  }
+
+  &__section + &__section {
+    margin-top: 40px;
+  }
+
+  &__section-title {
+    @include title;
+  }
+
+  &__divider {
+    @include hr;
+  }
+
+  &__social-row {
+    display: flex;
+    justify-content: center;
+    gap: clamp(30px, 5vw, 70px);
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  &__social-link {
+    color: var(--role-color);
+    font-size: clamp(2.2rem, 3.5vw, 3rem);
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  &__form {
+    max-width: 620px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  &__row {
+    width: 100%;
+  }
+
+  &__row--dual {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__field input,
+  &__field textarea {
+    width: 100%;
+    border-radius: 25px;
+    border: none;
+    background: #f4f2f8;
+    color: $black;
+    padding: 12px 18px;
+    font-size: 1rem;
+    font-family: $open;
+  }
+
+  &__field textarea {
+    resize: vertical;
+    min-height: 160px;
+  }
+
+  &__field-error {
+    font-size: 0.85rem;
+    color: #ff8a8a;
+    margin-top: 0.35rem;
+    text-align: left;
+  }
+
+  &__submit {
+    @include button;
+    margin-left: auto;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px 16px 40px;
+
+    &__row--dual {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    &__form {
+      max-width: 100%;
+      gap: 12px;
+    }
+
+    &__submit {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+}

@@ -9,11 +9,13 @@
 @import './components/footer';
 @import './components/headerNav';
 @import './components/createNews';
+@import './components/statusMessage';
 @import './components/forgotPassword/requestEmail';
 @import './components/forgotPassword/resetForgotPassword';
 
 @import './pages/home';
 @import './pages/about';
+@import './pages/contact';
 @import './pages//signup';
 @import './pages/profile';
 @import './pages/verifyEmail';

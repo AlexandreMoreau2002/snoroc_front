@@ -1,10 +1,13 @@
 // src/pages/visitor/User/Profile.jsx
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Login } from '../../components/export'
-import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import getProfile from '../../services/user/getProfile'
+import StatusMessage from '../../components/StatusMessage'
 import patchUpdateNewsletter from '../../services/user/patchUpdateNewsletter'
+
+const STATUS_DISPLAY_DURATION = 3000
 
 export default function UserProfile() {
   const { user } = useAuth()
@@ -54,14 +57,14 @@ export default function UserProfile() {
       
       setTimeout(() => {
         setSuccessMessage('')
-      }, 2000)
+      }, STATUS_DISPLAY_DURATION)
     } catch (error) {
       console.error('Erreur mise à jour newsletter:', error.message)
       setErrorMessage(error.message)
       
       setTimeout(() => {
         setErrorMessage('')
-      }, 2000)
+      }, STATUS_DISPLAY_DURATION)
     }
   }
 
@@ -106,10 +109,8 @@ export default function UserProfile() {
       >
         Mettre à jour
       </button>
-      {errorMessage && <p className="profile__error-message">{errorMessage}</p>}
-      {successMessage && (
-        <p className="profile__success-message">{successMessage}</p>
-      )}
+      <StatusMessage variant="error" message={errorMessage} />
+      <StatusMessage variant="success" message={successMessage} />
       <h1 className="profile__title profile__title--info">
         Informations personnelles
       </h1>

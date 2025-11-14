@@ -26,7 +26,7 @@ body {
   width: 700px;
   min-height: 400px;
   height: auto;
-  margin: 100px auto;
+  margin: 50px auto;
 }
 .login__title {
   font-size: 32px;
@@ -311,6 +311,17 @@ body {
   align-items: center;
   height: 100%;
 }
+.footer__social-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
+}
 .footer__copyright-text {
   font-size: 12px;
   max-width: 520px;
@@ -479,7 +490,7 @@ body {
   width: 700px;
   min-height: 400px;
   height: auto;
-  margin: 100px auto;
+  margin: 50px auto;
 }
 .create-news__title {
   font-size: 32px;
@@ -568,11 +579,30 @@ body {
   border-radius: 15px;
 }
 
+.status-message {
+  width: 100%;
+  margin: 20px 0;
+}
+.status-message--success {
+  background-color: #4caf50;
+  padding: 0.5rem 1.5rem;
+  color: #f1f1f6;
+  font-size: 16px;
+  border-radius: 15px;
+}
+.status-message--error {
+  background-color: red;
+  padding: 0.5rem 1.5rem;
+  color: #f1f1f6;
+  font-size: 16px;
+  border-radius: 15px;
+}
+
 .request-email {
   width: 700px;
   min-height: 400px;
   height: auto;
-  margin: 100px auto;
+  margin: 50px auto;
 }
 .request-email__title {
   font-size: 32px;
@@ -635,7 +665,7 @@ body {
   width: 700px;
   min-height: 400px;
   height: auto;
-  margin: 100px auto;
+  margin: 50px auto;
 }
 .reset-password__title {
   font-size: 32px;
@@ -815,11 +845,124 @@ body {
   width: 10%;
 }
 
+.contact {
+  width: 700px;
+  min-height: 400px;
+  height: auto;
+  margin: 50px auto;
+  padding: clamp(30px, 6vw, 60px) 20px;
+}
+.contact__section {
+  text-align: center;
+}
+.contact__section + .contact__section {
+  margin-top: 40px;
+}
+.contact__section-title {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.contact__divider {
+  color: #f1f1f6;
+  margin: 30px 0;
+  margin-bottom: 60px;
+}
+.contact__social-row {
+  display: flex;
+  justify-content: center;
+  gap: clamp(30px, 5vw, 70px);
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.contact__social-link {
+  color: var(--role-color);
+  font-size: clamp(2.2rem, 3.5vw, 3rem);
+  transition: opacity 0.2s ease;
+}
+.contact__social-link:hover {
+  opacity: 0.85;
+}
+.contact__form {
+  max-width: 620px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.contact__row {
+  width: 100%;
+}
+.contact__row--dual {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.contact__field {
+  display: flex;
+  flex-direction: column;
+}
+.contact__field input, .contact__field textarea {
+  width: 100%;
+  border-radius: 25px;
+  border: none;
+  background: #f4f2f8;
+  color: #1e1e1e;
+  padding: 12px 18px;
+  font-size: 1rem;
+  font-family: "Open Sans", sans-serif;
+}
+.contact__field textarea {
+  resize: vertical;
+  min-height: 160px;
+}
+.contact__field-error {
+  font-size: 0.85rem;
+  color: #ff8a8a;
+  margin-top: 0.35rem;
+  text-align: left;
+}
+.contact__submit {
+  background-color: var(--role-color);
+  color: #f1f1f6;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 24px;
+  padding: 0.5rem 1.5rem;
+  margin: 0;
+  margin-left: auto;
+}
+.contact__submit:hover {
+  filter: brightness(1.2);
+}
+.contact__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+@media (max-width: 768px) {
+  .contact {
+    padding: 20px 16px 40px;
+  }
+  .contact__row--dual {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .contact__form {
+    max-width: 100%;
+    gap: 12px;
+  }
+  .contact__submit {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
 .signup {
   width: 700px;
   min-height: 400px;
   height: auto;
-  margin: 100px auto;
+  margin: 50px auto;
 }
 .signup__title {
   font-size: 32px;
@@ -956,7 +1099,7 @@ body {
   width: 700px;
   min-height: 400px;
   height: auto;
-  margin: 100px auto;
+  margin: 50px auto;
   height: auto;
 }
 .profile__title--info {
@@ -1019,22 +1162,6 @@ body {
   gap: 10px;
   max-width: 100%;
 }
-.profile__success-message {
-  background-color: #4caf50;
-  padding: 0.5rem 1.5rem;
-  color: #f1f1f6;
-  font-size: 16px;
-  border-radius: 15px;
-  margin: 20px auto;
-}
-.profile__error-message {
-  background-color: red;
-  padding: 0.5rem 1.5rem;
-  color: #f1f1f6;
-  font-size: 16px;
-  border-radius: 15px;
-  margin: 20px auto;
-}
 .profile__label {
   font-size: 24px;
   margin: 0;
@@ -1092,7 +1219,7 @@ body {
   width: 700px;
   min-height: 400px;
   height: auto;
-  margin: 100px auto;
+  margin: 50px auto;
 }
 .verify-email__title {
   font-size: 32px;
@@ -1149,7 +1276,7 @@ body {
   width: 700px;
   min-height: 400px;
   height: auto;
-  margin: 100px auto;
+  margin: 50px auto;
 }
 .reset-password__title {
   font-size: 32px;
