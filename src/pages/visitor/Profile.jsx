@@ -14,7 +14,6 @@ export default function UserProfile() {
   const userId = user?.id
   const navigate = useNavigate()
   const { token, logout } = useAuth()
-  const [loading, setLoading] = useState(true)
   const [userData, setUserData] = useState(null)
   const [newsletter, setNewsletter] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -23,12 +22,10 @@ export default function UserProfile() {
   useEffect(() => {
     if (!token) {
       setUserData(null)
-      setLoading(false)
       return
     }
 
     const fetchUser = async () => {
-      setLoading(true)
       setErrorMessage('')
       
       try {
@@ -39,8 +36,6 @@ export default function UserProfile() {
         console.error('Erreur récupération profil:', error.message)
         setErrorMessage(error.message)
         setUserData(null)
-      } finally {
-        setLoading(false)
       }
     }
 
@@ -78,10 +73,6 @@ export default function UserProfile() {
 
   if (!token) {
     return <Login />
-  }
-
-  if (loading) {
-    return <p className="profile__loading">Chargement...</p>
   }
 
   return (

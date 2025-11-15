@@ -387,6 +387,52 @@ body {
     font-size: 16px;
   }
 }
+.app-loading {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.app-loading__content {
+  flex: 1;
+  transition: opacity 0.2s ease;
+}
+.app-loading--active .app-loading__content {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.app-loader {
+  position: relative;
+  padding: 60px;
+  margin: 0 auto;
+  max-width: 1160px;
+  min-height: clamp(320px, 60vh, 640px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 24px;
+  color: #f1f1f6;
+}
+.app-loader__spinner {
+  width: 72px;
+  height: 72px;
+  border: 6px solid rgba(241, 241, 246, 0.15);
+  border-top-color: var(--role-color);
+  border-radius: 50%;
+  animation: loader-spin 0.9s linear infinite;
+}
+
+@keyframes loader-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .header__nav {
   display: flex;
   gap: 10px;

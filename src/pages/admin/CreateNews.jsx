@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { postNews } from '../../services/news/postNews'
 
 export default function CreateNews() {
   const navigate = useNavigate()
+  const fileInputRef = useRef(null)
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [thumbnail, setThumbnail] = useState(null)
@@ -45,6 +46,11 @@ export default function CreateNews() {
       const response = await postNews(formData)
       setSuccessMessage(response.message)
       setErrorMessage('')
+      setTitle('')
+      setContent('')
+      setThumbnail(null)
+      setFileName('Aucun fichier sélectionné')
+      if (fileInputRef.current) fileInputRef.current.value = null
       setTimeout(() => {
         setSuccessMessage('')
       }, 5000)
@@ -92,12 +98,13 @@ export default function CreateNews() {
           <div className="create-news__form-group-file-input">
             <input
               name="thumbnail"
-              id="thumbnail"
-              type="file"
-              accept="image/*"
-              className="create-news__file-input"
-              onChange={handleFileChange}
-            />
+            id="thumbnail"
+            type="file"
+            accept="image/*"
+            className="create-news__file-input"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+          />
             <label htmlFor="thumbnail" className="create-news__file-label">
               Choisir un fichier
             </label>
@@ -109,7 +116,11 @@ export default function CreateNews() {
           <p className="create-news__success">{successMessage}</p>
         )}
         <div className="create-news--btn">
-          <button className="return" onClick={() => navigate('/home')}>
+          <button
+            type="button"
+            className="return"
+            onClick={() => navigate('/home')}
+          >
             Retour
           </button>
           <button type="submit" className="submit">
