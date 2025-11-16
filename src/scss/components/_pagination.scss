@@ -42,15 +42,15 @@
     }
 
     &.is-active {
-      background: linear-gradient(180deg, #2e8bff 0%, #1b74e4 100%);
+      background: var(--role-color);
       color: #fff;
-      box-shadow: 0 10px 22px rgba(27, 116, 228, 0.35),
+      box-shadow: 0 10px 22px color-mix(in srgb, var(--role-color) 50%, transparent),
         0 0 0 1px rgba(255, 255, 255, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.12);
     }
 
     &.pagination__nav {
-      background: linear-gradient(180deg, #2e8bff 0%, #1b74e4 100%);
+      background: var(--role-color);
       color: #fff;
       font-size: 1.4rem;
       border-color: rgba(255, 255, 255, 0.2);

@@ -11,7 +11,7 @@
   }
 
   &__section-title {
-    @include title;
+    @include title(false);
   }
 
   &__divider {

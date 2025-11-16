@@ -31,8 +31,9 @@ body {
 .login__title {
   font-size: 32px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
   font-family: "Merriweather", serif;
+  position: relative;
 }
 .login__hr {
   color: #f1f1f6;
@@ -67,11 +68,13 @@ body {
   font-size: 24px;
   padding: 0.5rem 1.5rem;
   margin: 0;
-  margin: auto;
-  padding: 0.75rem 1.5rem;
 }
 .login__button:hover {
   filter: brightness(1.2);
+}
+.login__button {
+  margin: auto;
+  padding: 0.75rem 1.5rem;
 }
 .login__text {
   font-size: 24px;
@@ -542,8 +545,26 @@ body {
 .create-news__title {
   font-size: 32px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
   font-family: "Merriweather", serif;
+  position: relative;
+}
+@media (max-width: 768px) {
+  .create-news__title {
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+  .create-news__title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 1px;
+    background: #f1f1f6;
+    opacity: 0.7;
+  }
 }
 .create-news__hr {
   color: #f1f1f6;
@@ -685,12 +706,12 @@ body {
   border-color: rgba(255, 255, 255, 0.08);
 }
 .pagination__button.is-active {
-  background: linear-gradient(180deg, #2e8bff 0%, #1b74e4 100%);
+  background: var(--role-color);
   color: #fff;
-  box-shadow: 0 10px 22px rgba(27, 116, 228, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 22px color-mix(in srgb, var(--role-color) 50%, transparent), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 .pagination__button.pagination__nav {
-  background: linear-gradient(180deg, #2e8bff 0%, #1b74e4 100%);
+  background: var(--role-color);
   color: #fff;
   font-size: 1.4rem;
   border-color: rgba(255, 255, 255, 0.2);
@@ -733,8 +754,26 @@ body {
 .request-email__title {
   font-size: 32px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
   font-family: "Merriweather", serif;
+  position: relative;
+}
+@media (max-width: 768px) {
+  .request-email__title {
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+  .request-email__title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 1px;
+    background: #f1f1f6;
+    opacity: 0.7;
+  }
 }
 .request-email__separator {
   color: #f1f1f6;
@@ -797,8 +836,26 @@ body {
 .reset-password__title {
   font-size: 32px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
   font-family: "Merriweather", serif;
+  position: relative;
+}
+@media (max-width: 768px) {
+  .reset-password__title {
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+  .reset-password__title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 1px;
+    background: #f1f1f6;
+    opacity: 0.7;
+  }
 }
 .reset-password__hr {
   color: #f1f1f6;
@@ -833,10 +890,12 @@ body {
   font-size: 24px;
   padding: 0.5rem 1.5rem;
   margin: 0;
-  margin-left: auto;
 }
 .reset-password__button:hover {
   filter: brightness(1.2);
+}
+.reset-password__button {
+  margin-left: auto;
 }
 
 .actus {
@@ -846,32 +905,84 @@ body {
   max-width: 1160px;
 }
 .actus .main-actus {
-  background-size: cover;
-  background-position: center;
-  color: white;
-  padding: 20px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+  padding: 0;
   margin-bottom: 20px;
-  height: 400px;
-  border-radius: 8px;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  align-items: center;
+}
+.actus .main-actus-media {
+  border-radius: 10px;
+  overflow: hidden;
+  background: transparent;
+  box-shadow: none;
+}
+.actus .main-actus-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .actus .main-actus-content {
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 15px;
-  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: stretch;
+  gap: 18px;
+  padding: 12px 8px;
+  color: #f8fafc;
+  text-align: left;
 }
 .actus .main-actus-title {
-  font-size: 2.5rem;
-  font-weight: bold;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  line-height: 1.2;
 }
 .actus .main-actus-description {
-  font-size: 1.2rem;
-  margin-top: 10px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #dbe4f3;
+  display: -webkit-box;
+  line-clamp: 8;
+  -webkit-line-clamp: 8;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 12.5rem;
+}
+.actus .main-actus-date {
+  font-size: 1.1rem;
+  color: #c2cce0;
+  margin-top: auto;
 }
 .actus .page__title {
   font-size: 32px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
   font-family: "Merriweather", serif;
+  position: relative;
+}
+@media (max-width: 768px) {
+  .actus .page__title {
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+  .actus .page__title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 1px;
+    background: #f1f1f6;
+    opacity: 0.7;
+  }
 }
 .actus .news-list {
   display: flex;
@@ -925,13 +1036,15 @@ body {
   font-size: 24px;
   padding: 0.5rem 1.5rem;
   margin: 0;
+}
+.actus .admin-button:hover {
+  filter: brightness(1.2);
+}
+.actus .admin-button {
   margin: 30px auto;
   position: absolute;
   right: 0;
   transform: translateX(-75%);
-}
-.actus .admin-button:hover {
-  filter: brightness(1.2);
 }
 @media (max-width: 768px) {
   .actus {
@@ -943,12 +1056,11 @@ body {
   }
   .actus .main-actus {
     width: 100%;
+    grid-template-columns: 1fr;
   }
   .actus .main-actus-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    text-align: left;
+    padding: 12px 0;
   }
   .actus .news-list {
     width: 100%;
@@ -965,6 +1077,22 @@ body {
   }
 }
 @media (max-width: 480px) {
+  .actus .main-actus {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0;
+  }
+  .actus .main-actus-title {
+    font-size: 1.8rem;
+  }
+  .actus .main-actus-description {
+    font-size: 1rem;
+    min-height: auto;
+  }
+  .actus .main-actus-date {
+    font-size: 1rem;
+  }
   .actus .news-item {
     flex: 1 1 100%;
   }
@@ -996,7 +1124,6 @@ body {
   aspect-ratio: 1.6;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
 }
 .about__media img {
   width: 100%;
@@ -1008,8 +1135,28 @@ body {
   grid-area: title;
   font-size: 32px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
   font-family: "Merriweather", serif;
+  position: relative;
+}
+@media (max-width: 768px) {
+  .about__title {
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+  .about__title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 1px;
+    background: #f1f1f6;
+    opacity: 0.7;
+  }
+}
+.about__title {
   text-align: start;
 }
 .about__lead {
@@ -1034,6 +1181,9 @@ body {
   .about__intro {
     grid-template-columns: 1fr;
     grid-template-areas: "title" "media" "lead";
+  }
+  .about__title {
+    text-align: center;
   }
   .about__media {
     width: 100%;
@@ -1064,8 +1214,9 @@ body {
 .contact__section-title {
   font-size: 32px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
   font-family: "Merriweather", serif;
+  position: relative;
 }
 .contact__divider {
   color: #f1f1f6;
@@ -1135,10 +1286,12 @@ body {
   font-size: 24px;
   padding: 0.5rem 1.5rem;
   margin: 0;
-  margin-left: auto;
 }
 .contact__submit:hover {
   filter: brightness(1.2);
+}
+.contact__submit {
+  margin-left: auto;
 }
 .contact__submit:disabled {
   opacity: 0.6;
@@ -1171,8 +1324,26 @@ body {
 .signup__title {
   font-size: 32px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
   font-family: "Merriweather", serif;
+  position: relative;
+}
+@media (max-width: 768px) {
+  .signup__title {
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+  .signup__title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 1px;
+    background: #f1f1f6;
+    opacity: 0.7;
+  }
 }
 .signup__hr {
   color: #f1f1f6;
@@ -1227,10 +1398,12 @@ body {
   font-size: 24px;
   padding: 0.5rem 1.5rem;
   margin: 0;
-  margin: 25px auto;
 }
 .signup__form__actions--submit:hover {
   filter: brightness(1.2);
+}
+.signup__form__actions--submit {
+  margin: 25px auto;
 }
 .signup__form__group--checkbox {
   display: flex;
@@ -1313,8 +1486,9 @@ body {
 .profile__title--info, .profile__title--notification {
   font-size: 32px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
   font-family: "Merriweather", serif;
+  position: relative;
 }
 .profile__divider {
   color: #f1f1f6;
@@ -1430,8 +1604,26 @@ body {
 .verify-email__title {
   font-size: 32px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
   font-family: "Merriweather", serif;
+  position: relative;
+}
+@media (max-width: 768px) {
+  .verify-email__title {
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+  .verify-email__title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 1px;
+    background: #f1f1f6;
+    opacity: 0.7;
+  }
 }
 .verify-email__hr {
   color: #f1f1f6;
@@ -1488,8 +1680,26 @@ body {
 .reset-password__title {
   font-size: 32px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
   font-family: "Merriweather", serif;
+  position: relative;
+}
+@media (max-width: 768px) {
+  .reset-password__title {
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+  .reset-password__title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 1px;
+    background: #f1f1f6;
+    opacity: 0.7;
+  }
 }
 .reset-password__separator {
   color: #f1f1f6;

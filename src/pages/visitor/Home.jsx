@@ -13,6 +13,12 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1)
 
   const NEWS_PER_PAGE = 3
+  const formatDate = (dateValue) => {
+    if (!dateValue) return ''
+    const parsedDate = new Date(dateValue)
+    if (Number.isNaN(parsedDate.getTime())) return ''
+    return parsedDate.toLocaleDateString('fr-FR')
+  }
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -59,15 +65,18 @@ export default function Home() {
       <div className="actus">
         <h1 className="page__title">Actus</h1>
         {mainActu && (
-          <div
-            className="main-actus"
-            style={{
-              backgroundImage: `url(${mainActu.thumbnail})`,
-            }}
-          >
+          <div className="main-actus">
+            <div className="main-actus-media">
+              <img src={mainActu.thumbnail} alt={mainActu.title} />
+            </div>
             <div className="main-actus-content">
-              <h2 className="main-actus-title">{mainActu.title}</h2>
-              <p className="main-actus-description">{mainActu.content}</p>
+              <div>
+                <h2 className="main-actus-title">{mainActu.title}</h2>
+                <p className="main-actus-description">{mainActu.content}</p>
+              </div>
+              <p className="main-actus-date">
+                {formatDate(mainActu.date || mainActu.createdAt)}
+              </p>
             </div>
           </div>
         )}

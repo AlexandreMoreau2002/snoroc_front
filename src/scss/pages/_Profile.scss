@@ -8,7 +8,7 @@
 
   &__title--info,
   &__title--notification {
-    @include title;
+    @include title(false);
   }
 
   &__divider {

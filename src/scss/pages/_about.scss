@@ -24,7 +24,6 @@
     aspect-ratio: 1.6;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
 
     img {
       width: 100%;
@@ -68,6 +67,10 @@
         'title'
         'media'
         'lead';
+    }
+   
+    &__title {
+      text-align: center;
     }
 
     &__media {
