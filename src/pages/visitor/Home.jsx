@@ -1,39 +1,56 @@
+import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
-import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import getAllNews from '../../services/news/getAllNews'
+import Pagination from '../../components/Pagination/Pagination'
 
 export default function Home() {
   const { isAdmin } = useAuth()
   const navigate = useNavigate()
   const [newsData, setNewsData] = useState([])
   const [mainActu, setMainActu] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const NEWS_PER_PAGE = 3
 
   useEffect(() => {
     const fetchNews = async () => {
       try {
         const response = await getAllNews()
         if (response.length > 0) {
-          const reversedNews = response.reverse()
+          const reversedNews = [...response].reverse()
 
           const lastActu = reversedNews[0]
           setMainActu(lastActu)
 
-          setNewsData(reversedNews.slice(1, 4))
+          setNewsData(reversedNews.slice(1))
+          setCurrentPage(1)
         } else {
           setMainActu(null)
           setNewsData([])
+          setCurrentPage(1)
         }
       } catch (error) {
         console.error('Erreur lors de la récupération des actualités :', error)
         setMainActu(null)
         setNewsData([])
+        setCurrentPage(1)
       }
     }
 
     fetchNews()
   }, [])
+
+  const totalPages = Math.ceil(newsData.length / NEWS_PER_PAGE)
+  const startIndex = (currentPage - 1) * NEWS_PER_PAGE
+  const currentNews = newsData.slice(startIndex, startIndex + NEWS_PER_PAGE)
+
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber)
+    }
+  }
   return (
     <>
       <Helmet>
@@ -55,7 +72,7 @@ export default function Home() {
           </div>
         )}
         <div className="news-list">
-          {newsData.map((news) => (
+          {currentNews.map((news) => (
             <div
               key={news.id}
               className="news-item"
@@ -70,6 +87,14 @@ export default function Home() {
             </div>
           ))}
         </div>
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+            className="news-pagination"
+          />
+        )}
         {isAdmin && (
           <button
             className="admin-button"

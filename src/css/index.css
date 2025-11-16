@@ -388,7 +388,7 @@ body {
   }
 }
 .app-loading {
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -646,6 +646,84 @@ body {
   border-radius: 15px;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 35px 0 0;
+}
+.pagination__button {
+  position: relative;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #2d3241 0%, #1f2430 100%);
+  color: #eef2ff;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+.pagination__button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(255, 255, 255, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.pagination__button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  background: linear-gradient(180deg, #2f3645 0%, #252a35 100%);
+  color: #b8c5dd;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.pagination__button.is-active {
+  background: linear-gradient(180deg, #2e8bff 0%, #1b74e4 100%);
+  color: #fff;
+  box-shadow: 0 10px 22px rgba(27, 116, 228, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+.pagination__button.pagination__nav {
+  background: linear-gradient(180deg, #2e8bff 0%, #1b74e4 100%);
+  color: #fff;
+  font-size: 1.4rem;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.pagination__button.pagination__nav:disabled {
+  background: linear-gradient(180deg, #2f3645 0%, #252a35 100%);
+  color: #b8c5dd;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.pagination__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #343a4a 0%, #262c39 100%);
+  color: #e2e8f5;
+  font-weight: 700;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    gap: 10px;
+  }
+  .pagination__button, .pagination__ellipsis {
+    width: 40px;
+    height: 40px;
+    font-size: 0.95rem;
+  }
+}
 .request-email {
   width: 700px;
   min-height: 400px;

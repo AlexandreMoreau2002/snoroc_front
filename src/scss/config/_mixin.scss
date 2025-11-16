@@ -5,6 +5,12 @@
   max-width: 1160px;
 }
 
+@mixin flexCenter() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @mixin card() {
   width: 700px;
   min-height: 400px;
