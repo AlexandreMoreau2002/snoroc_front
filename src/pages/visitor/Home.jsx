@@ -91,7 +91,6 @@ export default function Home() {
             >
               <div className="news-content">
                 <h2 className="news-title">{news.title}</h2>
-                <p className="news-description">{news.content}</p>
               </div>
             </div>
           ))}
