@@ -37,7 +37,7 @@ export default function Contact() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <i className={`fa-brands ${social.icon}`} aria-hidden="true"></i>
+          <i className={`fa-brands ${social.icon}`}></i>
         </a>
       )),
     []

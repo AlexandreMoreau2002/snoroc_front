@@ -2,19 +2,20 @@
 import Home from './Home'
 import Event from './Event'
 import Media from './Media'
+import AllActus from './AllActus'
 
 import About from './About'
 import Signup from './Signup'
 import Contact from './Contact'
 import Profile from './Profile'
-import ForgotPassword from './ForgotPassword'
-import ResetPassword from './ResetPassword'
 import VerifyEmail from './VerifyEmail'
+import ResetPassword from './ResetPassword'
+import ForgotPassword from './ForgotPassword'
 
 
 import LegalNotice from './LegalNotice'
 import TermsOfService from './TermsOfService'
 
-export { Home, Event, Media }
+export { Home, AllActus, Event, Media }
 export { LegalNotice, TermsOfService }
 export { About, Contact, Profile, Signup, ForgotPassword, ResetPassword, VerifyEmail }

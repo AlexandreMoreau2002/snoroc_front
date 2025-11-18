@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { usePasswordReset } from '../../context/PasswordResetContext'
 import postResetForgotPassword from '../../services/user/forgotPassword/postResetForgotPassword'
@@ -81,13 +81,13 @@ export default function ResetPassword() {
         />
 
         {errorMessage && (
-          <p className="reset-password__error" aria-live="polite">
+          <p className="reset-password__error">
             {errorMessage}
           </p>
         )}
 
         {successMessage && (
-          <p className="reset-password__success" aria-live="polite">
+          <p className="reset-password__success">
             {successMessage}
           </p>
         )}

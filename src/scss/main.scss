@@ -1,8 +1,8 @@
 // front/src/scss/main.scss
 @import './config/var';
 @import './config/base';
-@import './config/import';
 @import './config/mixin';
+@import './config/import';
 
 @import './components/login';
 @import './components/header';
@@ -10,8 +10,10 @@
 @import './components/loader';
 @import './components/headerNav';
 @import './components/createNews';
-@import './components/statusMessage';
+@import './components/searchBar';
 @import './components/pagination';
+@import './components/statusMessage';
+@import './components/workInProgress';
 @import './components/forgotPassword/requestEmail';
 @import './components/forgotPassword/resetForgotPassword';
 
@@ -20,6 +22,7 @@
 @import './pages/contact';
 @import './pages//signup';
 @import './pages/profile';
+@import './pages/AllActus';
 @import './pages/verifyEmail';
 @import './pages/resetPassword';
 @import './pages/forgotPassword';

@@ -9,7 +9,6 @@ export default function StatusMessage({ status = 'success', message }) {
     <p
       className={`status-message status-message--${normalizedStatus}`}
       role="status"
-      aria-live="polite"
     >
       {message}
     </p>

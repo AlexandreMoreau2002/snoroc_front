@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import postVerifyEmail from '../../services/user/postVerifyEmail'
 
 export default function VerifyEmail() {
@@ -95,13 +95,13 @@ export default function VerifyEmail() {
         </div>
 
         {errorMessage && (
-          <p className="verify-email__error" aria-live="polite">
+          <p className="verify-email__error">
             {errorMessage}
           </p>
         )}
 
         {successMessage && (
-          <p className="verify-email__success" aria-live="polite">
+          <p className="verify-email__success">
             {successMessage} Redirection en cours...
           </p>
         )}

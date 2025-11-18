@@ -51,6 +51,7 @@ export default function Home() {
   const totalPages = Math.ceil(newsData.length / NEWS_PER_PAGE)
   const startIndex = (currentPage - 1) * NEWS_PER_PAGE
   const currentNews = newsData.slice(startIndex, startIndex + NEWS_PER_PAGE)
+  const hasPagination = totalPages > 1
 
   const handlePageChange = (pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
@@ -95,14 +96,32 @@ export default function Home() {
             </div>
           ))}
         </div>
-        {totalPages > 1 && (
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-            className="news-pagination"
-          />
-        )}
+        <div className="news-controls">
+          {hasPagination && (
+            <button
+              type="button"
+              className="news-see-all news-see-all--ghost"
+              aria-hidden="true"
+              tabIndex={-1}
+              disabled
+            />
+          )}
+          {hasPagination && (
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+              className="news-pagination"
+            />
+          )}
+          <button
+            className="news-see-all"
+            onClick={() => navigate('/actus/all')}
+            type="button"
+          >
+            Tout voir
+          </button>
+        </div>
         {isAdmin && (
           <button
             className="admin-button"

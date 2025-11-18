@@ -18,6 +18,7 @@ import {
   Signup,
   Contact,
   Profile,
+  AllActus,
   LegalNotice,
   VerifyEmail,
   ResetPassword,
@@ -33,14 +34,16 @@ export default function Router() {
     <HelmetProvider>
       <BrowserRouter>
         <Header />
+        {/* <div className="debug-center-line" /> */}
         <main className={`app-loading ${showLoader ? 'app-loading--active' : ''}`}>
           {showLoader && <Loader />}
-          <div className="app-loading__content" aria-hidden={showLoader}>
+          <div className="app-loading__content">
             <Routes>
               {/* Home */}
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
               <Route path="/news" element={<Home />} />
+              <Route path="/actus/all" element={<AllActus />} />
               <Route element={<PrivateRoute />}>
                 <Route path="/createNews" element={<CreateNews />} />
               </Route>

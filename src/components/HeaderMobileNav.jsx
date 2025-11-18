@@ -1,7 +1,7 @@
 // front/src/components/HeaderMobileNav.jsx
-import React, { useEffect, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
 import Logo from '../asset/Logo.webp'
+import { useEffect, useState } from 'react'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 
 export default function HeaderMobileNav({ links }) {
   const location = useLocation()
@@ -24,12 +24,9 @@ export default function HeaderMobileNav({ links }) {
       <button
         type="button"
         className={`header__toggle${isOpen ? ' header__toggle--close' : ''}`}
-        aria-label={isOpen ? 'Fermer la navigation' : 'Ouvrir la navigation'}
-        aria-controls="header-drawer"
-        aria-expanded={isOpen}
         onClick={handleToggle}
       >
-        <span className="header__toggle__bars" aria-hidden="true">
+        <span className="header__toggle__bars">
           <span className="header__toggle__bar" />
           <span className="header__toggle__bar" />
           <span className="header__toggle__bar" />

@@ -18,7 +18,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <i className="fa-brands fa-facebook" aria-hidden="true"></i>
+            <i className="fa-brands fa-facebook"></i>
             <span className="footer__social-label">Facebook</span>
           </a>
           <a
@@ -27,7 +27,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <i className="fa-brands fa-instagram" aria-hidden="true"></i>
+            <i className="fa-brands fa-instagram"></i>
             <span className="footer__social-label">Instagram</span>
           </a>
           <a
@@ -36,7 +36,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <i className="fa-brands fa-twitter" aria-hidden="true"></i>
+            <i className="fa-brands fa-twitter"></i>
             <span className="footer__social-label">Twitter</span>
           </a>
         </div>

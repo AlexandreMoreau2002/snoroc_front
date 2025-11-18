@@ -1,5 +1,7 @@
 .actus {
   @include container;
+  display: flex;
+  flex-direction: column;
 
   .main-actus {
     display: grid;
@@ -75,6 +77,35 @@
     justify-content: center;
   }
 
+  .news-controls {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .news-see-all {
+    @include button;
+    margin-left: 0;
+    padding-inline: 18px;
+    white-space: nowrap;
+    justify-self: end;
+    min-width: 110px;
+  }
+
+  .news-pagination {
+    justify-self: center;
+    margin: 0;
+  }
+
+  .news-see-all--ghost {
+    visibility: hidden;
+    pointer-events: none;
+    min-width: 110px;
+    height: 44px;
+  }
+
   .news-item {
     flex: 1 1 calc(33.333% - 20px);
     box-sizing: border-box;
@@ -113,18 +144,22 @@
 
   .admin-button {
     @include button;
-    margin: 30px auto;
-    position: absolute;
-    right: 0;
-    transform: translateX(-75%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    margin: 30px 0 0 0;
+    position: static;
+    transform: none;
   }
 
   @media (max-width: 768px) {
-    padding: 0 20px 40px;
+    padding: 0 20px 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    gap: 10px;
 
     .main-actus {
       width: 100%;
@@ -149,8 +184,28 @@
       }
     }
 
+    .news-controls {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 8px;
+      gap: 12px;
+    }
+
+    .news-see-all--ghost {
+      display: none;
+    }
+
+    .news-see-all {
+      margin-left: 0;
+      width: fit-content;
+    }
+
     .admin-button {
-      margin: 8px auto;
+      align-self: flex-end;
+      margin: 25px 0 0 0;
+      width: fit-content;
     }
   }
 
