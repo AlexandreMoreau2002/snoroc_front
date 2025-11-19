@@ -35,8 +35,7 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background:
-      linear-gradient(
+    background: linear-gradient(
         to right,
         rgba($black, 1) 0%,
         rgba($black, 0.9) 6%,
@@ -71,7 +70,6 @@
   &__mobile {
     position: relative;
     min-height: 420px;
-    padding-bottom: 40px;
   }
 
   &__desktop {

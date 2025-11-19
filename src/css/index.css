@@ -117,7 +117,6 @@ body {
 .header__mobile {
   position: relative;
   min-height: 420px;
-  padding-bottom: 40px;
 }
 .header__desktop {
   display: none;
