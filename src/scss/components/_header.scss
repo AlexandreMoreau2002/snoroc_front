@@ -69,15 +69,13 @@
 
   &__mobile {
     position: relative;
-    min-height: 375px;
-    padding-bottom: 40px;
+    min-height: 300px;
   }
 
   &__desktop {
     display: none;
   }
 
-  // Logo placement
   &__logo-link {
     position: absolute;
     top: 21px;
