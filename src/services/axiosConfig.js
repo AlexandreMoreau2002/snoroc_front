@@ -38,6 +38,20 @@ const axiosInstance = (() => {
             }
           }
 
+          const newsIdMatch = url.match(/\/news\/id\/(\d+)/)
+          if (newsIdMatch) {
+            const targetNews = mockNews.find(
+              (item) => String(item.id) === newsIdMatch[1]
+            )
+            if (!targetNews) {
+              throw new Error("Actualité introuvable dans les données mockées.")
+            }
+
+            return {
+              data: targetNews,
+            }
+          }
+
           throw new Error(`Endpoint non géré : ${url}`)
         }),
       post: async (url, data) =>

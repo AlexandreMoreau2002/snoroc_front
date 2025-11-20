@@ -19,6 +19,7 @@ import {
   Contact,
   Profile,
   AllActus,
+  ActuDetails,
   LegalNotice,
   VerifyEmail,
   ResetPassword,
@@ -44,6 +45,8 @@ export default function Router() {
               <Route path="/home" element={<Home />} />
               <Route path="/news" element={<Home />} />
               <Route path="/actus/all" element={<AllActus />} />
+              <Route path="/actus/:id" element={<ActuDetails />} />
+              <Route path="/news/id/:id" element={<ActuDetails />} />
               <Route element={<PrivateRoute />}>
                 <Route path="/createNews" element={<CreateNews />} />
               </Route>

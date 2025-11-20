@@ -58,6 +58,10 @@ export default function Home() {
       setCurrentPage(pageNumber)
     }
   }
+
+  const openNews = (newsId) => {
+    navigate(`/actus/${newsId}`)
+  }
   return (
     <>
       <Helmet>
@@ -66,7 +70,12 @@ export default function Home() {
       <div className="actus">
         <h1 className="page__title">Actus</h1>
         {mainActu && (
-          <div className="main-actus">
+          <div
+            className="main-actus"
+            role="button"
+            tabIndex={0}
+            onClick={() => openNews(mainActu.id)}
+          >
             <div className="main-actus-media">
               <img src={mainActu.thumbnail} alt={mainActu.title} />
             </div>
@@ -83,17 +92,20 @@ export default function Home() {
         )}
         <div className="news-list">
           {currentNews.map((news) => (
-            <div
+            <article
               key={news.id}
               className="news-item"
               style={{
                 backgroundImage: `url(${news.thumbnail})`,
               }}
+              role="button"
+              tabIndex={0}
+              onClick={() => openNews(news.id)}
             >
               <div className="news-content">
                 <h2 className="news-title">{news.title}</h2>
               </div>
-            </div>
+            </article>
           ))}
         </div>
         <div className="news-controls">

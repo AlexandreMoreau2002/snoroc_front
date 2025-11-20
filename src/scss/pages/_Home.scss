@@ -13,6 +13,18 @@
     border-radius: 0;
     box-shadow: none;
     align-items: center;
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.2s ease;
+
+    &:focus-visible {
+      outline: 2px solid $blue;
+      outline-offset: 6px;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+    }
 
     &-media {
       border-radius: 10px;
@@ -120,10 +132,17 @@
     align-items: flex-end;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    outline: none;
 
     &:hover {
       transform: translateY(-5px);
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $blue;
+      outline-offset: 4px;
     }
 
     .news-content {
@@ -191,6 +210,17 @@
       align-items: center;
       margin-top: 8px;
       gap: 12px;
+    }
+
+    .page__title {
+      display: inline-block;
+      margin-inline: auto;
+
+      &::after {
+        left: 0;
+        transform: none;
+        width: 100%;
+      }
     }
 
     .news-see-all--ghost {

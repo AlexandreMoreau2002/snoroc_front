@@ -66,6 +66,10 @@ export default function AllActus() {
     }
   }
 
+  const openNews = (newsId) => {
+    navigate(`/actus/${newsId}`)
+  }
+
   return (
     <>
       <Helmet>
@@ -82,6 +86,9 @@ export default function AllActus() {
               key={news.id}
               className="all-actus__card"
               style={{ backgroundImage: `url(${news.thumbnail})` }}
+              role="button"
+              tabIndex={0}
+              onClick={() => openNews(news.id)}
             >
               <div className="all-actus__card-content">
                 <h2 className="all-actus__card-title">{news.title}</h2>

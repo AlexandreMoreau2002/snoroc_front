@@ -3,6 +3,7 @@ import Home from './Home'
 import Event from './Event'
 import Media from './Media'
 import AllActus from './AllActus'
+import ActuDetails from './ActuDetails'
 
 import About from './About'
 import Signup from './Signup'
@@ -16,6 +17,6 @@ import ForgotPassword from './ForgotPassword'
 import LegalNotice from './LegalNotice'
 import TermsOfService from './TermsOfService'
 
-export { Home, AllActus, Event, Media }
+export { Home, AllActus, ActuDetails, Event, Media }
 export { LegalNotice, TermsOfService }
 export { About, Contact, Profile, Signup, ForgotPassword, ResetPassword, VerifyEmail }
