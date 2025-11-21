@@ -69,14 +69,17 @@ export default function ActuDetails() {
           {news && (
             <>
               <div className="news-detail__header">
-                <h1 className="news-detail__title">{news.title}</h1>
+                <div className="news-detail__intro">
+                  <h1 className="news-detail__title">{news.title}</h1>
+                  {newsDate && (
+                    <div className="news-detail__meta">
+                      <p className="news-detail__date">{newsDate}</p>
+                    </div>
+                  )}
+                </div>
                 <div className="news-detail__media">
                   <img src={news.thumbnail} alt={news.title} loading="lazy" />
                 </div>
-              </div>
-
-              <div className="news-detail__meta">
-                {newsDate && <p className="news-detail__date">{newsDate}</p>}
               </div>
 
               <div className="news-detail__body">
