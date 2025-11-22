@@ -165,3 +165,33 @@
     }
   }
 }
+
+@keyframes slideInRight {
+  from {
+    opacity: 0.2;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0.2;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-right {
+  animation: slideInRight 0.25s ease-out forwards;
+}
+
+.slide-left {
+  animation: slideInLeft 0.25s ease-out forwards;
+}

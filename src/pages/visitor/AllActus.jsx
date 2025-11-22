@@ -45,6 +45,8 @@ export default function AllActus() {
     setCurrentPage(1)
   }, [search])
 
+  const [direction, setDirection] = useState('right')
+
   const filteredNews = useMemo(() => {
     const term = search.trim().toLowerCase()
     if (!term) return newsData
@@ -62,6 +64,7 @@ export default function AllActus() {
 
   const handlePageChange = (pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setDirection(pageNumber > currentPage ? 'right' : 'left')
       setCurrentPage(pageNumber)
     }
   }
@@ -69,6 +72,19 @@ export default function AllActus() {
   const openNews = (newsId) => {
     navigate(`/actus/${newsId}`)
   }
+
+  useEffect(() => {
+    const nextStartIndex = currentPage * ITEMS_PER_PAGE
+    const nextEndIndex = nextStartIndex + ITEMS_PER_PAGE
+    const nextNews = filteredNews.slice(nextStartIndex, nextEndIndex)
+    
+    nextNews.forEach((news) => {
+      if (news.thumbnail) {
+        const img = new Image()
+        img.src = news.thumbnail
+      }
+    })
+  }, [currentPage, filteredNews])
 
   return (
     <>
@@ -80,7 +96,7 @@ export default function AllActus() {
           <SearchBar value={search} onChange={setSearch} />
         </div>
 
-        <div className="all-actus__grid">
+        <div key={currentPage} className={`all-actus__grid slide-${direction}`}>
           {currentNews.map((news) => (
             <article
               key={news.id}

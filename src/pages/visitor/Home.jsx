@@ -48,6 +48,8 @@ export default function Home() {
     fetchNews()
   }, [])
 
+  const [direction, setDirection] = useState('right')
+
   const totalPages = Math.ceil(newsData.length / NEWS_PER_PAGE)
   const startIndex = (currentPage - 1) * NEWS_PER_PAGE
   const currentNews = newsData.slice(startIndex, startIndex + NEWS_PER_PAGE)
@@ -55,6 +57,7 @@ export default function Home() {
 
   const handlePageChange = (pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setDirection(pageNumber > currentPage ? 'right' : 'left')
       setCurrentPage(pageNumber)
     }
   }
@@ -62,6 +65,19 @@ export default function Home() {
   const openNews = (newsId) => {
     navigate(`/actus/${newsId}`)
   }
+  useEffect(() => {
+    const nextStartIndex = currentPage * NEWS_PER_PAGE
+    const nextEndIndex = nextStartIndex + NEWS_PER_PAGE
+    const nextNews = newsData.slice(nextStartIndex, nextEndIndex)
+    
+    nextNews.forEach((news) => {
+      if (news.thumbnail) {
+        const img = new Image()
+        img.src = news.thumbnail
+      }
+    })
+  }, [currentPage, newsData])
+
   return (
     <>
       <Helmet>
@@ -90,7 +106,7 @@ export default function Home() {
             </div>
           </div>
         )}
-        <div className="news-list">
+        <div key={currentPage} className={`news-list slide-${direction}`}>
           {currentNews.map((news) => (
             <article
               key={news.id}
