@@ -7,41 +7,49 @@
 
   &__hr {
     @include hr;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  &__form {
+    @include formContainer;
+    max-width: 100%;
   }
 
   &__form__group__user-info {
     @include formGrid;
-    margin: 30px auto;
+    margin: 0;
 
     &__input {
-      @include input;
+      @include formInput;
     }
   }
 
   &__form__group__password {
     @include formGroup;
-    margin: 30px auto;
+    margin: 0;
 
     &__input {
-      @include input;
+      @include formInput;
     }
   }
 
   &__form__input {
-    width: 100%;
-    height: 50px;
-    padding: 10px;
-    border: 1px solid $white;
-    border-radius: 15px;
-    font-size: 20px;
+    @include formInput;
   }
 
   &__form__actions {
-    display: flex;
+    @include formActions;
+    justify-content: center;
 
     &--submit {
       @include button;
-      margin: 25px auto;
+      margin: 10px auto;
     }
   }
 
@@ -62,6 +70,7 @@
   &__terms,
   &__login {
     @include text;
+    text-align: center;
   }
 
   &__terms__link,

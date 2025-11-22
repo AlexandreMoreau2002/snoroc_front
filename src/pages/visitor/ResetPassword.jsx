@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import StatusMessage from '../../components/StatusMessage'
 import patchUpdatePassword from '../../services/user/patchUpdatePassword'
 
 const ResetPassword = () => {
@@ -73,6 +74,7 @@ const ResetPassword = () => {
         />
         <div className="reset-password-action">
           <button
+            type="button"
             className="reset-password-action__return"
             onClick={() => navigate('/Profil')}
           >
@@ -83,13 +85,8 @@ const ResetPassword = () => {
           </button>
         </div>
 
-        {successMessage && (
-          <p className="reset-password__success">{successMessage}</p>
-        )}
-
-        {errorMessage && (
-          <p className="reset-password__error">{errorMessage}</p>
-        )}
+        <StatusMessage status="error" message={errorMessage} />
+        <StatusMessage status="success" message={successMessage} />
       </form>
     </div>
   )

@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 import postSignUp from '../../services/user/postSignUp'
+import StatusMessage from '../../components/StatusMessage'
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -43,16 +44,18 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setErrorMessage('')
+    setSuccessMessage('')
 
     if (formData.password !== formData.confirmPassword) {
-      alert('Les mots de passe ne correspondent pas.')
+      setErrorMessage('Les mots de passe ne correspondent pas.')
       return
     }
 
     const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/
 
     if (!emailRegex.test(formData.email)) {
-      alert("L'email n’est pas valide, veuillez entrer un email correct.")
+      setErrorMessage("L'email n’est pas valide, veuillez entrer un email correct.")
       return
     }
 
@@ -198,10 +201,8 @@ const Signup = () => {
           </button>
         </div>
       </form>
-      {errorMessage && <div className="signup__error">{errorMessage}</div>}
-      {successMessage && (
-        <div className="signup__success">{successMessage}</div>
-      )}
+      <StatusMessage status="error" message={errorMessage} />
+      <StatusMessage status="success" message={successMessage} />
       <p className="signup__terms">
         En vous inscrivant, vous acceptez les
         <Link to="/CGU" className="signup__terms__link">

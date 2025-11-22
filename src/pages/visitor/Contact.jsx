@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
-import { createContactMessage } from '../../repository/contact/contactRepository'
 import StatusMessage from '../../components/StatusMessage'
+import { createContactMessage } from '../../repository/contact/contactRepository'
 
 const initialFormState = {
   lastname: '',
@@ -230,8 +230,8 @@ export default function Contact() {
             {isSubmitting ? 'Envoi en cours...' : 'Envoyer'}
           </button>
 
-          <StatusMessage variant="error" message={errorMessage} />
-          <StatusMessage variant="success" message={successMessage} />
+          <StatusMessage status="error" message={errorMessage} />
+          <StatusMessage status="success" message={successMessage} />
         </form>
       </section>
     </main>

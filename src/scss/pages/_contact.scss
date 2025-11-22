@@ -1,6 +1,5 @@
 .contact {
   @include card;
-  padding: clamp(30px, 6vw, 60px) 20px;
 
   &__section {
     text-align: center;
@@ -11,25 +10,40 @@
   }
 
   &__section-title {
-    @include title(false);
+    @include title;
   }
 
   &__divider {
     @include hr;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
   &__social-row {
     display: flex;
     justify-content: center;
-    gap: clamp(30px, 5vw, 70px);
+    gap: 30px;
     flex-wrap: wrap;
     margin-bottom: 10px;
+
+    @media (min-width: 768px) {
+      gap: 70px;
+    }
   }
 
   &__social-link {
     color: var(--role-color);
-    font-size: clamp(2.2rem, 3.5vw, 3rem);
+    font-size: 2.2rem;
     transition: opacity 0.2s ease;
+
+    @media (min-width: 768px) {
+      font-size: 3rem;
+    }
 
     &:hover {
       opacity: 0.85;
@@ -37,11 +51,7 @@
   }
 
   &__form {
-    max-width: 620px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+    @include formContainer;
   }
 
   &__row {
@@ -49,26 +59,18 @@
   }
 
   &__row--dual {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px;
+    @include formGrid;
+    margin: 0;
   }
 
   &__field {
-    display: flex;
-    flex-direction: column;
+    @include formGroup;
+    gap: 5px;
   }
 
   &__field input,
   &__field textarea {
-    width: 100%;
-    border-radius: 25px;
-    border: none;
-    background: #f4f2f8;
-    color: $black;
-    padding: 12px 18px;
-    font-size: 1rem;
-    font-family: $open;
+    @include formInput;
   }
 
   &__field textarea {
@@ -79,36 +81,13 @@
   &__field-error {
     font-size: 0.85rem;
     color: #ff8a8a;
-    margin-top: 0.35rem;
+    margin-top: 0.2rem;
     text-align: left;
+    padding-left: 10px;
   }
 
   &__submit {
     @include button;
-    margin-left: auto;
-
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-  }
-
-  @media (max-width: 768px) {
-    padding: 20px 16px 40px;
-
-    &__row--dual {
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    &__form {
-      max-width: 100%;
-      gap: 12px;
-    }
-
-    &__submit {
-      width: 100%;
-      margin-left: 0;
-    }
+    margin-top: 10px;
   }
 }

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import StatusMessage from '../StatusMessage'
 import { useNavigate } from 'react-router-dom'
 import { usePasswordReset } from '../../context/PasswordResetContext'
 import postEmailForgotPassword from '../../services/user/forgotPassword/postEmailForgotPassword'
@@ -40,12 +41,6 @@ export default function RequestEmail() {
           onChange={(e) => setInputEmail(e.target.value)}
           required
         />
-        {errorMessage && (
-          <div className="request-email__form__error">{errorMessage}</div>
-        )}
-        {successMessage && (
-          <div className="request-email__form__success">{successMessage}</div>
-        )}
         <div className="request-email__actions">
           <button
             type="button"
@@ -58,6 +53,8 @@ export default function RequestEmail() {
             Envoyer le code
           </button>
         </div>
+        <StatusMessage status="error" message={errorMessage} />
+        <StatusMessage status="success" message={successMessage} />
       </form>
     </div>
   )

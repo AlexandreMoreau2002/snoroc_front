@@ -19,6 +19,7 @@ const NAV_LINKS = [
 
 export default function Header() {
   const location = useLocation()
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
 
   const getLinkClassName = (isActive, aliases = []) =>
     isActive || aliases?.includes(location.pathname)
@@ -37,7 +38,7 @@ export default function Header() {
     ))
 
   return (
-    <header className="header">
+    <header className={`header${isMobileMenuOpen ? ' header--open' : ''}`}>
       <div className="header__desktop">
         <nav className="header__nav header__nav--desktop header__nav--left">
           {renderNavLinks(NAV_LINKS.slice(0, 3))}
@@ -52,7 +53,12 @@ export default function Header() {
         </nav>
       </div>
 
-      <HeaderMobileNav links={NAV_LINKS} />
+      <HeaderMobileNav 
+        links={NAV_LINKS} 
+        isOpen={isMobileMenuOpen} 
+        onToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        onClose={() => setIsMobileMenuOpen(false)}
+      />
     </header>
   )
 }

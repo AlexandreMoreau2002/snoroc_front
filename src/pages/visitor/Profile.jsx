@@ -100,8 +100,8 @@ export default function UserProfile() {
       >
         Mettre à jour
       </button>
-      <StatusMessage variant="error" message={errorMessage} />
-      <StatusMessage variant="success" message={successMessage} />
+      <StatusMessage status="error" message={errorMessage} />
+      <StatusMessage status="success" message={successMessage} />
       <h1 className="profile__title profile__title--info">
         Informations personnelles
       </h1>

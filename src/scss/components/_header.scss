@@ -11,6 +11,15 @@
   background-size: cover;
   box-shadow: inset 0px 25px 65px 80px rgba($black, 0.85);
 
+  &--open {
+    height: auto !important;
+    overflow: visible !important;
+    
+    .header__mobile {
+      height: auto;
+    }
+  }
+
   &::before {
     content: '';
     position: absolute;

@@ -1,30 +1,26 @@
 // front/src/components/HeaderMobileNav.jsx
+import { useEffect } from 'react'
 import Logo from '../asset/Logo.webp'
-import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 
-export default function HeaderMobileNav({ links }) {
+export default function HeaderMobileNav({ links, isOpen, onToggle, onClose }) {
   const location = useLocation()
-  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
-    setIsOpen(false)
-  }, [location.pathname])
+    onClose()
+  }, [location.pathname]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const getLinkClassName = (isActive, aliases = []) =>
     isActive || aliases?.includes(location.pathname)
       ? 'header__nav__link header__nav__link--active'
       : 'header__nav__link'
 
-  const handleToggle = () => setIsOpen((prev) => !prev)
-  const handleClose = () => setIsOpen(false)
-
   return (
     <div className="header__mobile">
       <button
         type="button"
         className={`header__toggle${isOpen ? ' header__toggle--close' : ''}`}
-        onClick={handleToggle}
+        onClick={onToggle}
       >
         <span className="header__toggle__bars">
           <span className="header__toggle__bar" />
@@ -44,7 +40,7 @@ export default function HeaderMobileNav({ links }) {
             className={({ isActive }) =>
               getLinkClassName(isActive, link.aliases)
             }
-            onClick={handleClose}
+            onClick={onClose}
           >
             {link.label}
           </NavLink>
@@ -54,7 +50,7 @@ export default function HeaderMobileNav({ links }) {
       <Link
         to="/"
         className="header__logo-link header__logo-link--mobile"
-        onClick={handleClose}
+        onClick={onClose}
       >
         <img src={Logo} alt="Logo" className="header__logo" />
       </Link>

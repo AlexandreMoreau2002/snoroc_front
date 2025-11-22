@@ -1,6 +1,7 @@
 // src/components/login.jsx
 import { Link } from 'react-router-dom'
 import React, { useState } from 'react'
+import StatusMessage from './StatusMessage'
 import { useAuth } from '../context/AuthContext'
 import postLogin from '../services/user/postLogin'
 
@@ -15,10 +16,10 @@ export default function Login() {
     e.preventDefault()
     setErrorMessage('')
     setSuccessMessage('')
-    
+
     try {
       const data = await postLogin(email, password)
-      
+
       if (data.accessToken && data.user) {
         login({ accessToken: data.accessToken, user: data.user })
         setSuccessMessage('Connexion réussie ! Redirection en cours...')
@@ -57,11 +58,11 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        {errorMessage && <p className="login__error-message">{errorMessage}</p>}
-        {successMessage && <p className="login__success-message">{successMessage}</p>}
         <button type="submit" className="login__button">
           Se connecter
         </button>
+        <StatusMessage status="error" message={errorMessage} />
+        <StatusMessage status="success" message={successMessage} />
       </form>
       <p className="login__text">
         Pas encore membre ?

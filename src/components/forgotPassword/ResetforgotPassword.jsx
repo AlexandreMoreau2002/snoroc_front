@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import StatusMessage from '../StatusMessage'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { usePasswordReset } from '../../context/PasswordResetContext'
 import postResetForgotPassword from '../../services/user/forgotPassword/postResetForgotPassword'
@@ -43,7 +44,7 @@ export default function ResetPassword() {
     try {
       const data = await postResetForgotPassword(email, resetToken, password)
       setSuccessMessage(data.message || 'Mot de passe réinitialisé avec succès !')
-      
+
       setTimeout(() => {
         navigate('/Profil')
       }, 2000)
@@ -80,18 +81,6 @@ export default function ResetPassword() {
           disabled={loading}
         />
 
-        {errorMessage && (
-          <p className="reset-password__error">
-            {errorMessage}
-          </p>
-        )}
-
-        {successMessage && (
-          <p className="reset-password__success">
-            {successMessage}
-          </p>
-        )}
-
         <button
           className="reset-password__button"
           type="submit"
@@ -99,6 +88,8 @@ export default function ResetPassword() {
         >
           {loading ? 'Modification en cours...' : 'Changer le mot de passe'}
         </button>
+        <StatusMessage status="error" message={errorMessage} />
+        <StatusMessage status="success" message={successMessage} />
       </form>
     </div>
   )
