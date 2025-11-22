@@ -163,11 +163,6 @@ export const postEmailForgotPassword = async (email) => {
             email,
         })
 
-        // Note: The original code used response.data here, but axiosInstance interceptor 
-        // already returns response.data. If the API returns { data: ... }, then response.data is correct.
-        // If it returns the body directly, then response is correct.
-        // Keeping original logic for safety, assuming response structure requires it.
-        // If axiosInstance returns body, and body has .data property, then this is valid.
         const apiResponse = new ApiResponse(response.data || response)
 
         if (!apiResponse.isSuccess()) {

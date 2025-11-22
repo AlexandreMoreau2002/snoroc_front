@@ -1,224 +1,116 @@
-// src/utils/apiResponseHandler.js
-
 /**
- * Vérifie si une réponse API est un succès
- * @param {Object} response - La réponse de l'API
- * @returns {boolean} - true si succès, false sinon
+ * Normalise la réponse API pour gérer les différents formats du backend.
+ * Formats connus :
+ * 1. { error: boolean, message: string, data?: any } (Success: error === false)
+ * 2. { value: boolean, message: string } (Success: value === true, Error: value === false)
+ * 3. { status: boolean, message: string } (Success: status === true)
+ * 4. { accessToken: string, user: object, ... } (Auth success, often mixed with error: false)
  */
-export const isSuccess = (response) => {
-  // Vérifier que response n'est pas null ou undefined
-  if (!response || typeof response !== 'object') {
-    return false
-  }
-  
-  // Si c'est un objet Axios (contient status, headers, etc.)
-  if (response.status && response.headers && response.data) {
-    // C'est un objet Axios, on travaille avec response.data
-    const apiData = response.data
-    if (apiData.success !== undefined) {
-      return apiData.success === true
-    }
-    if (apiData.error !== undefined) {
-      return apiData.error === false
-    }
-    if (apiData.value !== undefined) {
-      return apiData.value === true
-    }
-    return false
-  }
-  
-  // Nouvelle structure unifiée (réponse API directe)
-  if (response.success !== undefined) {
-    return response.success === true
-  }
-  
-  // Ancienne structure (compatibilité)
-  if (response.error !== undefined) {
-    return response.error === false
-  }
-  
-  if (response.value !== undefined) {
-    return response.value === true
-  }
-  
-  return false
-}
-
-/**
- * Extrait les données de la réponse API
- * @param {Object} response - La réponse de l'API
- * @returns {any} - Les données extraites
- */
-export const getData = (response) => {
-  // Vérifier que response n'est pas null ou undefined
-  if (!response || typeof response !== 'object') {
-    return null
-  }
-  
-  // Si c'est un objet Axios (contient status, headers, etc.)
-  if (response.status && response.headers && response.data) {
-    // C'est un objet Axios, on travaille avec response.data
-    const apiData = response.data
-    if (apiData.success !== undefined && apiData.data) {
-      return apiData.data
-    }
-    if (apiData.error === false && apiData.data) {
-      return apiData.data
-    }
-    return apiData
-  }
-  
-  // Nouvelle structure unifiée (réponse API directe)
-  if (response.success !== undefined && response.data) {
-    return response.data
-  }
-  
-  // Ancienne structure (compatibilité)
-  if (response.error === false && response.data) {
-    return response.data
-  }
-  
-  // Si pas de structure data, retourner la réponse complète
-  return response
-}
-
-/**
- * Extrait le message de la réponse API
- * @param {Object} response - La réponse de l'API
- * @returns {string} - Le message
- */
-export const getMessage = (response) => {
-  // Vérifier que response n'est pas null ou undefined
-  if (!response || typeof response !== 'object') {
-    return 'Opération effectuée avec succès'
-  }
-  
-  // Si c'est un objet Axios (contient status, headers, etc.)
-  if (response.status && response.headers && response.data) {
-    return response.data.message || 'Opération effectuée avec succès'
-  }
-  
-  return response.message || 'Opération effectuée avec succès'
-}
-
-/**
- * Extrait les informations d'erreur de la réponse API
- * @param {Object} response - La réponse de l'API
- * @returns {Object} - Les informations d'erreur
- */
-export const getError = (response) => {
-  // Vérifier que response n'est pas null ou undefined
-  if (!response || typeof response !== 'object') {
-    return {
-      message: 'Une erreur inconnue est survenue',
-      code: 'UNKNOWN_ERROR',
-      details: null
-    }
-  }
-  
-  // Si c'est un objet Axios (contient status, headers, etc.)
-  if (response.status && response.headers && response.data) {
-    const apiData = response.data
-    if (apiData.success === false) {
-      return {
-        message: apiData.message || 'Une erreur est survenue',
-        code: apiData.error?.code || 'UNKNOWN_ERROR',
-        details: apiData.error?.details || null
-      }
-    }
-    if (apiData.error === true || apiData.value === false) {
-      return {
-        message: apiData.message || 'Une erreur est survenue',
-        code: 'LEGACY_ERROR',
-        details: null
-      }
-    }
-    return {
-      message: 'Une erreur inconnue est survenue (Axios)',
-      code: 'UNKNOWN_ERROR',
-      details: null
-    }
-  }
-  
-  // Nouvelle structure unifiée (réponse API directe)
-  if (response.success === false) {
-    return {
-      message: response.message || 'Une erreur est survenue',
-      code: response.error?.code || 'UNKNOWN_ERROR',
-      details: response.error?.details || null
-    }
-  }
-  
-  // Ancienne structure (compatibilité)
-  if (response.error === true || response.value === false) {
-    return {
-      message: response.message || 'Une erreur est survenue',
-      code: 'LEGACY_ERROR',
-      details: null
-    }
-  }
-  
-  return {
-    message: 'Une erreur inconnue est survenue',
-    code: 'UNKNOWN_ERROR',
-    details: null
-  }
-}
-
-/**
- * Classe pour gérer les réponses API de manière uniforme
- */
-export class ApiResponse {
+class ApiResponse {
   constructor(response) {
-    // Vérifier que response n'est pas null ou undefined
-    if (!response || typeof response !== 'object') {
-      this.response = {
+    this.originalResponse = response
+    this.normalized = this.normalize(response)
+  }
+
+  /**
+   * Normalise la réponse en un format standard interne
+   * @param {Object} response - La réponse brute (axios response.data ou response directe)
+   */
+  normalize(response) {
+    // Gestion des réponses Axios complètes (si on passe response au lieu de response.data)
+    let data = response
+    if (response && response.data && response.status && response.headers) {
+      data = response.data
+    }
+
+    if (!data || typeof data !== 'object') {
+      return {
         success: false,
-        message: 'Réponse invalide',
-        error: {
-          message: 'Une erreur inconnue est survenue',
-          code: 'INVALID_RESPONSE',
-          details: null
+        message: 'Réponse invalide ou vide',
+        data: null,
+        error: { code: 'INVALID_RESPONSE' }
+      }
+    }
+
+    // 1. Déterminer le succès
+    let success = false
+
+    // Priorité aux indicateurs explicites
+    if (typeof data.status === 'boolean') {
+      success = data.status === true
+    } else if (typeof data.error === 'boolean') {
+      success = data.error === false
+    } else if (typeof data.value === 'boolean') {
+      success = data.value === true
+    } else if (typeof data.success === 'boolean') {
+      success = data.success === true
+    } else {
+      // Fallback : Si aucun indicateur, on suppose succès si pas d'erreur explicite
+      // et présence de données significatives (ex: accessToken)
+      if (data.accessToken || data.id) {
+        success = true
+      }
+    }
+
+    // 2. Extraire le message
+    const message = data.message || (success ? 'Opération réussie' : 'Une erreur est survenue')
+
+    // 3. Extraire les données utiles
+    let payload = null
+
+    if (success) {
+      if (data.data !== undefined) {
+        payload = data.data
+      } else if (data.accessToken) {
+        // Cas spécifique Auth : on renvoie tout l'objet (accessToken + user)
+        // On exclut les champs de status pour nettoyer
+        const { error, value, status, message, ...rest } = data
+        payload = rest
+      } else {
+        // Si pas de champ data explicite, on essaie de renvoyer l'objet nettoyé
+        const { error, value, status, message, ...rest } = data
+        // Si l'objet restant n'est pas vide, c'est la donnée
+        if (Object.keys(rest).length > 0) {
+          payload = rest
+        } else {
+          // Si pas de données, on renvoie le message dans un objet pour éviter null
+          payload = { message }
         }
       }
-    } else {
-      this.response = response
     }
-    this.success = isSuccess(this.response)
-    this.data = getData(this.response)
-    this.message = getMessage(this.response)
-    this.error = this.success ? null : getError(this.response)
+
+    let errorObj = null
+    if (!success) {
+      errorObj = {
+        message: message,
+        code: data.code || 'API_ERROR',
+        details: data.details || null
+      }
+    }
+
+    return {
+      success,
+      message,
+      data: payload,
+      error: errorObj
+    }
   }
-  
-  /**
-   * Vérifie si la réponse est un succès
-   * @returns {boolean}
-   */
+
   isSuccess() {
-    return this.success
+    return this.normalized.success
   }
-  
-  /**
-   * Obtient les données de la réponse
-   * @returns {any}
-   */
+
   getData() {
-    return this.data
+    return this.normalized.data
   }
-  
-  /**
-   * Obtient le message de la réponse
-   * @returns {string}
-   */
+
   getMessage() {
-    return this.message
+    return this.normalized.message
   }
-  
-  /**
-   * Obtient les informations d'erreur
-   * @returns {Object|null}
-   */
+
   getError() {
-    return this.error
+    return this.normalized.error
   }
 }
+
+export { ApiResponse }
