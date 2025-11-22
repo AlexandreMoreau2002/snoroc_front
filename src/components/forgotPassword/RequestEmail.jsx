@@ -2,7 +2,7 @@ import { useState } from 'react'
 import StatusMessage from '../StatusMessage'
 import { useNavigate } from 'react-router-dom'
 import { usePasswordReset } from '../../context/PasswordResetContext'
-import postEmailForgotPassword from '../../services/user/forgotPassword/postEmailForgotPassword'
+import { postEmailForgotPassword } from '../../repositories/userRepository'
 
 export default function RequestEmail() {
   const navigate = useNavigate()

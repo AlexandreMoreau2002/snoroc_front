@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async'
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import getNewsById from '../../services/news/getNewsById'
+import { getNewsById } from '../../repositories/newsRepository'
 
 export default function ActuDetails() {
   const { id } = useParams()

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import getAllNews from '../../services/news/getAllNews'
+import { getAllNews } from '../../repositories/newsRepository'
 import Pagination from '../../components/Pagination/Pagination'
 
 export default function Home() {

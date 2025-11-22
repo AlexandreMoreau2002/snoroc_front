@@ -3,9 +3,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Login } from '../../components/export'
 import { useAuth } from '../../context/AuthContext'
-import getProfile from '../../services/user/getProfile'
+import { getProfile, patchUpdateNewsletter } from '../../repositories/userRepository'
 import StatusMessage from '../../components/StatusMessage'
-import patchUpdateNewsletter from '../../services/user/patchUpdateNewsletter'
 
 const STATUS_DISPLAY_DURATION = 3000
 

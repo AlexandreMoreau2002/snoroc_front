@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import StatusMessage from '../../components/StatusMessage'
-import { createContactMessage } from '../../repository/contact/contactRepository'
+import { createContactMessage } from '../../repositories/contactRepository'
 
 const initialFormState = {
   lastname: '',

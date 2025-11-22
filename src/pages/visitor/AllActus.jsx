@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import Pagination from '../../components/Pagination/Pagination'
 import { SearchBar } from '../../components/export'
-import getAllNews from '../../services/news/getAllNews'
+import { getAllNews } from '../../repositories/newsRepository'
 
 const ITEMS_PER_PAGE = 6
 

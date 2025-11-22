@@ -130,14 +130,14 @@
   width: 100%;
   border-radius: 25px;
   border: none;
-  background: #f4f2f8;
+  background: $input-bg;
   color: $black;
   padding: 12px 18px;
   font-size: 16px;
   font-family: $open;
   
   &::placeholder {
-    color: #666;
+    color: $placeholder-color;
     font-size: 16px;
     transform: none;
   }
@@ -145,6 +145,26 @@
   &:focus {
     outline: 2px solid var(--role-color);
   }
+}
+
+@mixin success() {
+  background-color: $success-color;
+  padding: 0.75rem 1.5rem;
+  color: $white;
+  font-size: 16px;
+  border-radius: 15px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+@mixin error() {
+  background-color: $error-color;
+  padding: 0.75rem 1.5rem;
+  color: $white;
+  font-size: 16px;
+  border-radius: 15px;
+  margin-top: 10px;
+  text-align: center;
 }
 
 @mixin formLabel() {

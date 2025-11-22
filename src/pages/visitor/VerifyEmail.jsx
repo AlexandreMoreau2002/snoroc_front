@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { useState, useEffect, useRef, useCallback } from 'react'
-import postVerifyEmail from '../../services/user/postVerifyEmail'
+import { postVerifyEmail } from '../../repositories/userRepository'
 
 export default function VerifyEmail() {
   const { email, login } = useAuth()

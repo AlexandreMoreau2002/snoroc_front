@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import React, { useState } from 'react'
 import StatusMessage from './StatusMessage'
 import { useAuth } from '../context/AuthContext'
-import postLogin from '../services/user/postLogin'
+import { postLogin } from '../repositories/userRepository'
 
 export default function Login() {
   const { login } = useAuth()

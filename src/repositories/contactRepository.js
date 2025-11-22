@@ -1,5 +1,4 @@
-// front/src/repository/contact/contactRepository.js
-import axiosInstance from '../../services/axiosConfig'
+import axiosInstance from '../services/axiosConfig'
 
 /**
  * Soumet le formulaire de contact via l'API.
@@ -7,5 +6,5 @@ import axiosInstance from '../../services/axiosConfig'
  * @returns {Promise<Object>} Réponse de l'API.
  */
 export const createContactMessage = (payload) => {
-  return axiosInstance.post('/contact', payload)
+    return axiosInstance.post('/contact', payload)
 }

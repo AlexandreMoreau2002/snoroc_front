@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
-import postSignUp from '../../services/user/postSignUp'
+import { postSignUp } from '../../repositories/userRepository'
 import StatusMessage from '../../components/StatusMessage'
 
 const Signup = () => {

@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { postNews } from '../../services/news/postNews'
+import { postNews } from '../../repositories/newsRepository'
 
 export default function CreateNews() {
   const navigate = useNavigate()

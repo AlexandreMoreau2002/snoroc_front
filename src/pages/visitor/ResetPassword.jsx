@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import StatusMessage from '../../components/StatusMessage'
-import patchUpdatePassword from '../../services/user/patchUpdatePassword'
+import { patchUpdatePassword } from '../../repositories/userRepository'
 
 const ResetPassword = () => {
   const { user } = useAuth()
