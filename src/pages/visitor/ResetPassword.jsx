@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Button } from '../../components/export'
 import { useAuth } from '../../context/AuthContext'
 import StatusMessage from '../../components/StatusMessage'
 import { patchUpdatePassword } from '../../repositories/userRepository'
@@ -73,16 +74,16 @@ const ResetPassword = () => {
           required
         />
         <div className="reset-password-action">
-          <button
-            type="button"
+          <Button
+            variant="secondary"
             className="reset-password-action__return"
             onClick={() => navigate('/Profil')}
           >
             Retour
-          </button>
-          <button type="submit" className="reset-password-action__button">
+          </Button>
+          <Button type="submit" variant="primary" className="reset-password-action__button">
             Modifier
-          </button>
+          </Button>
         </div>
 
         <StatusMessage status="error" message={errorMessage} />

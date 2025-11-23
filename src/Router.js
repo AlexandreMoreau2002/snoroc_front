@@ -49,6 +49,7 @@ export default function Router() {
               <Route path="/news/id/:id" element={<ActuDetails />} />
               <Route element={<PrivateRoute />}>
                 <Route path="/createNews" element={<CreateNews />} />
+                <Route path="/admin/actus/edit/:id" element={<CreateNews />} />
               </Route>
 
               {/* Event */}

@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async'
+import { Button } from '../../components/export'
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getNewsById } from '../../repositories/newsRepository'
@@ -94,13 +95,13 @@ export default function ActuDetails() {
             </>
           )}
 
-          <button
-            type="button"
+          <Button
+            variant="secondary"
             className="news-detail__back"
             onClick={handleBack}
           >
             Retour
-          </button>
+          </Button>
         </section>
       </main>
     </>

@@ -26,10 +26,5 @@
 
   &__actions {
     @include formActions;
-
-    .request-email__button-submit,
-    .request-email__button-return {
-      @include button;
-    }
   }
 }

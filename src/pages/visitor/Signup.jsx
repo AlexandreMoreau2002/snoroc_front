@@ -1,5 +1,6 @@
 // src/pages/visitor/Signup.jsx
 import React, { useState } from 'react'
+import { Button } from '../../components/export'
 import { useAuth } from '../../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { postSignUp } from '../../repositories/userRepository'
@@ -196,9 +197,9 @@ const Signup = () => {
         </div>
 
         <div className="signup__form__actions">
-          <button type="submit" className="signup__form__actions--submit">
+          <Button type="submit" className="signup__form__actions--submit" variant="primary">
             S'inscrire
-          </button>
+          </Button>
         </div>
       </form>
       <StatusMessage status="error" message={errorMessage} />

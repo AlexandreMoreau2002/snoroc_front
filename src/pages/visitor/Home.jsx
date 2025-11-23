@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
+import { Button } from '../../components/export'
 import { useAuth } from '../../context/AuthContext'
 import { getAllNews } from '../../repositories/newsRepository'
 import Pagination from '../../components/Pagination/Pagination'
@@ -142,21 +143,22 @@ export default function Home() {
               className="news-pagination"
             />
           )}
-          <button
+          <Button
             className="news-see-all"
             onClick={() => navigate('/actus/all')}
-            type="button"
+            variant="secondary"
           >
             Tout voir
-          </button>
+          </Button>
         </div>
         {isAdmin && (
-          <button
+          <Button
             className="admin-button"
             onClick={() => navigate('/createNews')}
+            variant="primary"
           >
             Ajouter
-          </button>
+          </Button>
         )}
       </div>
     </>

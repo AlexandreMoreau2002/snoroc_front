@@ -1,17 +1,22 @@
-import { useEffect, useMemo, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
+import { useEffect, useMemo, useState } from 'react'
+import { FiEdit2, FiEye, FiTrash2 } from 'react-icons/fi'
 import Pagination from '../../components/Pagination/Pagination'
-import { SearchBar } from '../../components/export'
-import { getAllNews } from '../../repositories/newsRepository'
+import { getAllNews, deleteNews } from '../../repositories/newsRepository'
+import { SearchBar, ConfirmationModal, Button } from '../../components/export'
 
 const ITEMS_PER_PAGE = 6
 
 export default function AllActus() {
   const navigate = useNavigate()
+  const { isAdmin } = useAuth()
   const [newsData, setNewsData] = useState([])
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [newsToDelete, setNewsToDelete] = useState(null)
 
   const formatDate = (dateValue) => {
     if (!dateValue) return ''
@@ -73,6 +78,35 @@ export default function AllActus() {
     navigate(`/actus/${newsId}`)
   }
 
+  const handleEdit = (e, newsId) => {
+    e.stopPropagation()
+    navigate(`/admin/actus/edit/${newsId}`)
+  }
+
+  const handleDeleteClick = (e, newsId) => {
+    e.stopPropagation()
+    setNewsToDelete(newsId)
+    setShowDeleteModal(true)
+  }
+
+  const confirmDelete = async () => {
+    if (newsToDelete) {
+      try {
+        await deleteNews(newsToDelete)
+        setNewsData(newsData.filter(news => news.id !== newsToDelete))
+        setShowDeleteModal(false)
+        setNewsToDelete(null)
+      } catch (error) {
+        console.error('Erreur lors de la suppression :', error)
+      }
+    }
+  }
+
+  const cancelDelete = () => {
+    setShowDeleteModal(false)
+    setNewsToDelete(null)
+  }
+
   useEffect(() => {
     const nextStartIndex = currentPage * ITEMS_PER_PAGE
     const nextEndIndex = nextStartIndex + ITEMS_PER_PAGE
@@ -104,8 +138,36 @@ export default function AllActus() {
               style={{ backgroundImage: `url(${news.thumbnail})` }}
               role="button"
               tabIndex={0}
-              onClick={() => openNews(news.id)}
+              onClick={() => !isAdmin && openNews(news.id)}
             >
+              {isAdmin && (
+                <div className="all-actus__admin-overlay">
+                  <button 
+                    className="all-actus__admin-btn edit"
+                    onClick={(e) => handleEdit(e, news.id)}
+                    title="Modifier"
+                  >
+                    <FiEdit2 />
+                  </button>
+                  <button 
+                    className="all-actus__admin-btn view"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      openNews(news.id)
+                    }}
+                    title="Voir"
+                  >
+                    <FiEye />
+                  </button>
+                  <button 
+                    className="all-actus__admin-btn delete"
+                    onClick={(e) => handleDeleteClick(e, news.id)}
+                    title="Supprimer"
+                  >
+                    <FiTrash2 />
+                  </button>
+                </div>
+              )}
               <div className="all-actus__card-content">
                 <h2 className="all-actus__card-title">{news.title}</h2>
                 <p className="all-actus__card-description">{news.content}</p>
@@ -121,13 +183,13 @@ export default function AllActus() {
         </div>
 
         <div className="all-actus__footer">
-          <button
-            type="button"
+          <Button
+            variant="secondary"
             className="all-actus__back"
             onClick={() => navigate(-1)}
           >
             Retour
-          </button>
+          </Button>
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}
@@ -144,6 +206,15 @@ export default function AllActus() {
           )}
         </div>
       </div>
+      
+      {showDeleteModal && (
+        <ConfirmationModal
+          isOpen={showDeleteModal}
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+          message="Voulez-vous supprimer ce contenu ?"
+        />
+      )}
     </>
   )
 }

@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { Button } from '../../components/export'
 import StatusMessage from '../../components/StatusMessage'
 import { createContactMessage } from '../../repositories/contactRepository'
 
@@ -226,9 +227,9 @@ export default function Contact() {
             </div>
           </div>
 
-          <button type="submit" className="contact__submit" disabled={isSubmitting}>
+          <Button type="submit" className="contact__submit" disabled={isSubmitting}>
             {isSubmitting ? 'Envoi en cours...' : 'Envoyer'}
-          </button>
+          </Button>
 
           <StatusMessage status="error" message={errorMessage} />
           <StatusMessage status="success" message={successMessage} />

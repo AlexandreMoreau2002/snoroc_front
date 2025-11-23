@@ -34,3 +34,32 @@ export const postNews = async (formData) => {
         throw new Error(error.message)
     }
 }
+
+export const updateNews = async (id, formData) => {
+    try {
+        const response = await axiosInstance.patch(`/news/update/${id}`, formData, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+        return response.data
+    } catch (error) {
+        console.error("Erreur lors de la mise à jour de l'actualité :", error)
+        throw error
+    }
+}
+
+export const deleteNews = async (id) => {
+    try {
+        const response = await axiosInstance.delete(`/news/delete/${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        })
+        return response.data
+    } catch (error) {
+        console.error("Erreur lors de la suppression de l'actualité :", error)
+        throw error
+    }
+}

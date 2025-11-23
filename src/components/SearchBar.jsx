@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { FiSearch } from 'react-icons/fi'
 
 export default function SearchBar({
   value,
@@ -34,7 +35,7 @@ export default function SearchBar({
           </button>
         )}
         <span className="search-bar__icon" aria-hidden>
-          🔍
+          <FiSearch />
         </span>
       </div>
     </label>

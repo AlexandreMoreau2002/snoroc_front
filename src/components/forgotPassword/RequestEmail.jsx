@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import StatusMessage from '../StatusMessage'
 import { useNavigate } from 'react-router-dom'
+import { Button } from '../../components/export'
 import { usePasswordReset } from '../../context/PasswordResetContext'
 import { postEmailForgotPassword } from '../../repositories/userRepository'
 
@@ -42,16 +43,16 @@ export default function RequestEmail() {
           required
         />
         <div className="request-email__actions">
-          <button
-            type="button"
+          <Button
+            variant="secondary"
             className="request-email__button request-email__button-return"
             onClick={() => navigate('/Profil')}
           >
             Retour
-          </button>
-          <button type="submit" className="request-email__button-submit">
+          </Button>
+          <Button type="submit" variant="primary" className="request-email__button-submit">
             Envoyer le code
-          </button>
+          </Button>
         </div>
         <StatusMessage status="error" message={errorMessage} />
         <StatusMessage status="success" message={successMessage} />

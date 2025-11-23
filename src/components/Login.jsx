@@ -1,4 +1,4 @@
-// src/components/login.jsx
+import { Button } from './export'
 import { Link } from 'react-router-dom'
 import React, { useState } from 'react'
 import StatusMessage from './StatusMessage'
@@ -58,9 +58,9 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" className="login__button">
+        <Button type="submit" className="login__button" variant="primary">
           Se connecter
-        </button>
+        </Button>
         <StatusMessage status="error" message={errorMessage} />
         <StatusMessage status="success" message={successMessage} />
       </form>

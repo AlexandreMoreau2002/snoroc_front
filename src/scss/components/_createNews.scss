@@ -63,11 +63,6 @@
   &--btn {
     display: flex;
     justify-content: space-between;
-
-    .return,
-    .submit {
-      @include button;
-    }
   }
 
   &__error {

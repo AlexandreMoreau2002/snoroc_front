@@ -1,10 +1,10 @@
 // src/pages/visitor/User/Profile.jsx
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Login } from '../../components/export'
 import { useAuth } from '../../context/AuthContext'
-import { getProfile, patchUpdateNewsletter } from '../../repositories/userRepository'
+import { Login, Button } from '../../components/export'
 import StatusMessage from '../../components/StatusMessage'
+import { getProfile, patchUpdateNewsletter } from '../../repositories/userRepository'
 
 const STATUS_DISPLAY_DURATION = 3000
 
@@ -93,12 +93,13 @@ export default function UserProfile() {
           Je souhaite recevoir les actualités et les évènements par mail.
         </label>
       </div>
-      <button
+      <Button
         onClick={updateNewsletter}
         className="profile__button profile__button--update"
+        variant="primary"
       >
         Mettre à jour
-      </button>
+      </Button>
       <StatusMessage status="error" message={errorMessage} />
       <StatusMessage status="success" message={successMessage} />
       <h1 className="profile__title profile__title--info">
@@ -120,19 +121,21 @@ export default function UserProfile() {
         </p>
       </div>
 
-      <button
+      <Button
         onClick={() => navigate('/ResetPassword')}
         className="profile__button profile__button--password"
+        variant="secondary"
       >
         Modifier mon mot de passe
-      </button>
+      </Button>
 
-      <button
+      <Button
         onClick={handleLogout}
         className="profile__button profile__button--logout"
+        variant="secondary"
       >
         Se déconnecter
-      </button>
+      </Button>
     </div>
   )
 }

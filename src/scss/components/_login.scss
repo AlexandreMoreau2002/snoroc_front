@@ -33,8 +33,9 @@
   }
 
   &__button {
-    @include button;
     margin-top: 10px;
+    width: fit-content;
+    align-self: center;
   }
 
   &__text {

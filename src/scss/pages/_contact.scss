@@ -87,7 +87,8 @@
   }
 
   &__submit {
-    @include button;
     margin-top: 10px;
+    width: fit-content;
+    align-self: flex-end;
   }
 }

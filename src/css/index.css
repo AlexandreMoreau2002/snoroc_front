@@ -126,30 +126,9 @@ body {
   text-align: center;
 }
 .login__button {
-  background-color: var(--role-color);
-  color: #f1f1f6;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 0.5rem 1.5rem;
-  margin: 0;
-  width: 100%;
-  text-align: center;
   margin-top: 10px;
-}
-@media (min-width: 768px) {
-  .login__button {
-    font-size: 24px;
-    width: auto;
-  }
-}
-.login__button:hover {
-  filter: brightness(1.2);
-}
-.login__button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  width: fit-content;
+  align-self: center;
 }
 .login__text {
   font-size: 18px;
@@ -533,6 +512,37 @@ body {
     transform: rotate(360deg);
   }
 }
+.btn {
+  padding: 10px 30px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+  min-width: 120px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.btn:hover {
+  opacity: 0.8;
+}
+.btn:active {
+  transform: scale(0.98);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn--primary {
+  background-color: var(--role-color);
+}
+.btn--secondary {
+  background-color: var(--role-color);
+}
+
 .header__nav {
   display: flex;
   gap: 10px;
@@ -733,35 +743,6 @@ body {
 .create-news--btn {
   display: flex;
   justify-content: space-between;
-}
-.create-news--btn .return,
-.create-news--btn .submit {
-  background-color: var(--role-color);
-  color: #f1f1f6;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 0.5rem 1.5rem;
-  margin: 0;
-  width: 100%;
-  text-align: center;
-}
-@media (min-width: 768px) {
-  .create-news--btn .return,
-  .create-news--btn .submit {
-    font-size: 24px;
-    width: auto;
-  }
-}
-.create-news--btn .return:hover,
-.create-news--btn .submit:hover {
-  filter: brightness(1.2);
-}
-.create-news--btn .return:disabled,
-.create-news--btn .submit:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
 .create-news__error {
   background-color: #d32f2f;
@@ -1125,6 +1106,36 @@ body {
     transform: translate(12px, 12px) scale(1.05);
   }
 }
+.confirmation-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.confirmation-modal-content {
+  background-color: #1a1a1a;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  border: 1px solid #8b0000;
+}
+.confirmation-modal-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.confirmation-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
 .request-email {
   width: 100%;
   max-width: 700px;
@@ -1227,35 +1238,6 @@ body {
     align-items: stretch;
     text-align: center;
   }
-}
-.request-email__actions .request-email__button-submit,
-.request-email__actions .request-email__button-return {
-  background-color: var(--role-color);
-  color: #f1f1f6;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 0.5rem 1.5rem;
-  margin: 0;
-  width: 100%;
-  text-align: center;
-}
-@media (min-width: 768px) {
-  .request-email__actions .request-email__button-submit,
-  .request-email__actions .request-email__button-return {
-    font-size: 24px;
-    width: auto;
-  }
-}
-.request-email__actions .request-email__button-submit:hover,
-.request-email__actions .request-email__button-return:hover {
-  filter: brightness(1.2);
-}
-.request-email__actions .request-email__button-submit:disabled,
-.request-email__actions .request-email__button-return:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
 
 .reset-password {
@@ -1507,34 +1489,8 @@ body {
   margin-top: 24px;
 }
 .actus .news-see-all {
-  background-color: var(--role-color);
-  color: #f1f1f6;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 0.5rem 1.5rem;
-  margin: 0;
-  width: 100%;
-  text-align: center;
   margin-left: 0;
-  padding-inline: 18px;
-  white-space: nowrap;
-  justify-self: end;
-  min-width: 110px;
-}
-@media (min-width: 768px) {
-  .actus .news-see-all {
-    font-size: 24px;
-    width: auto;
-  }
-}
-.actus .news-see-all:hover {
-  filter: brightness(1.2);
-}
-.actus .news-see-all:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  justify-self: start;
 }
 .actus .news-pagination {
   justify-self: center;
@@ -1585,36 +1541,8 @@ body {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 .actus .admin-button {
-  background-color: var(--role-color);
-  color: #f1f1f6;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 0.5rem 1.5rem;
-  margin: 0;
-  width: 100%;
-  text-align: center;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   align-self: flex-end;
   margin: 30px 0 0 0;
-  position: static;
-  transform: none;
-}
-@media (min-width: 768px) {
-  .actus .admin-button {
-    font-size: 24px;
-    width: auto;
-  }
-}
-.actus .admin-button:hover {
-  filter: brightness(1.2);
-}
-.actus .admin-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
 @media (max-width: 768px) {
   .actus {
@@ -1995,30 +1923,9 @@ body {
   padding-left: 10px;
 }
 .contact__submit {
-  background-color: var(--role-color);
-  color: #f1f1f6;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 0.5rem 1.5rem;
-  margin: 0;
-  width: 100%;
-  text-align: center;
   margin-top: 10px;
-}
-@media (min-width: 768px) {
-  .contact__submit {
-    font-size: 24px;
-    width: auto;
-  }
-}
-.contact__submit:hover {
-  filter: brightness(1.2);
-}
-.contact__submit:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  width: fit-content;
+  align-self: flex-end;
 }
 
 .signup {
@@ -2183,30 +2090,7 @@ body {
   }
 }
 .signup__form__actions--submit {
-  background-color: var(--role-color);
-  color: #f1f1f6;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 0.5rem 1.5rem;
-  margin: 0;
-  width: 100%;
-  text-align: center;
   margin: 10px auto;
-}
-@media (min-width: 768px) {
-  .signup__form__actions--submit {
-    font-size: 24px;
-    width: auto;
-  }
-}
-.signup__form__actions--submit:hover {
-  filter: brightness(1.2);
-}
-.signup__form__actions--submit:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
 .signup__form__group--checkbox {
   display: flex;
@@ -2429,45 +2313,25 @@ body {
   border-radius: 15px;
   padding: 10px;
 }
-.profile__button {
-  background-color: var(--role-color);
-  color: #f1f1f6;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 0.5rem 1.5rem;
-  margin: 0;
-  width: 100%;
-  text-align: center;
-}
-@media (min-width: 768px) {
-  .profile__button {
-    font-size: 24px;
-    width: auto;
-  }
-}
-.profile__button:hover {
-  filter: brightness(1.2);
-}
-.profile__button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
 .profile__button--update {
   display: block;
   margin-top: 40px;
   margin-left: auto;
+  margin-right: 0;
+  width: fit-content;
 }
 .profile__button--password {
   display: block;
   margin-top: 40px;
   margin-bottom: 40px;
   margin-left: auto;
+  margin-right: 0;
+  width: fit-content;
 }
 .profile__button--logout {
   display: block;
   margin: auto;
+  width: fit-content;
 }
 .profile__loading {
   text-align: center;
@@ -2580,34 +2444,6 @@ body {
 .all-actus__pagination {
   margin: 0;
 }
-.all-actus__back {
-  background-color: var(--role-color);
-  color: #f1f1f6;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 0.5rem 1.5rem;
-  margin: 0;
-  width: 100%;
-  text-align: center;
-  background-color: var(--role-color);
-  padding-inline: 18px;
-  min-width: 110px;
-}
-@media (min-width: 768px) {
-  .all-actus__back {
-    font-size: 24px;
-    width: auto;
-  }
-}
-.all-actus__back:hover {
-  filter: brightness(1.2);
-}
-.all-actus__back:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
 .all-actus__ghost {
   visibility: hidden;
   pointer-events: none;
@@ -2639,7 +2475,12 @@ body {
     gap: 12px;
   }
   .all-actus__footer .pagination {
+    order: 0;
+  }
+  .all-actus__footer .all-actus__back {
     order: 1;
+    align-self: flex-start;
+    width: fit-content;
   }
   .all-actus__ghost {
     display: none;
@@ -2675,6 +2516,35 @@ body {
 
 .slide-left {
   animation: slideInLeft 0.25s ease-out forwards;
+}
+
+.all-actus__admin-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.all-actus__admin-overlay .all-actus__admin-btn {
+  background: none;
+  border: none;
+  color: #ff0000;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 10px;
+  transition: transform 0.2s ease;
+}
+.all-actus__admin-overlay .all-actus__admin-btn:hover {
+  transform: scale(1.1);
+}
+
+.all-actus__card:hover .all-actus__admin-overlay {
+  opacity: 1;
 }
 
 .news-detail {
@@ -2752,31 +2622,8 @@ body {
   line-height: 1.7;
 }
 .news-detail__back {
-  background-color: var(--role-color);
-  color: #f1f1f6;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 0.5rem 1.5rem;
-  margin: 0;
-  width: 100%;
-  text-align: center;
   margin-top: 20px;
   align-self: flex-start;
-}
-@media (min-width: 768px) {
-  .news-detail__back {
-    font-size: 24px;
-    width: auto;
-  }
-}
-.news-detail__back:hover {
-  filter: brightness(1.2);
-}
-.news-detail__back:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
 @media (max-width: 768px) {
   .news-detail {
@@ -3115,29 +2962,7 @@ body {
   }
 }
 .reset-password-action__button, .reset-password-action__return {
-  background-color: var(--role-color);
-  color: #f1f1f6;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 0.5rem 1.5rem;
-  margin: 0;
-  width: 100%;
-  text-align: center;
-}
-@media (min-width: 768px) {
-  .reset-password-action__button, .reset-password-action__return {
-    font-size: 24px;
-    width: auto;
-  }
-}
-.reset-password-action__button:hover, .reset-password-action__return:hover {
-  filter: brightness(1.2);
-}
-.reset-password-action__button:disabled, .reset-password-action__return:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  width: fit-content;
 }
 
 .forgot-password {
