@@ -1,3 +1,5 @@
 import CreateNews from "./CreateNews";
 
-export { CreateNews }
+import EditAbout from "./EditAbout";
+
+export { CreateNews, EditAbout }

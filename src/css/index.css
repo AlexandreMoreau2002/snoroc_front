@@ -1741,6 +1741,10 @@ body {
 .about__body p {
   margin: 0;
 }
+.about .admin-button {
+  align-self: flex-end;
+  margin: 30px 0 0 0;
+}
 @media (max-width: 860px) {
   .about__intro {
     grid-template-columns: 1fr;
@@ -1766,6 +1770,11 @@ body {
   }
   .about__lead, .about__body {
     font-size: 18px;
+  }
+  .about .admin-button {
+    align-self: flex-end;
+    margin: 25px 0 0 0;
+    width: fit-content;
   }
 }
 

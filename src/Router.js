@@ -7,7 +7,7 @@ import { useLoading } from './context/LoadingContext'
 import { Header, Footer, PrivateRoute, Loader } from './components/export'
 
 // Imports des pages admin
-import { CreateNews } from './pages/admin/export.js'
+import { CreateNews, EditAbout } from './pages/admin/export.js'
 
 // Imports des pages classiques
 import {
@@ -50,6 +50,7 @@ export default function Router() {
               <Route element={<PrivateRoute />}>
                 <Route path="/createNews" element={<CreateNews />} />
                 <Route path="/admin/actus/edit/:id" element={<CreateNews />} />
+                <Route path="/admin/about/edit" element={<EditAbout />} />
               </Route>
 
               {/* Event */}
