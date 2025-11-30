@@ -133,7 +133,7 @@ export default function EditAbout() {
           >
             Retour
           </Button>
-          <Button type="submit" variant="primary">
+          <Button type="submit" variant="secondary">
             Modifier
           </Button>
         </div>
