@@ -80,12 +80,12 @@ export default function CreateNews() {
         setContent('')
         setThumbnail(null)
         setFileName('Aucun fichier sélectionné')
-        if (fileInputRef.current) fileInputRef.current.value = null
+        fileInputRef.current?.value && (fileInputRef.current.value = null)
       }
       
       setTimeout(() => {
         setSuccessMessage('')
-        if (isEditMode) navigate('/actus/all')
+        isEditMode && navigate('/actus/all')
       }, 2000)
     } catch (error) {
       console.log('Erreur : ', error.message)
