@@ -3,6 +3,7 @@ import StatusMessage from '../StatusMessage'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { usePasswordReset } from '../../context/PasswordResetContext'
 import { postResetForgotPassword } from '../../repositories/userRepository'
+import { Button } from '../export'
 
 export default function ResetPassword() {
   const navigate = useNavigate()
@@ -81,13 +82,14 @@ export default function ResetPassword() {
           disabled={loading}
         />
 
-        <button
+        <Button
           className="reset-password__button"
           type="submit"
           disabled={loading}
+          variant="primary"
         >
           {loading ? 'Modification en cours...' : 'Changer le mot de passe'}
-        </button>
+        </Button>
         <StatusMessage status="error" message={errorMessage} />
         <StatusMessage status="success" message={successMessage} />
       </form>
