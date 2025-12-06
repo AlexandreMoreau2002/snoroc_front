@@ -10,7 +10,11 @@ const NAV_LINKS = [
     to: '/',
     aliases: ['/home', '/news'],
   },
-  { label: 'Event', to: '/events/all', aliases: ['/Event', '/event'] },
+  {
+    label: 'Event',
+    to: '/event',
+    aliases: ['/Event', '/events/all', '/events'],
+  },
   { label: 'Média', to: '/Media' },
   { label: 'A propos', to: '/A-propos' },
   { label: 'Contact', to: '/Contact' },
