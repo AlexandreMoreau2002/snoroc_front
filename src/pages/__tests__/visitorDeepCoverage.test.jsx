@@ -1,22 +1,21 @@
-import React from 'react'
-import { act, render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { HelmetProvider } from 'react-helmet-async'
-import { MemoryRouter, Route, Routes } from 'react-router-dom'
-import About from '../visitor/About'
-import ActuDetails from '../visitor/ActuDetails'
-import AllActus from '../visitor/AllActus'
-import Contact from '../visitor/Contact'
-import Event from '../visitor/Event'
-import AllEvents from '../visitor/AllEvents'
 import Home from '../visitor/Home'
 import Media from '../visitor/Media'
-import TermsOfService from '../visitor/TermsOfService'
+import Event from '../visitor/Event'
+import About from '../visitor/About'
+import Contact from '../visitor/Contact'
+import AllActus from '../visitor/AllActus'
+import AllEvents from '../visitor/AllEvents'
+import ActuDetails from '../visitor/ActuDetails'
+import userEvent from '@testing-library/user-event'
+import { HelmetProvider } from 'react-helmet-async'
 import { useAuth } from '../../context/AuthContext'
-import { deleteNews, getAllNews, getNewsById } from '../../repositories/newsRepository'
-import { deleteEvent, getAllEvents } from '../../repositories/eventRepository'
-import { createContactMessage } from '../../repositories/contactRepository'
+import TermsOfService from '../visitor/TermsOfService'
 import { getAbout } from '../../repositories/aboutRepository'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { act, render, screen, waitFor } from '@testing-library/react'
+import { createContactMessage } from '../../repositories/contactRepository'
+import { deleteEvent, getAllEvents } from '../../repositories/eventRepository'
+import { deleteNews, getAllNews, getNewsById } from '../../repositories/newsRepository'
 
 const mockNavigate = jest.fn()
 
@@ -294,7 +293,7 @@ describe('Visitor flows deep coverage', () => {
     consoleSpy.mockRestore()
   })
 
-  it('renders static informational visitor pages', () => {
+  it('renders static informational visitor pages', async () => {
     renderWithRouter(
       <Routes>
         <Route path="/event" element={<Event />} />
@@ -302,6 +301,8 @@ describe('Visitor flows deep coverage', () => {
       ['/event']
     )
     expect(screen.getByRole('heading', { name: /Event/i })).toBeInTheDocument()
+    await waitFor(() => expect(getAllEvents).toHaveBeenCalled())
+    await act(async () => {})
 
     renderWithRouter(
       <Routes>

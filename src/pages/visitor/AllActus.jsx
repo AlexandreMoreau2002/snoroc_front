@@ -1,23 +1,23 @@
 import { Helmet } from 'react-helmet-async'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
+import { formatDate } from '../../utils/formatting'
 import { FiEdit2, FiEye, FiTrash2 } from 'react-icons/fi'
 import Pagination from '../../components/Pagination/Pagination'
-import { useAuth } from '../../context/AuthContext'
-import { Button, ConfirmationModal, SearchBar } from '../../components/export'
 import { usePaginatedSearch } from '../../hooks/usePaginatedSearch'
-import { formatDate } from '../../utils/formatting'
 import { deleteNews, getAllNews } from '../../repositories/newsRepository'
+import { Button, ConfirmationModal, SearchBar } from '../../components/export'
 
 const ITEMS_PER_PAGE = 6
 
 export default function AllActus() {
-  const navigate = useNavigate()
   const { isAdmin } = useAuth()
-  const [newsData, setNewsData] = useState([])
+  const navigate = useNavigate()
   const [search, setSearch] = useState('')
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [newsData, setNewsData] = useState([])
   const [newsToDelete, setNewsToDelete] = useState(null)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   const {
     currentItems: currentNews,

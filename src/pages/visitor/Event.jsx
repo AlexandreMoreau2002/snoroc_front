@@ -1,13 +1,12 @@
+import { FiMapPin } from 'react-icons/fi'
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
-import { FiMapPin } from 'react-icons/fi'
-
 import { Button } from '../../components/export'
 import { useAuth } from '../../context/AuthContext'
-import { getAllEvents } from '../../repositories/eventRepository'
-import Pagination from '../../components/Pagination/Pagination'
 import { formatDate } from '../../utils/formatting'
+import Pagination from '../../components/Pagination/Pagination'
+import { getAllEvents } from '../../repositories/eventRepository'
 import { useFeaturedPagination } from '../../hooks/useFeaturedPagination'
 
 const EVENTS_PER_PAGE = 3
@@ -60,6 +59,8 @@ export default function Event() {
       if (event.thumbnail) {
         const img = new Image()
         img.src = event.thumbnail
+      } else {
+        // No thumbnail to preload
       }
     })
   }, [currentPage, restItems])

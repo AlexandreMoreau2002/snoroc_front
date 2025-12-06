@@ -13,7 +13,6 @@ const NAV_LINKS = [
   {
     label: 'Event',
     to: '/event',
-    aliases: ['/Event', '/events/all', '/events'],
   },
   { label: 'Média', to: '/Media' },
   { label: 'A propos', to: '/A-propos' },

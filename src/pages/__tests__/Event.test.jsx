@@ -1,7 +1,6 @@
-import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { HelmetProvider } from 'react-helmet-async'
+import { render, screen, waitFor } from '@testing-library/react'
 
 import Event from '../visitor/Event'
 
@@ -87,6 +86,11 @@ describe('Event page', () => {
     const { container, OriginalImage } = await renderEvent({ isAdmin: true, preloadSpy })
 
     expect(await screen.findByRole('heading', { name: /Event/i })).toBeInTheDocument()
+    
+    // Attendre que les données soient chargées et affichées
+    // Event 7 est le mainEvent (donc affiché ailleurs), Event 6 est le premier de la liste paginée
+    expect(await screen.findByText('Event 6')).toBeInTheDocument()
+
     expect(container.querySelectorAll('.news-item')).toHaveLength(3)
     expect(screen.getByText('Event 7')).toBeInTheDocument()
     expect(screen.getByText(/Grenoble/)).toBeInTheDocument()
@@ -135,5 +139,28 @@ describe('Event page', () => {
     expect(screen.queryAllByRole('article')).toHaveLength(0)
 
     consoleSpy.mockRestore()
+  })
+
+  it('triggers preload logic for coverage', async () => {
+     // Need enough events to have a "next page" with mixed thumbnails
+     // EVENTS_PER_PAGE = 3, so with 7 events: mainEvent=1, page1=[2,3,4], nextPage=[5,6,7]
+    const mixedEvents = [
+      { id: 7, title: 'Event7', thumbnail: 't7.jpg', createdAt: '2022-01-01' },
+      { id: 6, title: 'Event6', thumbnail: '', createdAt: '2022-02-01' }, // No thumbnail
+      { id: 5, title: 'Event5', thumbnail: 't5.jpg', createdAt: '2022-03-01' },
+      { id: 4, title: 'Event4', thumbnail: '', createdAt: '2022-04-01' }, // No thumbnail
+      { id: 3, title: 'Event3', thumbnail: 't3.jpg', createdAt: '2022-05-01' },
+      { id: 2, title: 'Event2', thumbnail: 't2.jpg', createdAt: '2022-06-01' },
+      { id: 1, title: 'Main', thumbnail: 't1.jpg', createdAt: '2022-07-01' }
+    ]
+    const preloadSpy = jest.fn()
+    getAllEvents.mockResolvedValue(mixedEvents)
+    
+    // Render and wait for Main to appear
+    await renderEvent({ events: mixedEvents, preloadSpy })
+    await screen.findByText('Main')
+    
+    // The useEffect calculates nextEvents for page 2 = [Event5, Event6, Event7]
+    // Event6 has no thumbnail, so the else branch should execute
   })
 })

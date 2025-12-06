@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Helmet } from 'react-helmet-async'
-import { useNavigate, useParams } from 'react-router-dom'
 import { FiMapPin } from 'react-icons/fi'
+import { Helmet } from 'react-helmet-async'
 import { Button } from '../../components/export'
-import { formatDate, splitContentToParagraphs } from '../../utils/formatting'
+import { useEffect, useMemo, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { getEventById } from '../../repositories/eventRepository'
+import { formatDate, splitContentToParagraphs } from '../../utils/formatting'
 
 export default function EventDetails() {
   const { id } = useParams()

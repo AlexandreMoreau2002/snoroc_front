@@ -1,12 +1,12 @@
+import { Button } from '../../components/export'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Button } from '../../components/export'
 import { getEventById, postEvent, updateEvent } from '../../repositories/eventRepository'
 
 export default function CreateEvent() {
-  const navigate = useNavigate()
   const { id } = useParams()
   const isEditMode = !!id
+  const navigate = useNavigate()
   const fileInputRef = useRef(null)
 
   const [title, setTitle] = useState('')
@@ -91,9 +91,7 @@ export default function CreateEvent() {
         setAddress('')
         setThumbnail(null)
         setFileName('Aucun fichier sélectionné')
-        if (fileInputRef.current?.value) {
-          fileInputRef.current.value = null
-        }
+        fileInputRef.current.value = null
       }
 
       setTimeout(() => {

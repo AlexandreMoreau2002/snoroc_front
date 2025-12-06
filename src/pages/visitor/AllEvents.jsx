@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
-import { FiEdit2, FiEye, FiMapPin, FiTrash2 } from 'react-icons/fi'
-import Pagination from '../../components/Pagination/Pagination'
 import { useAuth } from '../../context/AuthContext'
-import { Button, ConfirmationModal, SearchBar } from '../../components/export'
-import { usePaginatedSearch } from '../../hooks/usePaginatedSearch'
 import { formatDate } from '../../utils/formatting'
+import Pagination from '../../components/Pagination/Pagination'
+import { FiEdit2, FiEye, FiMapPin, FiTrash2 } from 'react-icons/fi'
+import { usePaginatedSearch } from '../../hooks/usePaginatedSearch'
+import { Button, ConfirmationModal, SearchBar } from '../../components/export'
 import { deleteEvent, getAllEvents } from '../../repositories/eventRepository'
 
 const ITEMS_PER_PAGE = 6
@@ -69,8 +69,6 @@ export default function AllEvents() {
   }
 
   const confirmDelete = async () => {
-    if (!eventToDelete) return
-
     try {
       await deleteEvent(eventToDelete)
       setEvents(events.filter((event) => event.id !== eventToDelete))
@@ -90,8 +88,6 @@ export default function AllEvents() {
     const nextStartIndex = currentPage * ITEMS_PER_PAGE
     const nextEndIndex = nextStartIndex + ITEMS_PER_PAGE
     const nextEvents = filteredItems.slice(nextStartIndex, nextEndIndex)
-
-    if (typeof Image === 'undefined') return
 
     nextEvents.forEach((event) => {
       if (event.thumbnail) {

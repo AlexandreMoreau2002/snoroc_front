@@ -2,8 +2,8 @@ import { Helmet } from 'react-helmet-async'
 import { Button } from '../../components/export'
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { formatDate, splitContentToParagraphs } from '../../utils/formatting'
 import { getNewsById } from '../../repositories/newsRepository'
+import { formatDate, splitContentToParagraphs } from '../../utils/formatting'
 
 export default function ActuDetails() {
   const { id } = useParams()

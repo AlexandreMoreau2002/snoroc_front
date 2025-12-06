@@ -3,9 +3,9 @@ import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components/export'
 import { useAuth } from '../../context/AuthContext'
+import { formatDate } from '../../utils/formatting'
 import { getAllNews } from '../../repositories/newsRepository'
 import Pagination from '../../components/Pagination/Pagination'
-import { formatDate } from '../../utils/formatting'
 import { useFeaturedPagination } from '../../hooks/useFeaturedPagination'
 
 export default function Home() {

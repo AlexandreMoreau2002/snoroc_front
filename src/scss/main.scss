@@ -4,6 +4,17 @@
 @import './config/mixin';
 @import './config/import';
 
+@import './pages/Home';
+@import './pages/about';
+@import './pages/contact';
+@import './pages/signup';
+@import './pages/Profile';
+@import './pages/AllActus';
+@import './pages/ActuDetails';
+@import './pages/verifyEmail';
+@import './pages/resetPassword';
+@import './pages/forgotPassword';
+
 @import './components/login';
 @import './components/header';
 @import './components/footer';
@@ -18,14 +29,3 @@
 @import './components/confirmationModal';
 @import './components/forgotPassword/requestEmail';
 @import './components/forgotPassword/resetForgotPassword';
-
-@import './pages/Home';
-@import './pages/about';
-@import './pages/contact';
-@import './pages/signup';
-@import './pages/Profile';
-@import './pages/AllActus';
-@import './pages/ActuDetails';
-@import './pages/verifyEmail';
-@import './pages/resetPassword';
-@import './pages/forgotPassword';
