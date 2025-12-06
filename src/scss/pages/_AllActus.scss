@@ -19,7 +19,7 @@
     gap: 20px;
   }
 
-  &__card {
+  &__card { 
     position: relative;
     padding-top: 64%;
     border-radius: 14px;
@@ -85,6 +85,23 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  &__card-meta {
+    margin-top: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.95rem;
+    color: rgba($white, 0.9);
+    flex-wrap: wrap;
+  }
+
+  &__card-address {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
   }
 
   &__card-date {

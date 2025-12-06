@@ -301,7 +301,7 @@ describe('Visitor flows deep coverage', () => {
       </Routes>,
       ['/event']
     )
-    expect(screen.getByRole('heading', { name: /Événements/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /Event/i })).toBeInTheDocument()
 
     renderWithRouter(
       <Routes>

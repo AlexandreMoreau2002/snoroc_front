@@ -43,7 +43,7 @@ export default function AllEvents() {
         })
         setEvents(sortedEvents)
       } catch (error) {
-        console.error('Erreur lors du chargement des évènements :', error)
+        console.error('Erreur lors du chargement des events :', error)
         setEvents([])
       }
     }
@@ -104,10 +104,9 @@ export default function AllEvents() {
   return (
     <>
       <Helmet>
-        <title>Événements</title>
+        <title>Tous les events</title>
       </Helmet>
       <div className="all-events">
-        <h1 className="page__title">Événements</h1>
         <div className="all-events__top">
           <SearchBar value={search} onChange={setSearch} />
         </div>
@@ -165,7 +164,7 @@ export default function AllEvents() {
             </article>
           ))}
           {currentItems.length === 0 && (
-            <p className="all-events__empty">Aucun évènement trouvé.</p>
+            <p className="all-events__empty">Aucun event trouvé.</p>
           )}
         </div>
 

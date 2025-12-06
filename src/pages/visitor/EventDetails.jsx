@@ -47,7 +47,7 @@ export default function EventDetails() {
   return (
     <>
       <Helmet>
-        <title>{event?.title ? `${event.title} – Évènement` : 'Évènement'}</title>
+        <title>{event?.title ? `${event.title} – Event` : 'Event'}</title>
       </Helmet>
       <main className="event-detail">
         <section className="event-detail__card">

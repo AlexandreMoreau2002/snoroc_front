@@ -7,7 +7,7 @@ import HeaderMobileNav from '../HeaderMobileNav'
 
 const LINKS = [
   { label: 'Home', to: '/', aliases: ['/home'] },
-  { label: 'Évènements', to: '/events/all', aliases: ['/Event', '/event'] },
+  { label: 'Event', to: '/events/all', aliases: ['/Event', '/event'] },
 ]
 
 describe('HeaderMobileNav', () => {
