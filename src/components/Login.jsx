@@ -1,9 +1,10 @@
-import { Button } from './export'
-import { Link } from 'react-router-dom'
 import React, { useState } from 'react'
-import StatusMessage from './StatusMessage'
+import { Link } from 'react-router-dom'
+
 import { useAuth } from '../context/AuthContext'
 import { postLogin } from '../repositories/userRepository'
+import { Button } from './export'
+import StatusMessage from './StatusMessage'
 
 export default function Login() {
   const { login } = useAuth()
@@ -44,6 +45,7 @@ export default function Login() {
             value={email}
             placeholder="Email *"
             className="login__input"
+            autoComplete="email"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -55,6 +57,7 @@ export default function Login() {
             value={password}
             className="login__input"
             placeholder="Mot de passe *"
+            autoComplete="current-password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>

@@ -2,22 +2,22 @@ import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import { FiMapPin } from 'react-icons/fi'
-import Pagination from '../../components/Pagination/Pagination'
-import { Button } from '../../components/export'
+
 import { useAuth } from '../../context/AuthContext'
 import { useFeaturedPagination } from '../../hooks/useFeaturedPagination'
-import { formatDate } from '../../utils/formatting'
 import { getAllEvents } from '../../repositories/eventRepository'
-
-const EVENTS_PER_PAGE = 3
+import { formatDate } from '../../utils/formatting'
+import { Button } from '../../components/export'
+import Pagination from '../../components/Pagination/Pagination'
 
 export default function Event() {
-  const navigate = useNavigate()
   const { isAdmin } = useAuth()
-  const [events, setEvents] = useState([])
+  const navigate = useNavigate()
+  const [eventsData, setEventsData] = useState([])
+  const EVENTS_PER_PAGE = 3
 
   const {
-    currentItems,
+    currentItems: currentEvents,
     currentPage,
     direction,
     handlePageChange,
@@ -25,21 +25,21 @@ export default function Event() {
     mainItem: mainEvent,
     restItems,
     totalPages,
-  } = useFeaturedPagination(events, EVENTS_PER_PAGE)
+  } = useFeaturedPagination(eventsData, EVENTS_PER_PAGE)
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const response = await getAllEvents()
-        const sortedEvents = [...response].sort((a, b) => {
-          const dateA = new Date(a.createdAt || 0).getTime()
-          const dateB = new Date(b.createdAt || 0).getTime()
-          return dateB - dateA
-        })
-        setEvents(sortedEvents)
+        if (response.length > 0) {
+          const reversedEvents = [...response].reverse()
+          setEventsData(reversedEvents)
+        } else {
+          setEventsData([])
+        }
       } catch (error) {
-        console.error('Erreur lors du chargement des events :', error)
-        setEvents([])
+        console.error('Erreur lors de la récupération des évènements :', error)
+        setEventsData([])
       }
     }
 
@@ -51,15 +51,13 @@ export default function Event() {
     const nextEndIndex = nextStartIndex + EVENTS_PER_PAGE
     const nextEvents = restItems.slice(nextStartIndex, nextEndIndex)
 
-    if (typeof Image === 'undefined') return
-
     nextEvents.forEach((event) => {
       if (event.thumbnail) {
         const img = new Image()
         img.src = event.thumbnail
       }
     })
-  }, [EVENTS_PER_PAGE, currentPage, restItems])
+  }, [currentPage, restItems])
 
   const openEvent = (eventId) => {
     navigate(`/events/${eventId}`)
@@ -70,48 +68,48 @@ export default function Event() {
       <Helmet>
         <title>Event</title>
       </Helmet>
-      <div className="events">
+      <div className="actus">
         <h1 className="page__title">Event</h1>
-
         {mainEvent && (
           <div
-            className="main-event"
+            className="main-actus"
             role="button"
             tabIndex={0}
             onClick={() => openEvent(mainEvent.id)}
           >
-            <div className="main-event-media">
+            <div className="main-actus-media">
               <img src={mainEvent.thumbnail} alt={mainEvent.title} />
             </div>
-            <div className="main-event-content">
+            <div className="main-actus-content">
               <div>
-                <h2 className="main-event-title">{mainEvent.title}</h2>
-                <p className="main-event-description">{mainEvent.content}</p>
-              </div>
-              <div className="main-event-meta">
+                <h2 className="main-actus-title">{mainEvent.title}</h2>
                 {mainEvent.address && (
-                  <p className="main-event-address">
+                  <p className="main-actus-address">
                     <FiMapPin aria-hidden="true" /> {mainEvent.address}
                   </p>
                 )}
-                <p className="main-event-date">{formatDate(mainEvent.createdAt)}</p>
+                <p className="main-actus-description">{mainEvent.content}</p>
               </div>
+              <p className="main-actus-date">
+                {formatDate(mainEvent.date || mainEvent.createdAt)}
+              </p>
             </div>
           </div>
         )}
-
-        <div key={currentPage} className={`events-list slide-${direction}`}>
-          {currentItems.map((event) => (
+        <div key={currentPage} className={`news-list slide-${direction}`}>
+          {currentEvents.map((event) => (
             <article
               key={event.id}
-              className="event-item"
-              style={{ backgroundImage: `url(${event.thumbnail})` }}
+              className="news-item"
+              style={{
+                backgroundImage: `url(${event.thumbnail})`,
+              }}
               role="button"
               tabIndex={0}
               onClick={() => openEvent(event.id)}
             >
-              <div className="event-content">
-                <h2 className="event-title">{event.title}</h2>
+              <div className="news-content">
+                <h2 className="news-title">{event.title}</h2>
                 {event.address && (
                   <p className="event-location">
                     <FiMapPin aria-hidden="true" /> {event.address}
@@ -121,12 +119,11 @@ export default function Event() {
             </article>
           ))}
         </div>
-
-        <div className="events-controls">
+        <div className="news-controls">
           {hasPagination && (
             <button
               type="button"
-              className="events-see-all events-see-all--ghost"
+              className="news-see-all news-see-all--ghost"
               aria-hidden="true"
               tabIndex={-1}
               disabled
@@ -141,14 +138,13 @@ export default function Event() {
             />
           )}
           <Button
-            className="events-see-all"
+            className="news-see-all"
             onClick={() => navigate('/events/all')}
             variant="secondary"
           >
             Tout voir
           </Button>
         </div>
-
         {isAdmin && (
           <Button
             className="admin-button"
