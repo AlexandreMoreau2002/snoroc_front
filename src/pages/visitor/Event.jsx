@@ -3,18 +3,19 @@ import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import { FiMapPin } from 'react-icons/fi'
 
-import { useAuth } from '../../context/AuthContext'
-import { useFeaturedPagination } from '../../hooks/useFeaturedPagination'
-import { getAllEvents } from '../../repositories/eventRepository'
-import { formatDate } from '../../utils/formatting'
 import { Button } from '../../components/export'
+import { useAuth } from '../../context/AuthContext'
+import { getAllEvents } from '../../repositories/eventRepository'
 import Pagination from '../../components/Pagination/Pagination'
+import { formatDate } from '../../utils/formatting'
+import { useFeaturedPagination } from '../../hooks/useFeaturedPagination'
+
+const EVENTS_PER_PAGE = 3
 
 export default function Event() {
   const { isAdmin } = useAuth()
   const navigate = useNavigate()
   const [eventsData, setEventsData] = useState([])
-  const EVENTS_PER_PAGE = 3
 
   const {
     currentItems: currentEvents,
@@ -38,13 +39,17 @@ export default function Event() {
           setEventsData([])
         }
       } catch (error) {
-        console.error('Erreur lors de la récupération des évènements :', error)
+        console.error('Erreur lors du chargement des events :', error)
         setEventsData([])
       }
     }
 
     fetchEvents()
   }, [])
+
+  const openEvent = (eventId) => {
+    navigate(`/events/${eventId}`)
+  }
 
   useEffect(() => {
     const nextStartIndex = currentPage * EVENTS_PER_PAGE
@@ -58,10 +63,6 @@ export default function Event() {
       }
     })
   }, [currentPage, restItems])
-
-  const openEvent = (eventId) => {
-    navigate(`/events/${eventId}`)
-  }
 
   return (
     <>

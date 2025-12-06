@@ -87,7 +87,7 @@ describe('Event page', () => {
     const { container, OriginalImage } = await renderEvent({ isAdmin: true, preloadSpy })
 
     expect(await screen.findByRole('heading', { name: /Event/i })).toBeInTheDocument()
-    expect(container.querySelectorAll('.event-item')).toHaveLength(3)
+    expect(container.querySelectorAll('.news-item')).toHaveLength(3)
     expect(screen.getByText('Event 7')).toBeInTheDocument()
     expect(screen.getByText(/Grenoble/)).toBeInTheDocument()
 
@@ -99,10 +99,10 @@ describe('Event page', () => {
 
     await user.click(screen.getByLabelText('Next'))
     expect(screen.getByText('page-2')).toBeInTheDocument()
-    expect(container.querySelector('.events-list')?.className).toContain('slide-right')
+    expect(container.querySelector('.news-list')?.className).toContain('slide-right')
 
     await user.click(screen.getByLabelText('Prev'))
-    expect(container.querySelector('.events-list')?.className).toContain('slide-left')
+    expect(container.querySelector('.news-list')?.className).toContain('slide-left')
 
     await user.click(screen.getByRole('button', { name: 'Tout voir' }))
     expect(mockNavigate).toHaveBeenCalledWith('/events/all')
