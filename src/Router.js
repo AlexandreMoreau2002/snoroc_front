@@ -7,7 +7,7 @@ import { useLoading } from './context/LoadingContext'
 import { Header, Footer, PrivateRoute, Loader } from './components/export'
 
 // Imports des pages admin
-import { CreateNews, EditAbout } from './pages/admin/export.js'
+import { CreateEvent, CreateNews, EditAbout } from './pages/admin/export.js'
 
 // Imports des pages classiques
 import {
@@ -20,6 +20,8 @@ import {
   Profile,
   AllActus,
   ActuDetails,
+  AllEvents,
+  EventDetails,
   LegalNotice,
   VerifyEmail,
   ResetPassword,
@@ -51,9 +53,14 @@ export default function Router() {
                 <Route path="/createNews" element={<CreateNews />} />
                 <Route path="/admin/actus/edit/:id" element={<CreateNews />} />
                 <Route path="/admin/about/edit" element={<EditAbout />} />
+                <Route path="/createEvent" element={<CreateEvent />} />
+                <Route path="/admin/events/edit/:id" element={<CreateEvent />} />
               </Route>
 
               {/* Event */}
+              <Route path="/Events/all" element={<AllEvents />} />
+              <Route path="/Events/:id" element={<EventDetails />} />
+              <Route path="/event" element={<Event />} />
               <Route path="/Event" element={<Event />} />
 
               {/* Media */}

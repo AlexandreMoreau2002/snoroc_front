@@ -70,6 +70,19 @@ jest.mock('../../repositories/newsRepository', () => ({
   }),
 }))
 
+jest.mock('../../repositories/eventRepository', () => ({
+  getAllEvents: jest.fn().mockResolvedValue([
+    {
+      id: 1,
+      title: 'Évènement A',
+      content: 'Description',
+      address: '12 rue des fleurs',
+      thumbnail: '/event-a.jpg',
+      createdAt: '2024-02-01',
+    },
+  ]),
+}))
+
 jest.mock('../../repositories/aboutRepository', () => ({
   getAbout: jest.fn().mockResolvedValue({
     title: 'Snoroc',

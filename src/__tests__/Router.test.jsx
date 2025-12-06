@@ -24,6 +24,7 @@ jest.mock('../components/export', () => {
 
 jest.mock('../pages/admin/export', () => ({
   CreateNews: () => <div>Admin create news</div>,
+  CreateEvent: () => <div>Admin create event</div>,
   EditAbout: () => <div>Admin edit about</div>,
 }))
 
@@ -37,6 +38,8 @@ jest.mock('../pages/visitor/export', () => ({
   Profile: () => <div>Profile page</div>,
   AllActus: () => <div>All actus</div>,
   ActuDetails: () => <div>Actu details</div>,
+  AllEvents: () => <div>All events</div>,
+  EventDetails: () => <div>Event details</div>,
   LegalNotice: () => <div>Legal notice</div>,
   VerifyEmail: () => <div>Verify email</div>,
   ResetPassword: () => <div>Reset password</div>,

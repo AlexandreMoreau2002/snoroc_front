@@ -7,7 +7,7 @@ import HeaderMobileNav from '../HeaderMobileNav'
 
 const LINKS = [
   { label: 'Home', to: '/', aliases: ['/home'] },
-  { label: 'Event', to: '/Event' },
+  { label: 'Event', to: '/event', aliases: ['/Event', '/Events/all', '/Events'] },
 ]
 
 describe('HeaderMobileNav', () => {
@@ -50,7 +50,7 @@ describe('HeaderMobileNav', () => {
     const callsAfterRender = handleClose.mock.calls.length
 
     rerender(
-      <MemoryRouter initialEntries={['/Event']}>
+      <MemoryRouter initialEntries={['/Events/all']}>
         <HeaderMobileNav
           links={LINKS}
           isOpen

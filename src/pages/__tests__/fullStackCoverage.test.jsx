@@ -1,38 +1,39 @@
-import React from 'react'
-import { render, screen, act } from '@testing-library/react'
-import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import Home from '../visitor/Home'
+import About from '../visitor/About'
+import Event from '../visitor/Event'
+import Media from '../visitor/Media'
+import Signup from '../visitor/Signup'
+import Profile from '../visitor/Profile'
+import Contact from '../visitor/Contact'
+import AllActus from '../visitor/AllActus'
+import EditAbout from '../admin/EditAbout'
+import CreateNews from '../admin/CreateNews'
+import VerifyEmail from '../visitor/VerifyEmail'
+import ActuDetails from '../visitor/ActuDetails'
+import LegalNotice from '../visitor/LegalNotice'
 import { HelmetProvider } from 'react-helmet-async'
+import ResetPassword from '../visitor/ResetPassword'
+import axiosConfig from '../../services/axiosConfig'
+import TermsOfService from '../visitor/TermsOfService'
+import ForgotPassword from '../visitor/ForgotPassword'
 import { AuthProvider } from '../../context/AuthContext'
 import { ThemeProvider } from '../../context/RoleContext'
+import { render, screen, act } from '@testing-library/react'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { LoadingProvider } from '../../context/LoadingContext'
-import { PasswordResetProvider } from '../../context/PasswordResetContext'
-import About from '../visitor/About'
-import ActuDetails from '../visitor/ActuDetails'
-import AllActus from '../visitor/AllActus'
-import Contact from '../visitor/Contact'
-import Event from '../visitor/Event'
-import ForgotPassword from '../visitor/ForgotPassword'
-import Home from '../visitor/Home'
-import LegalNotice from '../visitor/LegalNotice'
-import Media from '../visitor/Media'
-import Profile from '../visitor/Profile'
-import ResetPassword from '../visitor/ResetPassword'
-import Signup from '../visitor/Signup'
-import TermsOfService from '../visitor/TermsOfService'
-import VerifyEmail from '../visitor/VerifyEmail'
-import CreateNews from '../admin/CreateNews'
-import EditAbout from '../admin/EditAbout'
-import ForgotComponentRequest from '../../components/forgotPassword/RequestEmail'
-import ForgotComponentReset from '../../components/forgotPassword/ResetforgotPassword'
 import Pagination from '../../components/Pagination/Pagination'
 import { Button, WorkInProgress } from '../../components/export'
-import * as aboutRepository from '../../repositories/aboutRepository'
 import * as newsRepository from '../../repositories/newsRepository'
-import * as contactRepository from '../../repositories/contactRepository'
 import * as userRepository from '../../repositories/userRepository'
-import axiosConfig from '../../services/axiosConfig'
+import * as eventRepository from '../../repositories/eventRepository'
+import * as aboutRepository from '../../repositories/aboutRepository'
+import * as contactRepository from '../../repositories/contactRepository'
+import { PasswordResetProvider } from '../../context/PasswordResetContext'
+import ForgotComponentRequest from '../../components/forgotPassword/RequestEmail'
+import ForgotComponentReset from '../../components/forgotPassword/ResetforgotPassword'
 
 jest.mock('../../repositories/aboutRepository')
+jest.mock('../../repositories/eventRepository')
 jest.mock('../../repositories/newsRepository')
 jest.mock('../../repositories/contactRepository')
 jest.mock('../../repositories/userRepository')
@@ -56,6 +57,17 @@ const newsItems = [
   { id: 2, title: 'B', content: 'b' },
 ]
 
+const eventItems = [
+  {
+    id: 1,
+    title: 'Gala',
+    content: 'Programme complet',
+    address: '12 rue des fleurs',
+    thumbnail: '/event.jpg',
+    createdAt: '2024-05-01',
+  },
+]
+
 beforeEach(() => {
   jest.useFakeTimers()
   aboutRepository.getAbout.mockResolvedValue({
@@ -70,6 +82,10 @@ beforeEach(() => {
   newsRepository.deleteNews.mockResolvedValue({ deleted: true })
   newsRepository.postNews.mockResolvedValue({ message: 'created' })
   newsRepository.updateNews.mockResolvedValue({ updated: true })
+
+  eventRepository.getAllEvents.mockResolvedValue(eventItems)
+  eventRepository.getEventById?.mockResolvedValue?.(eventItems[0])
+  eventRepository.deleteEvent?.mockResolvedValue?.({ deleted: true })
 
   contactRepository.createContactMessage.mockResolvedValue({ sent: true })
 

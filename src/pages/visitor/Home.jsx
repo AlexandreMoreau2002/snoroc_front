@@ -3,65 +3,45 @@ import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components/export'
 import { useAuth } from '../../context/AuthContext'
+import { formatDate } from '../../utils/formatting'
 import { getAllNews } from '../../repositories/newsRepository'
 import Pagination from '../../components/Pagination/Pagination'
+import { useFeaturedPagination } from '../../hooks/useFeaturedPagination'
 
 export default function Home() {
   const { isAdmin } = useAuth()
   const navigate = useNavigate()
   const [newsData, setNewsData] = useState([])
-  const [mainActu, setMainActu] = useState(null)
-  const [currentPage, setCurrentPage] = useState(1)
-
   const NEWS_PER_PAGE = 3
-  const formatDate = (dateValue) => {
-    if (!dateValue) return ''
-    const parsedDate = new Date(dateValue)
-    if (Number.isNaN(parsedDate.getTime())) return ''
-    return parsedDate.toLocaleDateString('fr-FR')
-  }
 
+  const {
+    currentItems: currentNews,
+    currentPage,
+    direction,
+    handlePageChange,
+    hasPagination,
+    mainItem: mainActu,
+    restItems,
+    totalPages,
+  } = useFeaturedPagination(newsData, NEWS_PER_PAGE)
   useEffect(() => {
     const fetchNews = async () => {
       try {
         const response = await getAllNews()
         if (response.length > 0) {
           const reversedNews = [...response].reverse()
-
-          const lastActu = reversedNews[0]
-          setMainActu(lastActu)
-
-          setNewsData(reversedNews.slice(1))
-          setCurrentPage(1)
+          setNewsData(reversedNews)
         } else {
-          setMainActu(null)
           setNewsData([])
-          setCurrentPage(1)
         }
       } catch (error) {
         console.error('Erreur lors de la récupération des actualités :', error)
-        setMainActu(null)
         setNewsData([])
-        setCurrentPage(1)
       }
     }
 
     fetchNews()
   }, [])
-
-  const [direction, setDirection] = useState('right')
-
-  const totalPages = Math.ceil(newsData.length / NEWS_PER_PAGE)
-  const startIndex = (currentPage - 1) * NEWS_PER_PAGE
-  const currentNews = newsData.slice(startIndex, startIndex + NEWS_PER_PAGE)
-  const hasPagination = totalPages > 1
-
-  const handlePageChange = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setDirection(pageNumber > currentPage ? 'right' : 'left')
-      setCurrentPage(pageNumber)
-    }
-  }
 
   const openNews = (newsId) => {
     navigate(`/actus/${newsId}`)
@@ -69,15 +49,15 @@ export default function Home() {
   useEffect(() => {
     const nextStartIndex = currentPage * NEWS_PER_PAGE
     const nextEndIndex = nextStartIndex + NEWS_PER_PAGE
-    const nextNews = newsData.slice(nextStartIndex, nextEndIndex)
-    
+    const nextNews = restItems.slice(nextStartIndex, nextEndIndex)
+
     nextNews.forEach((news) => {
       if (news.thumbnail) {
         const img = new Image()
         img.src = news.thumbnail
       }
     })
-  }, [currentPage, newsData])
+  }, [NEWS_PER_PAGE, currentPage, restItems])
 
   return (
     <>

@@ -1,20 +1,21 @@
-import React from 'react'
-import { act, render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { HelmetProvider } from 'react-helmet-async'
-import { MemoryRouter, Route, Routes } from 'react-router-dom'
-import About from '../visitor/About'
-import ActuDetails from '../visitor/ActuDetails'
-import AllActus from '../visitor/AllActus'
-import Contact from '../visitor/Contact'
-import Event from '../visitor/Event'
 import Home from '../visitor/Home'
 import Media from '../visitor/Media'
-import TermsOfService from '../visitor/TermsOfService'
+import Event from '../visitor/Event'
+import About from '../visitor/About'
+import Contact from '../visitor/Contact'
+import AllActus from '../visitor/AllActus'
+import AllEvents from '../visitor/AllEvents'
+import ActuDetails from '../visitor/ActuDetails'
+import userEvent from '@testing-library/user-event'
+import { HelmetProvider } from 'react-helmet-async'
 import { useAuth } from '../../context/AuthContext'
-import { deleteNews, getAllNews, getNewsById } from '../../repositories/newsRepository'
-import { createContactMessage } from '../../repositories/contactRepository'
+import TermsOfService from '../visitor/TermsOfService'
 import { getAbout } from '../../repositories/aboutRepository'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { act, render, screen, waitFor } from '@testing-library/react'
+import { createContactMessage } from '../../repositories/contactRepository'
+import { deleteEvent, getAllEvents } from '../../repositories/eventRepository'
+import { deleteNews, getAllNews, getNewsById } from '../../repositories/newsRepository'
 
 const mockNavigate = jest.fn()
 
@@ -34,6 +35,11 @@ jest.mock('../../repositories/newsRepository', () => ({
   getAllNews: jest.fn(),
   getNewsById: jest.fn(),
   deleteNews: jest.fn(),
+}))
+
+jest.mock('../../repositories/eventRepository', () => ({
+  getAllEvents: jest.fn(),
+  deleteEvent: jest.fn(),
 }))
 
 jest.mock('../../repositories/contactRepository', () => ({
@@ -59,8 +65,11 @@ describe('Visitor flows deep coverage', () => {
     getAllNews.mockReset()
     getNewsById.mockReset()
     deleteNews.mockReset()
+    getAllEvents.mockReset()
+    deleteEvent.mockReset()
     createContactMessage.mockReset()
     getAbout.mockReset()
+    getAllEvents.mockResolvedValue([])
   })
 
   it('paginates Home news and triggers navigation actions', async () => {
@@ -121,6 +130,43 @@ describe('Visitor flows deep coverage', () => {
     await userEvent.click(await screen.findByText('Oui'))
 
     await waitFor(() => expect(deleteNews).toHaveBeenCalledWith(2))
+  })
+
+  it('renders events and lets admins delete them', async () => {
+    getAllEvents.mockResolvedValue([
+      {
+        id: 1,
+        title: 'Concert',
+        content: 'Live set',
+        address: 'Paris',
+        thumbnail: '/concert.jpg',
+        createdAt: '2024-03-10',
+      },
+      {
+        id: 2,
+        title: 'Atelier photo',
+        content: 'Techniques avancées',
+        address: 'Lyon',
+        thumbnail: '/photo.jpg',
+        createdAt: '2024-04-01',
+      },
+    ])
+    deleteEvent.mockResolvedValue({ ok: true })
+    useAuth.mockReturnValue({ user: { isAdmin: true }, isAdmin: true })
+
+    renderWithRouter(
+      <Routes>
+        <Route path="/Events/all" element={<AllEvents />} />
+      </Routes>,
+      ['/Events/all']
+    )
+
+    expect(await screen.findByText('Atelier photo')).toBeInTheDocument()
+
+    await userEvent.click(screen.getAllByTitle('Supprimer')[0])
+    await userEvent.click(await screen.findByText('Oui'))
+
+    await waitFor(() => expect(deleteEvent).toHaveBeenCalledWith(2))
   })
 
   it('shows empty state on AllActus fetch error', async () => {
@@ -247,14 +293,16 @@ describe('Visitor flows deep coverage', () => {
     consoleSpy.mockRestore()
   })
 
-  it('renders static informational visitor pages', () => {
+  it('renders static informational visitor pages', async () => {
     renderWithRouter(
       <Routes>
         <Route path="/event" element={<Event />} />
       </Routes>,
       ['/event']
     )
-    expect(screen.getByRole('heading', { name: /Événements/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /Event/i })).toBeInTheDocument()
+    await waitFor(() => expect(getAllEvents).toHaveBeenCalled())
+    await act(async () => {})
 
     renderWithRouter(
       <Routes>

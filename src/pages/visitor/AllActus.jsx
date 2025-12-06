@@ -1,29 +1,32 @@
 import { Helmet } from 'react-helmet-async'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import { useEffect, useMemo, useState } from 'react'
+import { formatDate } from '../../utils/formatting'
 import { FiEdit2, FiEye, FiTrash2 } from 'react-icons/fi'
 import Pagination from '../../components/Pagination/Pagination'
-import { getAllNews, deleteNews } from '../../repositories/newsRepository'
-import { SearchBar, ConfirmationModal, Button } from '../../components/export'
+import { usePaginatedSearch } from '../../hooks/usePaginatedSearch'
+import { deleteNews, getAllNews } from '../../repositories/newsRepository'
+import { Button, ConfirmationModal, SearchBar } from '../../components/export'
 
 const ITEMS_PER_PAGE = 6
 
 export default function AllActus() {
-  const navigate = useNavigate()
   const { isAdmin } = useAuth()
-  const [newsData, setNewsData] = useState([])
+  const navigate = useNavigate()
   const [search, setSearch] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [newsData, setNewsData] = useState([])
   const [newsToDelete, setNewsToDelete] = useState(null)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
-  const formatDate = (dateValue) => {
-    if (!dateValue) return ''
-    const parsedDate = new Date(dateValue)
-    if (Number.isNaN(parsedDate.getTime())) return ''
-    return parsedDate.toLocaleDateString('fr-FR')
-  }
+  const {
+    currentItems: currentNews,
+    currentPage,
+    direction,
+    filteredItems,
+    handlePageChange,
+    totalPages,
+  } = usePaginatedSearch(newsData, search, ITEMS_PER_PAGE)
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -35,44 +38,16 @@ export default function AllActus() {
           return dateB - dateA
         })
         setNewsData(sortedNews)
-        setCurrentPage(1)
       } catch (error) {
         console.error('Erreur lors du chargement des actualités :', error)
         setNewsData([])
-        setCurrentPage(1)
       }
     }
 
     fetchNews()
   }, [])
 
-  useEffect(() => {
-    setCurrentPage(1)
-  }, [search])
-
-  const [direction, setDirection] = useState('right')
-
-  const filteredNews = useMemo(() => {
-    const term = search.trim().toLowerCase()
-    if (!term) return newsData
-    return newsData.filter((news) => {
-      const title = news.title?.toLowerCase() || ''
-      const content = news.content?.toLowerCase() || ''
-      return title.includes(term) || content.includes(term)
-    })
-  }, [newsData, search])
-
-  const totalPages = Math.ceil(filteredNews.length / ITEMS_PER_PAGE)
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
-  const currentNews = filteredNews.slice(startIndex, startIndex + ITEMS_PER_PAGE)
   const hasPagination = totalPages > 1
-
-  const handlePageChange = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setDirection(pageNumber > currentPage ? 'right' : 'left')
-      setCurrentPage(pageNumber)
-    }
-  }
 
   const openNews = (newsId) => {
     navigate(`/actus/${newsId}`)
@@ -110,7 +85,7 @@ export default function AllActus() {
   useEffect(() => {
     const nextStartIndex = currentPage * ITEMS_PER_PAGE
     const nextEndIndex = nextStartIndex + ITEMS_PER_PAGE
-    const nextNews = filteredNews.slice(nextStartIndex, nextEndIndex)
+    const nextNews = filteredItems.slice(nextStartIndex, nextEndIndex)
     
     nextNews.forEach((news) => {
       if (news.thumbnail) {
@@ -118,7 +93,7 @@ export default function AllActus() {
         img.src = news.thumbnail
       }
     })
-  }, [currentPage, filteredNews])
+  }, [currentPage, filteredItems])
 
   return (
     <>

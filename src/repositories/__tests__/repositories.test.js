@@ -3,6 +3,7 @@ import * as aboutRepository from '../aboutRepository'
 import * as contactRepository from '../contactRepository'
 import * as newsRepository from '../newsRepository'
 import * as userRepository from '../userRepository'
+import * as eventRepository from '../eventRepository'
 
 jest.mock('../../services/axiosConfig', () => ({
   get: jest.fn(),
@@ -59,6 +60,45 @@ describe('repository helpers', () => {
 
       axiosConfig.post.mockRejectedValue(defaultError)
       await expect(contactRepository.createContactMessage(payload)).rejects.toThrow('Erreur de connexion')
+    })
+  })
+
+  describe('event repository', () => {
+    it('fetches events successfully', async () => {
+      axiosConfig.get.mockResolvedValue({ data: [{ id: 1 }], status: true })
+      await expect(eventRepository.getAllEvents()).resolves.toEqual([{ id: 1 }])
+
+      axiosConfig.get.mockResolvedValue({ data: { id: 1 }, status: true })
+      await expect(eventRepository.getEventById(1)).resolves.toEqual({ id: 1 })
+    })
+
+    it('creates and modifies events successfully', async () => {
+      const postResponse = { data: { message: 'created' }, status: true }
+      axiosConfig.post.mockResolvedValue(postResponse)
+      await expect(eventRepository.postEvent(new FormData())).resolves.toEqual(postResponse)
+
+      axiosConfig.patch.mockResolvedValue({ data: { updated: true }, status: true })
+      await expect(eventRepository.updateEvent(1, new FormData())).resolves.toEqual({ updated: true })
+
+      axiosConfig.delete.mockResolvedValue({ data: { deleted: true }, status: true })
+      await expect(eventRepository.deleteEvent(1)).resolves.toEqual({ deleted: true })
+    })
+
+    it('handles event repository errors', async () => {
+      axiosConfig.get.mockRejectedValueOnce(defaultError)
+      await expect(eventRepository.getAllEvents()).rejects.toThrow('Erreur de connexion')
+
+      axiosConfig.get.mockRejectedValueOnce(defaultError)
+      await expect(eventRepository.getEventById(1)).rejects.toThrow('Erreur de connexion')
+
+      axiosConfig.post.mockRejectedValueOnce({ message: 'create fail' })
+      await expect(eventRepository.postEvent(new FormData())).rejects.toThrow('create fail')
+
+      axiosConfig.patch.mockRejectedValueOnce(defaultError)
+      await expect(eventRepository.updateEvent(1, new FormData())).rejects.toThrow('Erreur de connexion')
+
+      axiosConfig.delete.mockRejectedValueOnce(defaultError)
+      await expect(eventRepository.deleteEvent(1)).rejects.toThrow('Erreur de connexion')
     })
   })
 

@@ -1,6 +1,8 @@
 // front/src/pages/visitor/export.js
 import Home from './Home'
 import Event from './Event'
+import EventDetails from './EventDetails'
+import AllEvents from './AllEvents'
 import Media from './Media'
 import AllActus from './AllActus'
 import ActuDetails from './ActuDetails'
@@ -17,6 +19,6 @@ import ForgotPassword from './ForgotPassword'
 import LegalNotice from './LegalNotice'
 import TermsOfService from './TermsOfService'
 
-export { Home, AllActus, ActuDetails, Event, Media }
+export { Home, AllActus, ActuDetails, AllEvents, Event, EventDetails, Media }
 export { LegalNotice, TermsOfService }
 export { About, Contact, Profile, Signup, ForgotPassword, ResetPassword, VerifyEmail }
