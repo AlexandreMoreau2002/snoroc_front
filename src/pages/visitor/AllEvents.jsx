@@ -54,7 +54,7 @@ export default function AllEvents() {
   const hasPagination = totalPages > 1
 
   const openEvent = (eventId) => {
-    navigate(`/events/${eventId}`)
+    navigate(`/Events/${eventId}`)
   }
 
   const handleEdit = (e, eventId) => {

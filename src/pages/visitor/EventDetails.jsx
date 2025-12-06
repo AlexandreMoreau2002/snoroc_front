@@ -40,7 +40,7 @@ export default function EventDetails() {
     if (window.history.state?.idx > 0) {
       navigate(-1)
     } else {
-      navigate('/events/all')
+      navigate('/Events/all')
     }
   }
 

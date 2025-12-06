@@ -96,7 +96,7 @@ export default function CreateEvent() {
 
       setTimeout(() => {
         setSuccessMessage('')
-        isEditMode && navigate('/events/all')
+        isEditMode && navigate('/Events/all')
       }, 2000)
     } catch (error) {
       console.log('Erreur : ', error.message)

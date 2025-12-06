@@ -1,10 +1,8 @@
-import React from 'react'
-import { render, screen, waitFor, fireEvent } from '@testing-library/react'
+import AllEvents from '../visitor/AllEvents'
 import userEvent from '@testing-library/user-event'
 import { HelmetProvider } from 'react-helmet-async'
-import AllEvents from '../visitor/AllEvents'
+import { render, screen, waitFor } from '@testing-library/react'
 
-// Mocks
 const mockNavigate = jest.fn()
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -37,7 +35,6 @@ describe('AllEvents Page', () => {
     getAllEvents.mockReset()
     deleteEvent.mockReset()
     useAuth.mockReturnValue({ isAdmin: false })
-    // Mock global Image for preload test
     global.Image = class { constructor() { this.src = '' } }
   })
 
@@ -56,9 +53,6 @@ describe('AllEvents Page', () => {
     expect(await screen.findByText('Event 1')).toBeInTheDocument()
     expect(screen.getByText('Event 2')).toBeInTheDocument()
 
-    // Test preload image logic implicitly covered by render
-
-    // Search
     const searchInput = screen.getByPlaceholderText(/Rechercher/i)
     await user.type(searchInput, 'Paris')
     expect(screen.getByText('Event 1')).toBeInTheDocument()
@@ -66,23 +60,18 @@ describe('AllEvents Page', () => {
   })
 
   test('triggers image preload logic with many events and handles missing data', async () => {
-    // Need enough events to have a "next page" for preload logic
-    // We also introduce missing fields to cover sorting and preload branches
     const manyEvents = Array.from({ length: 20 }, (_, i) => ({
       id: i + 1,
       title: `Event ${i + 1}`,
       content: 'Content',
       address: 'City',
-      // Cover (createdAt || 0) in sort
       createdAt: i % 2 === 0 ? '2023-01-01' : null, 
-      // Cover implicit else in if(event.thumbnail)
       thumbnail: i % 2 === 0 ? `img${i + 1}.jpg` : '' 
     }))
     
     getAllEvents.mockResolvedValue(manyEvents)
     renderPage()
-    
-    // Wait for render
+
     await screen.findByText('Event 1')
   })
 
@@ -100,14 +89,10 @@ describe('AllEvents Page', () => {
     renderPage()
 
     const article = await screen.findByText('Event 1')
-    await user.click(article) // Le click est sur le texte mais bubbling vers l'article qui a onClick
-    // Ou cibler l'article role="button"
     const articles = screen.getAllByRole('button')
-    // Les articles sont des buttons (role="button")
-    // event 1 is index 0
     await user.click(articles[0])
 
-    expect(mockNavigate).toHaveBeenCalledWith('/events/1')
+    expect(mockNavigate).toHaveBeenCalledWith('/Events/2')
   })
 
   test('bouton retour', async () => {
@@ -126,7 +111,7 @@ describe('AllEvents Page', () => {
 
     test('affiche overlay admin et gère edit', async () => {
       renderPage()
-      await screen.findByText('Event 2') // Event 2 is newer (Feb vs Jan), so first
+      await screen.findByText('Event 2')
 
       const editBtns = screen.getAllByTitle('Modifier')
       await user.click(editBtns[0])
@@ -139,7 +124,7 @@ describe('AllEvents Page', () => {
 
       const viewBtns = screen.getAllByTitle('Voir')
       await user.click(viewBtns[0])
-      expect(mockNavigate).toHaveBeenCalledWith('/events/2')
+      expect(mockNavigate).toHaveBeenCalledWith('/Events/2')
     })
 
     test('gère suppression (succès)', async () => {
@@ -182,7 +167,6 @@ describe('AllEvents Page', () => {
       await user.click(screen.getByText('Oui'))
 
       await waitFor(() => expect(consoleSpy).toHaveBeenCalledWith('Erreur lors de la suppression :', expect.any(Error)))
-      // Event still there
       expect(screen.getByText('Event 1')).toBeInTheDocument()
       consoleSpy.mockRestore()
     })

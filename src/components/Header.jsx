@@ -12,7 +12,7 @@ const NAV_LINKS = [
   },
   {
     label: 'Event',
-    to: '/event',
+    to: '/Event',
   },
   { label: 'Média', to: '/Media' },
   { label: 'A propos', to: '/A-propos' },

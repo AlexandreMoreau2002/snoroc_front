@@ -156,9 +156,9 @@ describe('Visitor flows deep coverage', () => {
 
     renderWithRouter(
       <Routes>
-        <Route path="/events/all" element={<AllEvents />} />
+        <Route path="/Events/all" element={<AllEvents />} />
       </Routes>,
-      ['/events/all']
+      ['/Events/all']
     )
 
     expect(await screen.findByText('Atelier photo')).toBeInTheDocument()

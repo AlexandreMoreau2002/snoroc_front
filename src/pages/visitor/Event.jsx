@@ -47,7 +47,7 @@ export default function Event() {
   }, [])
 
   const openEvent = (eventId) => {
-    navigate(`/events/${eventId}`)
+    navigate(`/Events/${eventId}`)
   }
 
   useEffect(() => {
@@ -141,7 +141,7 @@ export default function Event() {
           )}
           <Button
             className="news-see-all"
-            onClick={() => navigate('/events/all')}
+            onClick={() => navigate('/Events/all')}
             variant="secondary"
           >
             Tout voir

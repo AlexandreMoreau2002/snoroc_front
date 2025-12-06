@@ -34,9 +34,9 @@ describe('EventDetails', () => {
   it('renders details and splits paragraphs', async () => {
     render(
       <HelmetProvider>
-        <MemoryRouter initialEntries={[{ pathname: '/events/5' }]}>
+        <MemoryRouter initialEntries={[{ pathname: '/Events/5' }]}>
           <Routes>
-            <Route path="/events/:id" element={<EventDetails />} />
+            <Route path="/Events/:id" element={<EventDetails />} />
           </Routes>
         </MemoryRouter>
       </HelmetProvider>
@@ -53,9 +53,9 @@ describe('EventDetails', () => {
 
     render(
       <HelmetProvider>
-        <MemoryRouter initialEntries={[{ pathname: '/events/5' }]}>
+        <MemoryRouter initialEntries={[{ pathname: '/Events/5' }]}>
           <Routes>
-            <Route path="/events/:id" element={<EventDetails />} />
+            <Route path="/Events/:id" element={<EventDetails />} />
           </Routes>
         </MemoryRouter>
       </HelmetProvider>
@@ -64,16 +64,16 @@ describe('EventDetails', () => {
     await waitFor(() => expect(getEventById).toHaveBeenCalledWith('5'))
     await userEvent.click(screen.getByRole('button', { name: 'Retour' }))
 
-    expect(navigateSpy).toHaveBeenCalledWith('/events/all')
+    expect(navigateSpy).toHaveBeenCalledWith('/Events/all')
   })
 
   it('navigates -1 when history state exists', async () => {
     Object.defineProperty(window.history, 'state', { value: { idx: 1 }, writable: true })
     render(
       <HelmetProvider>
-        <MemoryRouter initialEntries={['/events/5']}>
+        <MemoryRouter initialEntries={['/Events/5']}>
           <Routes>
-            <Route path="/events/:id" element={<EventDetails />} />
+            <Route path="/Events/:id" element={<EventDetails />} />
           </Routes>
         </MemoryRouter>
       </HelmetProvider>
@@ -88,40 +88,31 @@ describe('EventDetails', () => {
     getEventById.mockRejectedValue(new Error('fail'))
     render(
       <HelmetProvider>
-        <MemoryRouter initialEntries={['/events/99']}>
+        <MemoryRouter initialEntries={['/Events/99']}>
           <Routes>
-            <Route path="/events/:id" element={<EventDetails />} />
+            <Route path="/Events/:id" element={<EventDetails />} />
           </Routes>
         </MemoryRouter>
       </HelmetProvider>
     )
 
-    // Wait for effect to run and catch error
     await waitFor(() => expect(getEventById).toHaveBeenCalled())
-    // Should not render title if failed
     expect(screen.queryByRole('heading', { level: 1 })).not.toBeInTheDocument()
   })
 
   it('does nothing without ID', async () => {
     render(
       <HelmetProvider>
-        <MemoryRouter initialEntries={['/events/']}>
+        <MemoryRouter initialEntries={['/Events/']}>
           <Routes>
-            <Route path="/events/" element={<EventDetails />} />
-            {/* Note: React Router might match differently if no ID, but here likely params.id is undefined */}
+            <Route path="/Events/" element={<EventDetails />} />
           </Routes>
         </MemoryRouter>
       </HelmetProvider>
     )
-    
-    // Typically if route is defined as /events/:id, empty ID might not match or be empty string.
-    // If we mount component directly without ID param:
-    // Testing logic inside useEffect: if (!id) return
-    // Testing logic inside useEffect: if (!id) return
   })
 
   it('renders raw content if no paragraphs detected', async () => {
-    // Provide content that results in 0 paragraphs after splitting and filtering
     getEventById.mockResolvedValue({
       id: 6,
       title: 'EmptyContent',
@@ -133,18 +124,14 @@ describe('EventDetails', () => {
 
     render(
       <HelmetProvider>
-        <MemoryRouter initialEntries={['/events/6']}>
+        <MemoryRouter initialEntries={['/Events/6']}>
           <Routes>
-            <Route path="/events/:id" element={<EventDetails />} />
+            <Route path="/Events/:id" element={<EventDetails />} />
           </Routes>
         </MemoryRouter>
       </HelmetProvider>
     )
 
     expect(await screen.findByText('EmptyContent')).toBeInTheDocument()
-    // If content is empty string, the fallback <p>{event.content}</p> renders an empty p.
-    // Testing library might not find empty text easily.
-    // We assume execution passed through the ELSE branch of `bodyParagraphs.length > 0`.
-    // Validating title presence confirms no crash.
   })
 })

@@ -58,8 +58,8 @@ export default function Router() {
               </Route>
 
               {/* Event */}
-              <Route path="/events/all" element={<AllEvents />} />
-              <Route path="/events/:id" element={<EventDetails />} />
+              <Route path="/Events/all" element={<AllEvents />} />
+              <Route path="/Events/:id" element={<EventDetails />} />
               <Route path="/event" element={<Event />} />
               <Route path="/Event" element={<Event />} />
 
