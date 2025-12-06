@@ -38,6 +38,7 @@ export default function RequestEmail() {
           type="email"
           className="request-email__input"
           value={inputEmail}
+          autoComplete="email"
           placeholder="Adresse mail *"
           onChange={(e) => setInputEmail(e.target.value)}
           required

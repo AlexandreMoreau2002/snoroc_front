@@ -62,10 +62,19 @@ export default function ResetPassword() {
       <h1 className="reset-password__title">Réinitialiser le mot de passe</h1>
       <hr className="reset-password__hr" />
       <form className="reset-password__form" onSubmit={handleResetPassword}>
+        {/* Hidden username field for accessibility tools to associate password with user */}
+        <input
+          type="text"
+          value={email || ''}
+          autoComplete="username"
+          readOnly
+          style={{ display: 'none' }}
+        />
         <input
           className="reset-password__input"
           type="password"
           value={password}
+          autoComplete="new-password"
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Nouveau mot de passe"
           required
@@ -76,6 +85,7 @@ export default function ResetPassword() {
           className="reset-password__input"
           type="password"
           value={confirmPassword}
+          autoComplete="new-password"
           onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirmer le mot de passe"
           required

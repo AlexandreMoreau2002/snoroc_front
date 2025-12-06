@@ -108,6 +108,7 @@ const Signup = () => {
             type="text"
             name="lastname"
             placeholder="Nom"
+            autoComplete="family-name"
             className="signup__form__group__user-info__input"
             value={formData.lastname}
             onChange={handleChange}
@@ -117,6 +118,7 @@ const Signup = () => {
             type="text"
             name="firstname"
             placeholder="Prénom"
+            autoComplete="given-name"
             className="signup__form__group__user-info__input"
             value={formData.firstname}
             onChange={handleChange}
@@ -126,6 +128,7 @@ const Signup = () => {
             type="email"
             name="email"
             placeholder="Email"
+            autoComplete="email"
             className="signup__form__group__user-info__input"
             value={formData.email}
             onChange={handleChange}
@@ -135,6 +138,7 @@ const Signup = () => {
             type="tel"
             name="userPhone"
             placeholder="Téléphone"
+            autoComplete="tel"
             className="signup__form__group__user-info__input"
             value={formData.userPhone}
             onChange={handleChange}
@@ -162,6 +166,7 @@ const Signup = () => {
             type="password"
             name="password"
             placeholder="Mot de passe"
+            autoComplete="new-password"
             className="signup__form__group__password__input"
             value={formData.password}
             onChange={handleChange}
@@ -171,6 +176,7 @@ const Signup = () => {
             type="password"
             name="confirmPassword"
             placeholder="Confirmer le mot de passe"
+            autoComplete="new-password"
             className="signup__form__group__password__input"
             value={formData.confirmPassword}
             onChange={handleChange}

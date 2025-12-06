@@ -50,9 +50,17 @@ const ResetPassword = () => {
       <hr className="reset-password__separator" />
       <form className="reset-password__form" onSubmit={handleSubmit}>
         <input
+          type="text"
+          value={user?.email || ''}
+          autoComplete="username"
+          readOnly
+          style={{ display: 'none' }}
+        />
+        <input
           type="password"
           className="reset-password__input"
           value={password}
+          autoComplete="current-password"
           placeholder="Ancien mot de passe *"
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -61,6 +69,7 @@ const ResetPassword = () => {
           type="password"
           className="reset-password__input"
           value={newPassword}
+          autoComplete="new-password"
           placeholder="Nouveau mot de passe *"
           onChange={(e) => setNewPassword(e.target.value)}
           required
@@ -69,6 +78,7 @@ const ResetPassword = () => {
           type="password"
           className="reset-password__input"
           value={confirm}
+          autoComplete="new-password"
           placeholder="Confirmer le mot de passe *"
           onChange={(e) => setConfirm(e.target.value)}
           required
