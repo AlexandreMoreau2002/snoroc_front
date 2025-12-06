@@ -1,5 +1,5 @@
-import CreateNews from "./CreateNews";
+import CreateEvent from './CreateEvent'
+import CreateNews from './CreateNews'
+import EditAbout from './EditAbout'
 
-import EditAbout from "./EditAbout";
-
-export { CreateNews, EditAbout }
+export { CreateEvent, CreateNews, EditAbout }

@@ -35,6 +35,7 @@ jest.mock(
     FiEdit2: () => null,
     FiEye: () => null,
     FiTrash2: () => null,
+    FiMapPin: () => null,
   }),
   { virtual: true }
 )

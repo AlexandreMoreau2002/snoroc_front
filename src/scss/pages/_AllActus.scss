@@ -1,4 +1,5 @@
-.all-actus {
+.all-actus,
+.all-events {
   @include container;
   display: flex;
   flex-direction: column;
@@ -151,7 +152,8 @@
         order: 0;
       }
 
-      .all-actus__back {
+      .all-actus__back,
+      .all-events__back {
         order: 1;
         align-self: flex-start;
         width: fit-content;
@@ -198,7 +200,8 @@
   animation: slideInLeft 0.25s ease-out forwards;
 }
 
-.all-actus__admin-overlay {
+.all-actus__admin-overlay,
+.all-events__admin-overlay {
   position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.7);
@@ -210,7 +213,8 @@
   opacity: 0;
   transition: opacity 0.3s ease;
 
-  .all-actus__admin-btn {
+  .all-actus__admin-btn,
+  .all-events__admin-btn {
     background: none;
     border: none;
     color: #ff0000;
@@ -223,9 +227,13 @@
       transform: scale(1.1);
     }
   }
+.all-events__admin-btn {
+  color: #ff0000;
+}
 }
 
-.all-actus__card:hover .all-actus__admin-overlay {
+.all-actus__card:hover .all-actus__admin-overlay,
+.all-events__card:hover .all-events__admin-overlay {
   opacity: 1;
 }
 

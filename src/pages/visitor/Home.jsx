@@ -5,6 +5,7 @@ import { Button } from '../../components/export'
 import { useAuth } from '../../context/AuthContext'
 import { getAllNews } from '../../repositories/newsRepository'
 import Pagination from '../../components/Pagination/Pagination'
+import { formatDate } from '../../utils/formatting'
 
 export default function Home() {
   const { isAdmin } = useAuth()
@@ -14,12 +15,6 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1)
 
   const NEWS_PER_PAGE = 3
-  const formatDate = (dateValue) => {
-    if (!dateValue) return ''
-    const parsedDate = new Date(dateValue)
-    if (Number.isNaN(parsedDate.getTime())) return ''
-    return parsedDate.toLocaleDateString('fr-FR')
-  }
 
   useEffect(() => {
     const fetchNews = async () => {

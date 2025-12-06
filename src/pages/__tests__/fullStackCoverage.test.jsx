@@ -27,12 +27,14 @@ import ForgotComponentReset from '../../components/forgotPassword/ResetforgotPas
 import Pagination from '../../components/Pagination/Pagination'
 import { Button, WorkInProgress } from '../../components/export'
 import * as aboutRepository from '../../repositories/aboutRepository'
+import * as eventRepository from '../../repositories/eventRepository'
 import * as newsRepository from '../../repositories/newsRepository'
 import * as contactRepository from '../../repositories/contactRepository'
 import * as userRepository from '../../repositories/userRepository'
 import axiosConfig from '../../services/axiosConfig'
 
 jest.mock('../../repositories/aboutRepository')
+jest.mock('../../repositories/eventRepository')
 jest.mock('../../repositories/newsRepository')
 jest.mock('../../repositories/contactRepository')
 jest.mock('../../repositories/userRepository')
@@ -56,6 +58,17 @@ const newsItems = [
   { id: 2, title: 'B', content: 'b' },
 ]
 
+const eventItems = [
+  {
+    id: 1,
+    title: 'Gala',
+    content: 'Programme complet',
+    address: '12 rue des fleurs',
+    thumbnail: '/event.jpg',
+    createdAt: '2024-05-01',
+  },
+]
+
 beforeEach(() => {
   jest.useFakeTimers()
   aboutRepository.getAbout.mockResolvedValue({
@@ -70,6 +83,10 @@ beforeEach(() => {
   newsRepository.deleteNews.mockResolvedValue({ deleted: true })
   newsRepository.postNews.mockResolvedValue({ message: 'created' })
   newsRepository.updateNews.mockResolvedValue({ updated: true })
+
+  eventRepository.getAllEvents.mockResolvedValue(eventItems)
+  eventRepository.getEventById?.mockResolvedValue?.(eventItems[0])
+  eventRepository.deleteEvent?.mockResolvedValue?.({ deleted: true })
 
   contactRepository.createContactMessage.mockResolvedValue({ sent: true })
 

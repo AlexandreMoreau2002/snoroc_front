@@ -2,19 +2,13 @@ import { Helmet } from 'react-helmet-async'
 import { Button } from '../../components/export'
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { formatDate, splitContentToParagraphs } from '../../utils/formatting'
 import { getNewsById } from '../../repositories/newsRepository'
 
 export default function ActuDetails() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [news, setNews] = useState(null)
-
-  const formatDate = (dateValue) => {
-    if (!dateValue) return ''
-    const parsedDate = new Date(dateValue)
-    if (Number.isNaN(parsedDate.getTime())) return ''
-    return parsedDate.toLocaleDateString('fr-FR')
-  }
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -38,19 +32,10 @@ export default function ActuDetails() {
     return formatDate(news.date || news.createdAt)
   }, [news])
 
-  const bodyParagraphs = useMemo(() => {
-    if (!news?.content) return []
-    const paragraphs = news.content
-      .split(/\n\s*\n/)
-      .map((paragraph) => paragraph.trim())
-      .filter(Boolean)
-
-    if (paragraphs.length === 0) {
-      return [news.content]
-    }
-
-    return paragraphs
-  }, [news])
+  const bodyParagraphs = useMemo(
+    () => splitContentToParagraphs(news?.content),
+    [news]
+  )
 
   const handleBack = () => {
     if (window.history.state?.idx > 0) {
