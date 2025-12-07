@@ -182,9 +182,9 @@
   margin-top: 10px;
   
   @media (max-width: 768px) {
-    flex-direction: column;
     align-items: stretch;
     text-align: center;
+    justify-content: space-between;
   }
 }
 
