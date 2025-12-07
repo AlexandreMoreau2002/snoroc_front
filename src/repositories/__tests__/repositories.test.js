@@ -4,6 +4,7 @@ import * as contactRepository from '../contactRepository'
 import * as newsRepository from '../newsRepository'
 import * as userRepository from '../userRepository'
 import * as eventRepository from '../eventRepository'
+import * as mediaRepository from '../mediaRepository'
 
 jest.mock('../../services/axiosConfig', () => ({
   get: jest.fn(),
@@ -99,6 +100,42 @@ describe('repository helpers', () => {
 
       axiosConfig.delete.mockRejectedValueOnce(defaultError)
       await expect(eventRepository.deleteEvent(1)).rejects.toThrow('Erreur de connexion')
+    })
+  })
+
+  describe('media repository', () => {
+    it('fetches and mutates media successfully', async () => {
+      axiosConfig.get.mockResolvedValue({ data: [{ id: 1 }], status: true })
+      await expect(mediaRepository.getAllMedia()).resolves.toEqual([{ id: 1 }])
+
+      axiosConfig.get.mockResolvedValueOnce({ data: { id: 2 }, status: true })
+      await expect(mediaRepository.getMediaById(2)).resolves.toEqual({ id: 2 })
+
+      axiosConfig.post.mockResolvedValueOnce({ data: { message: 'created' }, status: true })
+      await expect(mediaRepository.createMedia({ title: 't' })).resolves.toEqual({ data: { message: 'created' }, status: true })
+
+      axiosConfig.patch.mockResolvedValueOnce({ data: { updated: true }, status: true })
+      await expect(mediaRepository.updateMedia(2, { title: 'x' })).resolves.toEqual({ updated: true })
+
+      axiosConfig.delete.mockResolvedValueOnce({ data: { deleted: true }, status: true })
+      await expect(mediaRepository.deleteMedia(2)).resolves.toEqual({ deleted: true })
+    })
+
+    it('handles media errors', async () => {
+      axiosConfig.get.mockRejectedValueOnce(defaultError)
+      await expect(mediaRepository.getAllMedia()).rejects.toThrow('Erreur de connexion')
+
+      axiosConfig.get.mockRejectedValueOnce(defaultError)
+      await expect(mediaRepository.getMediaById(1)).rejects.toThrow('Erreur de connexion')
+
+      axiosConfig.post.mockRejectedValueOnce(defaultError)
+      await expect(mediaRepository.createMedia({})).rejects.toThrow('Erreur de connexion')
+
+      axiosConfig.patch.mockRejectedValueOnce(defaultError)
+      await expect(mediaRepository.updateMedia(1, {})).rejects.toThrow('Erreur de connexion')
+
+      axiosConfig.delete.mockRejectedValueOnce(defaultError)
+      await expect(mediaRepository.deleteMedia(1)).rejects.toThrow('Erreur de connexion')
     })
   })
 

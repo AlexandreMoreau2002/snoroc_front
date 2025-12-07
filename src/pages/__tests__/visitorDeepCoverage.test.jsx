@@ -50,6 +50,12 @@ jest.mock('../../repositories/aboutRepository', () => ({
   getAbout: jest.fn(),
 }))
 
+jest.mock('../../repositories/mediaRepository', () => ({
+  getAllMedia: jest.fn(),
+}))
+
+const { getAllMedia } = require('../../repositories/mediaRepository')
+
 const renderWithRouter = (ui, initialEntries = ['/']) =>
   render(
     <HelmetProvider>
@@ -69,7 +75,9 @@ describe('Visitor flows deep coverage', () => {
     deleteEvent.mockReset()
     createContactMessage.mockReset()
     getAbout.mockReset()
+    getAllMedia.mockReset()
     getAllEvents.mockResolvedValue([])
+    getAllMedia.mockResolvedValue([])
   })
 
   it('paginates Home news and triggers navigation actions', async () => {
@@ -310,7 +318,9 @@ describe('Visitor flows deep coverage', () => {
       </Routes>,
       ['/media']
     )
-    expect(screen.getByRole('heading', { name: /Médias/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /Media/i })).toBeInTheDocument()
+    await waitFor(() => expect(getAllMedia).toHaveBeenCalled())
+    await act(async () => {})
 
     renderWithRouter(
       <Routes>
