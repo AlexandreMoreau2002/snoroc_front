@@ -1,0 +1,169 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build front
+    runs-on: ubuntu-latest
+    environment: snoroc-front-develop
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Log current version from package.json
+        run: node -p "require('./package.json').version"
+
+      - name: Clean install
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install --legacy-peer-deps
+
+      - name: Exposer la version applicative
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "REACT_APP_VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "Set REACT_APP_VERSION=${VERSION}"
+
+      - name: Log env variables
+        run: env | grep REACT_APP
+
+      - name: Build front
+        run: |
+          echo "Building front with env vars..."
+          echo "REACT_APP_API_URL=${REACT_APP_API_URL}"
+          echo "REACT_APP_ENV=${REACT_APP_ENV}"
+          npm run build
+          ls -lh build
+        env:
+          CI: false
+          GENERATE_SOURCEMAP: false
+          REACT_APP_API_URL: ${{ vars.REACT_APP_API_URL }}
+          REACT_APP_ENV: ${{ vars.REACT_APP_ENV }}
+          REACT_APP_VERSION: ${{ env.REACT_APP_VERSION }}
+
+      - name: Create deployment archive
+        run: |
+          set -euxo pipefail
+          tar -czf snoroc_front.tar.gz build
+          ls -lh snoroc_front.tar.gz
+          echo "Archive snoroc_front.tar.gz created"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: snoroc_front
+          path: snoroc_front.tar.gz
+          if-no-files-found: error
+
+  deploy:
+    name: Deploy front
+    runs-on: ubuntu-latest
+    needs: test
+    environment: snoroc-front-develop
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: snoroc_front
+          path: .
+
+      - name: Verify artifact present
+        run: |
+          ls -lh .
+          if [ ! -f snoroc_front.tar.gz ]; then
+            echo "ERROR: Archive snoroc_front.tar.gz not found"
+            exit 1
+          fi
+
+      - name: Copy archive via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ vars.SSH_HOST }}
+          username: ${{ vars.SSH_USER }}
+          key: ${{ vars.SSH_KEY }}
+          source: 'snoroc_front.tar.gz'
+          target: '/tmp'
+          rm: false
+          overwrite: true
+
+      - name: Deploy front and reload Nginx
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ vars.SSH_HOST }}
+          username: ${{ vars.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            set -euxo pipefail
+            echo "🚀 Déploiement du front en cours..."
+            REMOTE_ROOT="/srv/snoroc-dev"
+            PROJECT_DIR="${REMOTE_ROOT}/snoroc_front"
+            ARCHIVE="/tmp/snoroc_front.tar.gz"
+
+            echo "PROJECT_DIR=${PROJECT_DIR}"
+            echo "ARCHIVE=${ARCHIVE}"
+
+            mkdir -p "$PROJECT_DIR"
+
+            sudo chown -R ${{ vars.SSH_USER }}:www-data "$PROJECT_DIR"
+            sudo chmod -R 775 "$PROJECT_DIR"
+
+            if [ -d "${PROJECT_DIR}/build" ]; then
+              BACKUP_DIR="${PROJECT_DIR}/build_$(date +%Y%m%d%H%M%S)"
+              mv "${PROJECT_DIR}/build" "$BACKUP_DIR"
+              echo "Ancienne version sauvegardée dans ${BACKUP_DIR}"
+            fi
+
+            tar -xzf "$ARCHIVE" -C "$PROJECT_DIR"
+            rm -f "$ARCHIVE"
+
+            echo "Build extrait dans ${PROJECT_DIR}"
+            ls -lh "$PROJECT_DIR"
+
+            sudo systemctl reload nginx
+            echo "✅ Front déployé et Nginx rechargé"
+
+  test:
+    name: Test front
+    runs-on: ubuntu-latest
+    needs: build
+    environment: snoroc-front-develop
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Clean install
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install --legacy-peer-deps
+
+      - name: Run tests with coverage
+        run: npm run test:coverage -- --watchAll=false
+        env:
+          CI: true
+          REACT_APP_API_URL: ${{ vars.REACT_APP_API_URL }}
+          REACT_APP_ENV: ${{ vars.REACT_APP_ENV }}

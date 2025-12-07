@@ -4,13 +4,16 @@ import Router from './Router'
 import ReactDOM from 'react-dom/client'
 import { AuthProvider } from './context/AuthContext'
 import { ThemeProvider } from './context/RoleContext'
+import { LoadingProvider } from './context/LoadingContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <ThemeProvider>
       <AuthProvider>
-        <Router />
+        <LoadingProvider>
+          <Router />
+        </LoadingProvider>
       </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>

@@ -1,0 +1,12 @@
+.status-message {
+  width: 100%;
+  margin: 20px 0;
+
+  &--success {
+    @include success;
+  }
+
+  &--error {
+    @include error;
+  }
+}

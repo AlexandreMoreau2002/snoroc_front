@@ -3,24 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.4.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "axios": "^1.13.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "react-helmet-async": "^2.0.5",
-    "react-router-dom": "^7.1.1",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.9.5",
     "react-scripts": "^5.0.1",
-    "sweetpagination": "^1.0.15",
-    "web-vitals": "^2.1.4"
+    "sweetpagination": "^2.0.1",
+    "web-vitals": "^5.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev": "react-scripts start && sass --watch src/scss/main.scss src/css/index.css",
     "sass": "sass --watch src/scss/main.scss src/css/index.css",
+    "dev": "concurrently \"npm run sass\" \"npm start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "NODE_NO_WARNINGS=1 NODE_OPTIONS=--no-deprecation react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -28,6 +30,21 @@
       "react-app",
       "react-app/jest"
     ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!src/index.js",
+      "!src/setupTests.js",
+      "!src/jestWarningFilter.js",
+      "!src/**/export.js"
+    ],
+    "moduleNameMapper": {
+      "^punycode$": "punycode/",
+      "^react-router-dom$": "<rootDir>/node_modules/react-router-dom/dist/index.js",
+      "^react-router$": "<rootDir>/node_modules/react-router/dist/development/index.js",
+      "^react-router/dom$": "<rootDir>/node_modules/react-router/dist/development/dom-export.js"
+    }
   },
   "browserslist": {
     "production": [
@@ -42,6 +59,11 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@testing-library/dom": "^10.4.1",
+    "ajv": "^6.12.6",
+    "ajv-keywords": "^3.5.2",
+    "concurrently": "^9.2.1",
+    "punycode": "^2.3.1"
   }
 }

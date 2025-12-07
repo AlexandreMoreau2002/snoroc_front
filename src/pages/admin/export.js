@@ -1,3 +1,6 @@
-import CreateNews from "./CreateNews";
+import EditAbout from './EditAbout'
+import CreateNews from './CreateNews'
+import CreateEvent from './CreateEvent'
+import CreateMedia from './CreateMedia'
 
-export { CreateNews }
+export { CreateEvent, CreateNews, CreateMedia, EditAbout }

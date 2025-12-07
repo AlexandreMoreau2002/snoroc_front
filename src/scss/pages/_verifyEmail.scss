@@ -7,6 +7,13 @@
 
   &__hr {
     @include hr;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
   &__form {
@@ -15,20 +22,33 @@
   }
 
   &__form-label {
-    @include text;
+    @include formLabel;
+    text-align: center;
   }
 
   &__inputs {
     display: flex;
-    gap: 15px;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+    @media (min-width: 768px) {
+      gap: 15px;
+    }
   }
 
   &__input {
-    @include input;
-    width: 50px;
+    @include formInput;
+    width: 40px;
+    height: 50px;
+    padding: 5px;
     text-align: center;
     font-size: 20px;
     font-weight: bold;
+    
+    @media (min-width: 768px) {
+      width: 50px;
+    }
   }
 
   &__error {

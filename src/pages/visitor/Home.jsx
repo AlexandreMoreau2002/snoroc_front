@@ -1,43 +1,63 @@
+import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
-import React, { useEffect, useState } from 'react'
+import { Button } from '../../components/export'
 import { useAuth } from '../../context/AuthContext'
-import getAllNews from '../../services/news/getAllNews'
+import { formatDate } from '../../utils/formatting'
+import { getAllNews } from '../../repositories/newsRepository'
+import Pagination from '../../components/Pagination/Pagination'
+import { useFeaturedPagination } from '../../hooks/useFeaturedPagination'
 
 export default function Home() {
   const { isAdmin } = useAuth()
   const navigate = useNavigate()
   const [newsData, setNewsData] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [mainActu, setMainActu] = useState(null)
+  const NEWS_PER_PAGE = 3
 
+  const {
+    currentItems: currentNews,
+    currentPage,
+    direction,
+    handlePageChange,
+    hasPagination,
+    mainItem: mainActu,
+    restItems,
+    totalPages,
+  } = useFeaturedPagination(newsData, NEWS_PER_PAGE)
   useEffect(() => {
     const fetchNews = async () => {
-      setLoading(true)
       try {
         const response = await getAllNews()
         if (response.length > 0) {
-          const reversedNews = response.reverse()
-
-          const lastActu = reversedNews[0]
-          setMainActu(lastActu)
-
-          setNewsData(reversedNews.slice(1, 4))
+          const reversedNews = [...response].reverse()
+          setNewsData(reversedNews)
         } else {
-          setMainActu(null)
           setNewsData([])
         }
       } catch (error) {
         console.error('Erreur lors de la récupération des actualités :', error)
-        setMainActu(null)
         setNewsData([])
-      } finally {
-        setLoading(false)
       }
     }
 
     fetchNews()
   }, [])
+
+  const openNews = (newsId) => {
+    navigate(`/actus/${newsId}`)
+  }
+  useEffect(() => {
+    const nextStartIndex = currentPage * NEWS_PER_PAGE
+    const nextEndIndex = nextStartIndex + NEWS_PER_PAGE
+    const nextNews = restItems.slice(nextStartIndex, nextEndIndex)
+
+    nextNews.forEach((news) => {
+      if (news.thumbnail) {
+        const img = new Image()
+        img.src = news.thumbnail
+      }
+    })
+  }, [NEWS_PER_PAGE, currentPage, restItems])
 
   return (
     <>
@@ -46,48 +66,79 @@ export default function Home() {
       </Helmet>
       <div className="actus">
         <h1 className="page__title">Actus</h1>
-        {loading ? (
-          <p>Chargement des actualités...</p>
-        ) : (
-          <>
-            {mainActu && (
-              <div
-                className="main-actus"
-                style={{
-                  backgroundImage: `url(${mainActu.thumbnail})`,
-                }}
-              >
-                <div className="main-actus-content">
-                  <h2 className="main-actus-title">{mainActu.title}</h2>
-                  <p className="main-actus-description">{mainActu.content}</p>
-                </div>
-              </div>
-            )}
-            <div className="news-list">
-              {newsData.map((news) => (
-                <div
-                  key={news.id}
-                  className="news-item"
-                  style={{
-                    backgroundImage: `url(${news.thumbnail})`,
-                  }}
-                >
-                  <div className="news-content">
-                    <h2 className="news-title">{news.title}</h2>
-                    <p className="news-description">{news.content}</p>
-                  </div>
-                </div>
-              ))}
+        {mainActu && (
+          <div
+            className="main-actus"
+            role="button"
+            tabIndex={0}
+            onClick={() => openNews(mainActu.id)}
+          >
+            <div className="main-actus-media">
+              <img src={mainActu.thumbnail} alt={mainActu.title} />
             </div>
-          </>
+            <div className="main-actus-content">
+              <div>
+                <h2 className="main-actus-title">{mainActu.title}</h2>
+                <p className="main-actus-description">{mainActu.content}</p>
+              </div>
+              <p className="main-actus-date">
+                {formatDate(mainActu.date || mainActu.createdAt)}
+              </p>
+            </div>
+          </div>
         )}
+        <div key={currentPage} className={`news-list slide-${direction}`}>
+          {currentNews.map((news) => (
+            <article
+              key={news.id}
+              className="news-item"
+              style={{
+                backgroundImage: `url(${news.thumbnail})`,
+              }}
+              role="button"
+              tabIndex={0}
+              onClick={() => openNews(news.id)}
+            >
+              <div className="news-content">
+                <h2 className="news-title">{news.title}</h2>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div className="news-controls">
+          {hasPagination && (
+            <button
+              type="button"
+              className="news-see-all news-see-all--ghost"
+              aria-hidden="true"
+              tabIndex={-1}
+              disabled
+            />
+          )}
+          {hasPagination && (
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+              className="news-pagination"
+            />
+          )}
+          <Button
+            className="news-see-all"
+            onClick={() => navigate('/actus/all')}
+            variant="secondary"
+          >
+            Tout voir
+          </Button>
+        </div>
         {isAdmin && (
-          <button
+          <Button
             className="admin-button"
             onClick={() => navigate('/createNews')}
+            variant="primary"
           >
             Ajouter
-          </button>
+          </Button>
         )}
       </div>
     </>

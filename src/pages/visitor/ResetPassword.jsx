@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Button } from '../../components/export'
 import { useAuth } from '../../context/AuthContext'
-import patchUpdatePassword from '../../services/user/patchUpdatePassword'
+import StatusMessage from '../../components/StatusMessage'
+import { patchUpdatePassword } from '../../repositories/userRepository'
 
 const ResetPassword = () => {
   const { user } = useAuth()
@@ -48,9 +50,17 @@ const ResetPassword = () => {
       <hr className="reset-password__separator" />
       <form className="reset-password__form" onSubmit={handleSubmit}>
         <input
+          type="text"
+          value={user?.email || ''}
+          autoComplete="username"
+          readOnly
+          style={{ display: 'none' }}
+        />
+        <input
           type="password"
           className="reset-password__input"
           value={password}
+          autoComplete="current-password"
           placeholder="Ancien mot de passe *"
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -59,6 +69,7 @@ const ResetPassword = () => {
           type="password"
           className="reset-password__input"
           value={newPassword}
+          autoComplete="new-password"
           placeholder="Nouveau mot de passe *"
           onChange={(e) => setNewPassword(e.target.value)}
           required
@@ -67,29 +78,26 @@ const ResetPassword = () => {
           type="password"
           className="reset-password__input"
           value={confirm}
+          autoComplete="new-password"
           placeholder="Confirmer le mot de passe *"
           onChange={(e) => setConfirm(e.target.value)}
           required
         />
         <div className="reset-password-action">
-          <button
+          <Button
+            variant="secondary"
             className="reset-password-action__return"
             onClick={() => navigate('/Profil')}
           >
             Retour
-          </button>
-          <button type="submit" className="reset-password-action__button">
+          </Button>
+          <Button type="submit" variant="primary" className="reset-password-action__button">
             Modifier
-          </button>
+          </Button>
         </div>
 
-        {successMessage && (
-          <p className="reset-password__success">{successMessage}</p>
-        )}
-
-        {errorMessage && (
-          <p className="reset-password__error">{errorMessage}</p>
-        )}
+        <StatusMessage status="error" message={errorMessage} />
+        <StatusMessage status="success" message={successMessage} />
       </form>
     </div>
   )

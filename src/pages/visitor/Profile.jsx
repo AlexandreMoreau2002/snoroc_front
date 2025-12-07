@@ -1,17 +1,18 @@
 // src/pages/visitor/User/Profile.jsx
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Login } from '../../components/export'
-import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
-import getProfile from '../../services/user/getProfile'
-import patchUpdateNewsletter from '../../services/user/patchUpdateNewsletter'
+import { Login, Button } from '../../components/export'
+import StatusMessage from '../../components/StatusMessage'
+import { getProfile, patchUpdateNewsletter } from '../../repositories/userRepository'
+
+const STATUS_DISPLAY_DURATION = 3000
 
 export default function UserProfile() {
   const { user } = useAuth()
   const userId = user?.id
   const navigate = useNavigate()
   const { token, logout } = useAuth()
-  const [loading, setLoading] = useState(true)
   const [userData, setUserData] = useState(null)
   const [newsletter, setNewsletter] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -20,12 +21,10 @@ export default function UserProfile() {
   useEffect(() => {
     if (!token) {
       setUserData(null)
-      setLoading(false)
       return
     }
 
     const fetchUser = async () => {
-      setLoading(true)
       setErrorMessage('')
       
       try {
@@ -36,8 +35,6 @@ export default function UserProfile() {
         console.error('Erreur récupération profil:', error.message)
         setErrorMessage(error.message)
         setUserData(null)
-      } finally {
-        setLoading(false)
       }
     }
 
@@ -54,14 +51,14 @@ export default function UserProfile() {
       
       setTimeout(() => {
         setSuccessMessage('')
-      }, 2000)
+      }, STATUS_DISPLAY_DURATION)
     } catch (error) {
       console.error('Erreur mise à jour newsletter:', error.message)
       setErrorMessage(error.message)
       
       setTimeout(() => {
         setErrorMessage('')
-      }, 2000)
+      }, STATUS_DISPLAY_DURATION)
     }
   }
 
@@ -75,10 +72,6 @@ export default function UserProfile() {
 
   if (!token) {
     return <Login />
-  }
-
-  if (loading) {
-    return <p className="profile__loading">Chargement...</p>
   }
 
   return (
@@ -100,16 +93,15 @@ export default function UserProfile() {
           Je souhaite recevoir les actualités et les évènements par mail.
         </label>
       </div>
-      <button
+      <Button
         onClick={updateNewsletter}
         className="profile__button profile__button--update"
+        variant="primary"
       >
         Mettre à jour
-      </button>
-      {errorMessage && <p className="profile__error-message">{errorMessage}</p>}
-      {successMessage && (
-        <p className="profile__success-message">{successMessage}</p>
-      )}
+      </Button>
+      <StatusMessage status="error" message={errorMessage} />
+      <StatusMessage status="success" message={successMessage} />
       <h1 className="profile__title profile__title--info">
         Informations personnelles
       </h1>
@@ -129,19 +121,21 @@ export default function UserProfile() {
         </p>
       </div>
 
-      <button
+      <Button
         onClick={() => navigate('/ResetPassword')}
         className="profile__button profile__button--password"
+        variant="secondary"
       >
         Modifier mon mot de passe
-      </button>
+      </Button>
 
-      <button
+      <Button
         onClick={handleLogout}
         className="profile__button profile__button--logout"
+        variant="secondary"
       >
         Se déconnecter
-      </button>
+      </Button>
     </div>
   )
 }

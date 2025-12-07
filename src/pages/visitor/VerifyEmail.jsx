@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import React, { useState, useEffect, useRef } from 'react'
-import postVerifyEmail from '../../services/user/postVerifyEmail'
+import { useState, useEffect, useRef, useCallback } from 'react'
+import { postVerifyEmail } from '../../repositories/userRepository'
 
 export default function VerifyEmail() {
   const { email, login } = useAuth()
@@ -12,22 +12,50 @@ export default function VerifyEmail() {
   const [successMessage, setSuccessMessage] = useState('')
   const [verificationCode, setVerificationCode] = useState(Array(6).fill(''))
 
+  const handleSubmit = useCallback(async () => {
+    setErrorMessage('')
+    setSuccessMessage('')
+    setLoading(true)
+
+    try {
+      const response = await postVerifyEmail({
+        email,
+        emailVerificationToken: verificationCode.join(''),
+      })
+
+      if (response.data && response.data.accessToken && response.data.user) {
+        login({
+          accessToken: response.data.accessToken,
+          user: response.data.user,
+        })
+        setSuccessMessage(
+          'Email vérifié avec succès ! Connexion automatique...'
+        )
+        setTimeout(() => navigate('/news'), 2000)
+      } else {
+        setSuccessMessage(
+          response.data?.message || 'Email vérifié avec succès !'
+        )
+        setTimeout(() => navigate('/login'), 3000)
+      }
+    } catch (error) {
+      setErrorMessage(error.message)
+      setLoading(false)
+    }
+  }, [email, verificationCode, login, navigate])
+
   useEffect(() => {
     if (verificationCode.every((digit) => digit !== '')) {
       handleSubmit()
     }
-  }, [verificationCode])
+  }, [verificationCode, handleSubmit])
 
   const handleChange = (index, value) => {
     if (!/^\d?$/.test(value)) return
-
     const newCode = [...verificationCode]
     newCode[index] = value
     setVerificationCode(newCode)
-
-    if (value && index < 5) {
-      inputsRef.current[index + 1]?.focus()
-    }
+    if (value && index < 5) inputsRef.current[index + 1]?.focus()
   }
 
   const handlePaste = (e) => {
@@ -39,39 +67,6 @@ export default function VerifyEmail() {
     if (pasteData.length === 6) {
       setVerificationCode(pasteData.split(''))
       inputsRef.current[5]?.focus()
-    }
-  }
-
-  const handleSubmit = async () => {
-    setErrorMessage('')
-    setSuccessMessage('')
-    setLoading(true)
-
-    try {
-      const response = await postVerifyEmail({
-        email,
-        emailVerificationToken: verificationCode.join(''),
-      })
-      // Si la réponse contient un token et des infos utilisateur, connecter automatiquement
-      if (response.data && response.data.accessToken && response.data.user) {
-        login({
-          accessToken: response.data.accessToken,
-          user: response.data.user
-        })
-        setSuccessMessage('Email vérifié avec succès ! Connexion automatique...')
-        setTimeout(() => {
-          navigate('/news')
-        }, 2000)
-      } else {
-        // Fallback si pas de données de connexion
-        setSuccessMessage(response.data?.message || 'Email vérifié avec succès !')
-        setTimeout(() => {
-          navigate('/login')
-        }, 3000)
-      }
-    } catch (error) {
-      setErrorMessage(error.message)
-      setLoading(false)
     }
   }
 
@@ -100,13 +95,13 @@ export default function VerifyEmail() {
         </div>
 
         {errorMessage && (
-          <p className="verify-email__error" aria-live="polite">
+          <p className="verify-email__error">
             {errorMessage}
           </p>
         )}
 
         {successMessage && (
-          <p className="verify-email__success" aria-live="polite">
+          <p className="verify-email__success">
             {successMessage} Redirection en cours...
           </p>
         )}

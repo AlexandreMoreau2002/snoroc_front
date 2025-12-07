@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import StatusMessage from '../StatusMessage'
 import { useNavigate } from 'react-router-dom'
+import { Button } from '../../components/export'
 import { usePasswordReset } from '../../context/PasswordResetContext'
-import postEmailForgotPassword from '../../services/user/forgotPassword/postEmailForgotPassword'
+import { postEmailForgotPassword } from '../../repositories/userRepository'
 
 export default function RequestEmail() {
   const navigate = useNavigate()
@@ -36,28 +38,25 @@ export default function RequestEmail() {
           type="email"
           className="request-email__input"
           value={inputEmail}
+          autoComplete="email"
           placeholder="Adresse mail *"
           onChange={(e) => setInputEmail(e.target.value)}
           required
         />
-        {errorMessage && (
-          <div className="request-email__form__error">{errorMessage}</div>
-        )}
-        {successMessage && (
-          <div className="request-email__form__success">{successMessage}</div>
-        )}
         <div className="request-email__actions">
-          <button
-            type="button"
+          <Button
+            variant="secondary"
             className="request-email__button request-email__button-return"
             onClick={() => navigate('/Profil')}
           >
             Retour
-          </button>
-          <button type="submit" className="request-email__button-submit">
+          </Button>
+          <Button type="submit" variant="primary" className="request-email__button-submit">
             Envoyer le code
-          </button>
+          </Button>
         </div>
+        <StatusMessage status="error" message={errorMessage} />
+        <StatusMessage status="success" message={successMessage} />
       </form>
     </div>
   )

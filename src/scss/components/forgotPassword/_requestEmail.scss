@@ -7,32 +7,24 @@
 
   &__separator {
     @include hr;
-    margin-bottom: 60px;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
   &__form {
-    @include formGroup;
-
-    &__error {
-      @include error;
-    }
-
-    &__success {
-      @include success;
-    }
+    @include formContainer;
   }
 
   &__input {
-    @include input;
+    @include formInput;
   }
 
   &__actions {
-    display: flex;
-    justify-content: space-between;
-
-    .request-email__button-submit,
-    .request-email__button-return {
-      @include button;
-    }
+    @include formActions;
   }
 }

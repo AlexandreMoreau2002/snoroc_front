@@ -1,8 +1,10 @@
 // src/pages/visitor/Signup.jsx
 import React, { useState } from 'react'
+import { Button } from '../../components/export'
 import { useAuth } from '../../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
-import postSignUp from '../../services/user/postSignUp'
+import { postSignUp } from '../../repositories/userRepository'
+import StatusMessage from '../../components/StatusMessage'
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -43,16 +45,18 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setErrorMessage('')
+    setSuccessMessage('')
 
     if (formData.password !== formData.confirmPassword) {
-      alert('Les mots de passe ne correspondent pas.')
+      setErrorMessage('Les mots de passe ne correspondent pas.')
       return
     }
 
     const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/
 
     if (!emailRegex.test(formData.email)) {
-      alert("L'email n’est pas valide, veuillez entrer un email correct.")
+      setErrorMessage("L'email n’est pas valide, veuillez entrer un email correct.")
       return
     }
 
@@ -104,6 +108,7 @@ const Signup = () => {
             type="text"
             name="lastname"
             placeholder="Nom"
+            autoComplete="family-name"
             className="signup__form__group__user-info__input"
             value={formData.lastname}
             onChange={handleChange}
@@ -113,6 +118,7 @@ const Signup = () => {
             type="text"
             name="firstname"
             placeholder="Prénom"
+            autoComplete="given-name"
             className="signup__form__group__user-info__input"
             value={formData.firstname}
             onChange={handleChange}
@@ -122,6 +128,7 @@ const Signup = () => {
             type="email"
             name="email"
             placeholder="Email"
+            autoComplete="email"
             className="signup__form__group__user-info__input"
             value={formData.email}
             onChange={handleChange}
@@ -131,6 +138,7 @@ const Signup = () => {
             type="tel"
             name="userPhone"
             placeholder="Téléphone"
+            autoComplete="tel"
             className="signup__form__group__user-info__input"
             value={formData.userPhone}
             onChange={handleChange}
@@ -158,6 +166,7 @@ const Signup = () => {
             type="password"
             name="password"
             placeholder="Mot de passe"
+            autoComplete="new-password"
             className="signup__form__group__password__input"
             value={formData.password}
             onChange={handleChange}
@@ -167,6 +176,7 @@ const Signup = () => {
             type="password"
             name="confirmPassword"
             placeholder="Confirmer le mot de passe"
+            autoComplete="new-password"
             className="signup__form__group__password__input"
             value={formData.confirmPassword}
             onChange={handleChange}
@@ -193,15 +203,13 @@ const Signup = () => {
         </div>
 
         <div className="signup__form__actions">
-          <button type="submit" className="signup__form__actions--submit">
+          <Button type="submit" className="signup__form__actions--submit" variant="primary">
             S'inscrire
-          </button>
+          </Button>
         </div>
       </form>
-      {errorMessage && <div className="signup__error">{errorMessage}</div>}
-      {successMessage && (
-        <div className="signup__success">{successMessage}</div>
-      )}
+      <StatusMessage status="error" message={errorMessage} />
+      <StatusMessage status="success" message={successMessage} />
       <p className="signup__terms">
         En vous inscrivant, vous acceptez les
         <Link to="/CGU" className="signup__terms__link">

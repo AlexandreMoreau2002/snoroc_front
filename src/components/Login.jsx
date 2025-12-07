@@ -1,8 +1,9 @@
-// src/components/login.jsx
+import { useState } from 'react'
+import { Button } from './export'
 import { Link } from 'react-router-dom'
-import React, { useState } from 'react'
+import StatusMessage from './StatusMessage'
 import { useAuth } from '../context/AuthContext'
-import postLogin from '../services/user/postLogin'
+import { postLogin } from '../repositories/userRepository'
 
 export default function Login() {
   const { login } = useAuth()
@@ -15,10 +16,10 @@ export default function Login() {
     e.preventDefault()
     setErrorMessage('')
     setSuccessMessage('')
-    
+
     try {
       const data = await postLogin(email, password)
-      
+
       if (data.accessToken && data.user) {
         login({ accessToken: data.accessToken, user: data.user })
         setSuccessMessage('Connexion réussie ! Redirection en cours...')
@@ -41,8 +42,10 @@ export default function Login() {
             id="email"
             type="email"
             value={email}
+            autoComplete="username"
             placeholder="Email *"
             className="login__input"
+            autoComplete="email"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -52,16 +55,18 @@ export default function Login() {
             id="password"
             type="password"
             value={password}
+            autoComplete="current-password"
             className="login__input"
             placeholder="Mot de passe *"
+            autoComplete="current-password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        {errorMessage && <p className="login__error-message">{errorMessage}</p>}
-        {successMessage && <p className="login__success-message">{successMessage}</p>}
-        <button type="submit" className="login__button">
+        <Button type="submit" className="login__button" variant="primary">
           Se connecter
-        </button>
+        </Button>
+        <StatusMessage status="error" message={errorMessage} />
+        <StatusMessage status="success" message={successMessage} />
       </form>
       <p className="login__text">
         Pas encore membre ?

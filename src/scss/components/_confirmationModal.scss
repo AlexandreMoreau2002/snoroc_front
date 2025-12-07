@@ -1,0 +1,32 @@
+.confirmation-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.confirmation-modal-content {
+  background-color: #1a1a1a;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  border: 1px solid #8b0000;
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+}
+
+.confirmation-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+
+
+}

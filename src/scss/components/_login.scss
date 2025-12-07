@@ -7,15 +7,25 @@
 
   &__hr {
     @include hr;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
-  &__form,
+  &__form {
+    @include formContainer;
+  }
+
   &__form-group {
     @include formGroup;
   }
 
   &__input {
-    @include input;
+    @include formInput;
   }
 
   &__error-message {
@@ -23,13 +33,14 @@
   }
 
   &__button {
-    @include button;
-    margin: auto;
-    padding: 0.75rem 1.5rem;
+    margin-top: 10px;
+    width: fit-content;
+    align-self: center;
   }
 
   &__text {
     @include text;
+    text-align: center;
   }
 
   &__link {

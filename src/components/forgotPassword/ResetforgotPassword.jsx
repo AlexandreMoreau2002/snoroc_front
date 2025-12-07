@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import StatusMessage from '../StatusMessage'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { usePasswordReset } from '../../context/PasswordResetContext'
-import postResetForgotPassword from '../../services/user/forgotPassword/postResetForgotPassword'
+import { postResetForgotPassword } from '../../repositories/userRepository'
+import { Button } from '../export'
 
 export default function ResetPassword() {
   const navigate = useNavigate()
@@ -43,7 +45,7 @@ export default function ResetPassword() {
     try {
       const data = await postResetForgotPassword(email, resetToken, password)
       setSuccessMessage(data.message || 'Mot de passe réinitialisé avec succès !')
-      
+
       setTimeout(() => {
         navigate('/Profil')
       }, 2000)
@@ -60,10 +62,19 @@ export default function ResetPassword() {
       <h1 className="reset-password__title">Réinitialiser le mot de passe</h1>
       <hr className="reset-password__hr" />
       <form className="reset-password__form" onSubmit={handleResetPassword}>
+        {/* Hidden username field for accessibility tools to associate password with user */}
+        <input
+          type="text"
+          value={email || ''}
+          autoComplete="username"
+          readOnly
+          style={{ display: 'none' }}
+        />
         <input
           className="reset-password__input"
           type="password"
           value={password}
+          autoComplete="new-password"
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Nouveau mot de passe"
           required
@@ -74,31 +85,23 @@ export default function ResetPassword() {
           className="reset-password__input"
           type="password"
           value={confirmPassword}
+          autoComplete="new-password"
           onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirmer le mot de passe"
           required
           disabled={loading}
         />
 
-        {errorMessage && (
-          <p className="reset-password__error" aria-live="polite">
-            {errorMessage}
-          </p>
-        )}
-
-        {successMessage && (
-          <p className="reset-password__success" aria-live="polite">
-            {successMessage}
-          </p>
-        )}
-
-        <button
+        <Button
           className="reset-password__button"
           type="submit"
           disabled={loading}
+          variant="primary"
         >
           {loading ? 'Modification en cours...' : 'Changer le mot de passe'}
-        </button>
+        </Button>
+        <StatusMessage status="error" message={errorMessage} />
+        <StatusMessage status="success" message={successMessage} />
       </form>
     </div>
   )

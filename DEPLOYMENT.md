@@ -1,92 +1,47 @@
-# 🚀 CI/CD Deployment with GitHub Pages
+# Déploiement du front Snoroc
 
-## GitHub Pages Configuration
+Ce document résume le pipeline GitHub Actions et le déroulé du déploiement sur le serveur Nginx.
 
-### 1. Enable GitHub Pages
-1. Go to your GitHub repository **Settings**
-2. Navigate to **Pages** section (left menu)
-3. Under **Source**, select **GitHub Actions**
-4. Save the changes
+## Vue d’ensemble
+- Trigger : `push` sur `develop`.
+- Job `build` : compile l’application React et archive le dossier `build/`.
+- Job `deploy` : transfère l’archive vers le serveur, remplace le dossier `build` distant puis recharge Nginx.
 
-### 2. Branch Configuration
-The workflow triggers on:
-- `develop` (development environment)
+## Secrets requis
+- `SSH_HOST`, `SSH_USER`, `SSH_KEY` — identiques à ceux utilisés pour le backend.
+- Variables supplémentaires (`REACT_APP_*`) à ajouter plus tard si le build en a besoin.
 
-### 3. Environment Variables (optional)
-If you need environment variables:
-1. Go to **Settings** > **Secrets and variables** > **Actions**
-2. Add your variables in **Variables** (for public values)
-3. Add your secrets in **Secrets** (for sensitive values)
+## Étapes du pipeline
+1. **Build**
+   - Checkout du code.
+   - Installation Node.js 20 + cache npm.
+   - Export de la variable `REACT_APP_VERSION` (et fallback automatique sur la version du `package.json` dans le code).
+   - `npm ci` puis `npm run build` (sourcemaps désactivés).
+   - Création et upload de `snoroc_front.tar.gz` contenant `build/`.
+2. **Deploy**
+   - Récupération de l’artefact.
+   - Copie vers `/tmp/snoroc_front.tar.gz` sur le serveur via SCP.
+   - Script SSH :
+     - création de `/srv/snoroc_dev/snoroc_front` si besoin ;
+     - sauvegarde éventuelle de l’ancien `build` (renommé en `build_YYYYmmddHHMMSS`) ;
+     - extraction de la nouvelle archive ;
+     - suppression de l’archive temporaire ;
+     - `sudo systemctl reload nginx`.
 
-## 🔄 CI/CD Workflow
+## Architecture serveur
+- Racine des applis : `/srv/snoroc_dev`.
+- Front servi par Nginx depuis `/srv/snoroc_dev/snoroc_front/build`.
+- Le build est produit dans la CI : Node/NPM ne sont pas obligatoires pour la mise en prod, mais vous pouvez les conserver pour vos tests ou scripts manuels sur le serveur.
 
-### Triggers
-- **Push** to `develop`
-- **Pull Request** to `develop`
+## Rollback rapide
+- Après un déploiement, l’ancien build est conservé dans `build_<timestamp>`.
+- Pour revenir en arrière :
+  ```bash
+  sudo systemctl stop nginx
+  rm -rf /srv/snoroc_dev/snoroc_front/build
+  mv /srv/snoroc_dev/snoroc_front/build_<timestamp> /srv/snoroc_dev/snoroc_front/build
+  sudo systemctl start nginx
+  ```
 
-### Workflow Steps
-1. **Checkout** code
-2. **Setup Node.js** (version 18)
-3. **Install** dependencies (`npm ci`)
-4. **Build** the application
-5. **Deploy** to GitHub Pages (only on develop)
-
-### Deployment URL
-- **Development** (develop): `https://[username].github.io/[repo-name]/`
-
-## 🛠️ Available Scripts
-
-```bash
-# Local development
-npm start
-
-# Production build
-npm run build
-```
-
-## 📁 Added Files Structure
-
-```
-.github/
-└── workflows/
-    └── deploy.yml          # CI/CD Workflow
-
-public/
-├── 404.html               # SPA routing handling
-└── index.html             # Redirection script added
-```
-
-## 🔧 SPA Routing on GitHub Pages
-
-The `404.html` file and the script in `index.html` allow React routing to work correctly on GitHub Pages by:
-1. Intercepting 404s (routes not found)
-2. Redirecting to `index.html` with route parameters
-3. Reconstructing the correct URL on the client side
-
-## 🚨 First Time Setup
-
-1. **Commit and push** these files to your `develop` branch
-2. The workflow will start automatically
-3. Check the **Actions** tab on GitHub to ensure everything works
-4. Once completed, your site will be available at the GitHub Pages URL
-
-## 📊 Monitoring
-
-- **Actions**: Build and deployment tracking
-- **Environments**: Deployment history in Settings > Environments
-- **Pages**: Status and URL in Settings > Pages
-
-## 🔍 Troubleshooting
-
-### Build Fails
-- Check the logs in the Actions tab
-- Make sure `npm run build` works locally
-
-### Site Doesn't Load
-- Verify that GitHub Pages is enabled
-- Wait a few minutes after deployment
-- Check the URL in Settings > Pages
-
-### Routing Doesn't Work
-- The `404.html` file and script in `index.html` are required
-- Make sure you're using React Router correctly
+## Tests automatisés
+- Non exécutés pour l’instant. On pourra intercaler un job `test` (`npm test -- --watch=false`) entre `build` et `deploy` quand vous serez prêts.

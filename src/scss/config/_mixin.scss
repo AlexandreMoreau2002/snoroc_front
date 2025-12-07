@@ -1,27 +1,74 @@
 @mixin container() {
   position: relative;
-  padding: 60px;
+  padding: 0 20px 60px 20px;
   margin: 0 auto;
   max-width: 1160px;
+
+  @media (min-width: 768px) {
+    padding: 0 60px 60px 60px;
+  }
+}
+
+@mixin flexCenter() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @mixin card() {
-  width: 700px;
+  width: 100%;
+  max-width: 700px;
   min-height: 400px;
-  height: auto;
-  margin: 100px auto;
+  margin: 0 auto 50px;
+  padding: 20px;
+
+  @media (min-width: 768px) {
+    padding: 0;
+  }
 }
 
-@mixin title() {
-  font-size: 32px;
+@mixin title($underline-mobile: true) {
+  font-size: 24px;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  font-family: $merriweather;
+  position: relative;
+
+  @media (min-width: 768px) {
+    font-size: 32px;
+    margin-bottom: 35px;
+  }
+
+  @if $underline-mobile {
+    @media (max-width: 768px) {
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      padding-bottom: 10px;
+      margin-bottom: 40px;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        background: $white;
+        opacity: 0.7;
+      }
+    }
+  }
 }
 
 @mixin hr() {
   color: $white;
   margin: 30px 0;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
+
+  @media (min-width: 768px) {
+    margin-bottom: 60px;
+  }
 }
 
 @mixin button($bg-color: var(--role-color)) {
@@ -30,48 +77,153 @@
   border: none;
   border-radius: 15px;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 18px;
   padding: 0.5rem 1.5rem;
   margin: 0;
+  width: 100%;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    font-size: 24px;
+    width: auto;
+  }
 
   &:hover {
     filter: brightness(1.2);
   }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+@mixin formContainer() {
+  max-width: 620px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
 }
 
 @mixin formGrid() {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, auto);
-  gap: 30px 15px;
-  margin: 25px auto;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px 15px;
+  }
 }
 
 @mixin formGroup() {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 18px;
+  width: 100%;
+}
+
+@mixin formInput() {
+  width: 100%;
+  border-radius: 25px;
+  border: none;
+  background: $input-bg;
+  color: $black;
+  padding: 12px 18px;
+  font-size: 16px;
+  font-family: $open;
+  
+  &::placeholder {
+    color: $placeholder-color;
+    font-size: 16px;
+    transform: none;
+  }
+
+  &:focus {
+    outline: 2px solid var(--role-color);
+  }
+}
+
+@mixin success() {
+  background-color: $success-color;
+  padding: 0.75rem 1.5rem;
+  color: $white;
+  font-size: 16px;
+  border-radius: 15px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+@mixin error() {
+  background-color: $error-color;
+  padding: 0.75rem 1.5rem;
+  color: $white;
+  font-size: 16px;
+  border-radius: 15px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+@mixin formLabel() {
+  @include text;
+  font-size: 18px;
+  margin: 0 0 8px 0;
+}
+
+@mixin formActions() {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+}
+
+@mixin contactFormLayout($gap: 18px) {
+  @include formContainer;
+}
+
+@mixin contactFieldInput() {
+  @include formInput;
+}
+
+@mixin contactActions() {
+  @include formActions;
 }
 
 @mixin input() {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid $white;
-  border-radius: 15px;
-  height: 50px;
+  @include formInput;
 }
 
 @mixin text() {
-  font-size: 24px;
+  font-size: 18px;
   color: $white;
-  margin: 20px 0;
+  margin: 15px 0;
+  
+  @media (min-width: 768px) {
+    font-size: 24px;
+    margin: 20px 0;
+  }
 }
 
 @mixin textLink() {
-  font-size: 24px;
+  font-size: 18px;
   color: $blue;
   margin-left: 5px;
   text-decoration: none;
+  
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
 }
 
 @mixin newsletter() {
@@ -93,6 +245,7 @@
     cursor: pointer;
     position: relative;
     transition: all 0.2s ease-in-out;
+    flex-shrink: 0;
 
     &:checked {
       background-color: var(--role-color);
@@ -114,21 +267,31 @@
   &__label {
     @include text;
     cursor: pointer;
+    margin: 0;
+    font-size: 16px;
+    
+    @media (min-width: 768px) {
+      font-size: 24px;
+    }
   }
 }
 
 @mixin success() {
   background-color: #4caf50;
-  padding: 0.5rem 1.5rem;
+  padding: 0.75rem 1.5rem;
   color: $white;
   font-size: 16px;
   border-radius: 15px;
+  margin-top: 10px;
+  text-align: center;
 }
 
 @mixin error() {
-  background-color: red;
-  padding: 0.5rem 1.5rem;
+  background-color: #d32f2f;
+  padding: 0.75rem 1.5rem;
   color: $white;
   font-size: 16px;
   border-radius: 15px;
+  margin-top: 10px;
+  text-align: center;
 }
