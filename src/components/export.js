@@ -7,5 +7,19 @@ import { default as Button } from './Button'
 import PrivateRoute from './PrivateRoute.jsx'
 import { default as WorkInProgress } from './WorkInProgress'
 import { default as ConfirmationModal } from './ConfirmationModal'
+import MediaVideoEmbed from './MediaVideoEmbed.jsx'
+import Pagination from './Pagination/Pagination'
 
-export { Header, Login, Footer, PrivateRoute, Loader, SearchBar, WorkInProgress, ConfirmationModal, Button }
+export {
+  Header,
+  Login,
+  Footer,
+  PrivateRoute,
+  Loader,
+  SearchBar,
+  WorkInProgress,
+  ConfirmationModal,
+  Button,
+  MediaVideoEmbed,
+  Pagination,
+}

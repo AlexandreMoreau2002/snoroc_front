@@ -1,5 +1,7 @@
 .all-actus,
-.all-events {
+.all-actus,
+.all-events,
+.all-media {
   @include container;
   display: flex;
   flex-direction: column;
@@ -218,7 +220,8 @@
 }
 
 .all-actus__admin-overlay,
-.all-events__admin-overlay {
+.all-events__admin-overlay,
+.all-media__admin-overlay {
   position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.7);
@@ -231,7 +234,8 @@
   transition: opacity 0.3s ease;
 
   .all-actus__admin-btn,
-  .all-events__admin-btn {
+  .all-events__admin-btn,
+  .all-media__admin-btn {
     background: none;
     border: none;
     color: #ff0000;
@@ -250,7 +254,8 @@
 }
 
 .all-actus__card:hover .all-actus__admin-overlay,
-.all-events__card:hover .all-events__admin-overlay {
+.all-events__card:hover .all-events__admin-overlay,
+.all-media__card:hover .all-media__admin-overlay {
   opacity: 1;
 }
 

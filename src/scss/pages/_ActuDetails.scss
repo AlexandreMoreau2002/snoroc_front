@@ -1,5 +1,6 @@
 .news-detail,
-.event-detail {
+.event-detail,
+.media-detail {
   @include container;
   padding-top: clamp(30px, 6vw, 60px);
   color: $white;
@@ -149,5 +150,36 @@
     &__meta {
       align-items: center;
     }
+  }
+}
+
+.media-embed {
+  position: relative;
+  width: 100%;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+
+  &__ratio {
+    position: relative;
+    padding-top: 56.25%;
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  }
+
+  &__fallback {
+    margin: 0;
+    padding: 16px;
+    text-align: center;
+    color: $white;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
   }
 }

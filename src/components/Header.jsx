@@ -14,7 +14,7 @@ const NAV_LINKS = [
     label: 'Event',
     to: '/Event',
   },
-  { label: 'Média', to: '/Media' },
+  { label: 'Média', to: '/media' },
   { label: 'A propos', to: '/A-propos' },
   { label: 'Contact', to: '/Contact' },
   { label: 'Profil', to: '/Profil' },

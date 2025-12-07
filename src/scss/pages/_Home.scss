@@ -1,5 +1,6 @@
 .actus,
-.events {
+.events,
+.media {
   @include container;
   display: flex;
   flex-direction: column;
