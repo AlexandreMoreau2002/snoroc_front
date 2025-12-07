@@ -999,9 +999,9 @@ body {
 }
 @media (max-width: 768px) {
   .signup__form__actions {
-    flex-direction: column;
     align-items: stretch;
     text-align: center;
+    justify-content: space-between;
   }
 }
 .signup__form__actions--submit {
@@ -1111,6 +1111,8 @@ body {
   min-height: 400px;
   margin: 0 auto 50px;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 @media (min-width: 768px) {
   .profile {
@@ -1214,6 +1216,7 @@ body {
   grid-template-columns: 1fr;
   gap: 18px;
   width: 100%;
+  margin-bottom: 32px;
 }
 @media (min-width: 768px) {
   .profile__info {
@@ -1230,28 +1233,59 @@ body {
 }
 .profile__button--update {
   display: block;
-  margin-top: 40px;
+  margin-top: 30px;
   margin-left: auto;
   margin-right: 0;
   width: fit-content;
 }
 .profile__button--password {
   display: block;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  margin-left: auto;
-  margin-right: 0;
   width: fit-content;
+  align-self: flex-end;
+  margin-bottom: 30px;
 }
 .profile__button--logout {
   display: block;
-  margin: auto;
   width: fit-content;
+  align-self: center;
+}
+.profile__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+  margin-top: 24px;
 }
 .profile__loading {
   text-align: center;
   font-size: 16px;
   color: #f1f1f6;
+}
+@media (max-width: 768px) {
+  .profile__button {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    text-align: center;
+  }
+  .profile__button--update {
+    margin-top: 20px;
+  }
+  .profile__button--password {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    width: fit-content;
+  }
+  .profile__button--logout {
+    margin-top: 16px;
+    width: fit-content;
+  }
+  .profile__actions {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
 }
 
 .all-actus,
@@ -2095,12 +2129,16 @@ body {
   gap: 12px;
   flex-wrap: wrap;
   margin-top: 10px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 }
 @media (max-width: 768px) {
   .reset-password-action {
-    flex-direction: column;
     align-items: stretch;
     text-align: center;
+    justify-content: space-between;
   }
 }
 .reset-password-action__button, .reset-password-action__return {
@@ -3332,9 +3370,9 @@ body {
 }
 @media (max-width: 768px) {
   .request-email__actions {
-    flex-direction: column;
     align-items: stretch;
     text-align: center;
+    justify-content: space-between;
   }
 }
 

@@ -1,5 +1,7 @@
 .profile {
   @include card;
+  display: flex;
+  flex-direction: column;
 
   &__title--info {
     margin-top: 40px;
@@ -34,6 +36,7 @@
 
   &__info {
     @include formGrid;
+    margin-bottom: 32px;
 
     &-item {
       font-size: 20px;
@@ -45,11 +48,9 @@
   }
 
   &__button {
-
-
     &--update {
       display: block;
-      margin-top: 40px;
+      margin-top: 30px;
       margin-left: auto;
       margin-right: 0;
       width: fit-content;
@@ -57,23 +58,60 @@
 
     &--password {
       display: block;
-      margin-top: 40px;
-      margin-bottom: 40px;
-      margin-left: auto;
-      margin-right: 0;
       width: fit-content;
+      align-self: flex-end;
+      margin-bottom: 30px;
     }
 
     &--logout {
       display: block;
-      margin: auto;
       width: fit-content;
+      align-self: center;
     }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 16px;
+    margin-top: 24px;
   }
 
   &__loading {
     text-align: center;
     font-size: 16px;
     color: $white;
+  }
+
+  @media (max-width: 768px) {
+    &__button {
+      margin-left: auto;
+      margin-right: auto;
+      width: fit-content;
+      text-align: center;
+
+      &--update {
+        margin-top: 20px;
+      }
+
+      &--password {
+        margin-top: 16px;
+        margin-bottom: 16px;
+        width: fit-content;
+      }
+
+      &--logout {
+        margin-top: 16px;
+        width: fit-content;
+      }
+    }
+
+    &__actions {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
   }
 }
