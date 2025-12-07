@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components/export'
 import { useAuth } from '../../context/AuthContext'
 import { formatDate } from '../../utils/formatting'
-import Pagination from '../../components/Pagination/Pagination'
-import { useFeaturedPagination } from '../../hooks/useFeaturedPagination'
-import { getAllMedia } from '../../repositories/mediaRepository'
 import { extractYoutubeId } from '../../utils/youtube'
+import Pagination from '../../components/Pagination/Pagination'
+import { getAllMedia } from '../../repositories/mediaRepository'
+import { useFeaturedPagination } from '../../hooks/useFeaturedPagination'
 
 const MEDIA_PER_PAGE = 3
 

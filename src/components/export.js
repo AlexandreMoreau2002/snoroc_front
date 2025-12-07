@@ -5,10 +5,10 @@ import Header from './Header.jsx'
 import SearchBar from './SearchBar.jsx'
 import { default as Button } from './Button'
 import PrivateRoute from './PrivateRoute.jsx'
+import Pagination from './Pagination/Pagination'
+import MediaVideoEmbed from './MediaVideoEmbed.jsx'
 import { default as WorkInProgress } from './WorkInProgress'
 import { default as ConfirmationModal } from './ConfirmationModal'
-import MediaVideoEmbed from './MediaVideoEmbed.jsx'
-import Pagination from './Pagination/Pagination'
 
 export {
   Header,

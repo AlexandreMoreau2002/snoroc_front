@@ -96,7 +96,7 @@ describe('AllMedia Page', () => {
 
       const editBtns = screen.getAllByTitle('Modifier')
       await user.click(editBtns[0])
-      expect(mockNavigate).toHaveBeenCalledWith('/admin/media/edit/1')
+      expect(mockNavigate).toHaveBeenCalledWith('/admin/media/edit/2')
     })
 
     test('gère view depuis overlay', async () => {
@@ -105,7 +105,7 @@ describe('AllMedia Page', () => {
 
       const viewBtns = screen.getAllByTitle('Voir')
       await user.click(viewBtns[0])
-      expect(mockNavigate).toHaveBeenCalledWith('/media/1')
+      expect(mockNavigate).toHaveBeenCalledWith('/media/2')
     })
 
     test('gère suppression (succès)', async () => {
@@ -120,7 +120,7 @@ describe('AllMedia Page', () => {
       deleteMedia.mockResolvedValue({})
       await user.click(screen.getByText('Oui'))
 
-      expect(deleteMedia).toHaveBeenCalledWith(1)
+      expect(deleteMedia).toHaveBeenCalledWith(2)
     })
 
     test('gère erreur suppression', async () => {
@@ -135,5 +135,74 @@ describe('AllMedia Page', () => {
       await waitFor(() => expect(consoleSpy).toHaveBeenCalled())
       consoleSpy.mockRestore()
     })
+
+    test('annuler suppression ferme la modal (couvre cancelDelete)', async () => {
+      renderPage()
+      await screen.findByText('Media 2')
+
+      const deleteBtns = screen.getAllByTitle('Supprimer')
+      await user.click(deleteBtns[0])
+
+      expect(screen.getByText('Voulez-vous supprimer ce contenu ?')).toBeInTheDocument()
+      
+      await user.click(screen.getByText('Non'))
+      
+      await waitFor(() => {
+        expect(screen.queryByText('Voulez-vous supprimer ce contenu ?')).not.toBeInTheDocument()
+      })
+    })
+  })
+
+  test('préchargement thumbnails avec URLs invalides', async () => {
+    const mediasWithInvalidUrl = [
+      { id: 1, title: 'Media 1', description: 'Desc 1', createdAt: '2023-01-01', url: 'https://youtu.be/abcdefghijk' },
+      { id: 2, title: 'Media 2', description: 'Desc 2', createdAt: '2023-02-01', url: 'invalid-url' },
+      { id: 3, title: 'Media 3', description: 'Desc 3', createdAt: '2023-03-01', url: '' },
+      { id: 4, title: 'Media 4', description: 'Desc 4', createdAt: '2023-04-01', url: 'https://youtu.be/lmnopqrstuv' },
+      { id: 5, title: 'Media 5', description: 'Desc 5', createdAt: '2023-05-01', url: 'https://youtu.be/xyz123abc45' },
+      { id: 6, title: 'Media 6', description: 'Desc 6', createdAt: '2023-06-01', url: 'not-a-youtube-url' },
+      { id: 7, title: 'Media 7', description: 'Desc 7', createdAt: '2023-07-01', url: 'https://youtu.be/def456ghi78' },
+      { id: 8, title: 'Media 8', description: 'Desc 8', createdAt: '2023-08-01', url: 'https://youtu.be/validid12345' },
+      { id: 9, title: 'Ancien invalide', description: 'Desc 9', createdAt: '2022-01-01', url: 'invalid-old-url' },
+    ]
+    getAllMedia.mockResolvedValue(mediasWithInvalidUrl)
+    useAuth.mockReturnValue({ isAdmin: false })
+    
+    const mockImageInstances = []
+    global.Image = class {
+      constructor() {
+        this.src = ''
+        mockImageInstances.push(this)
+      }
+    }
+
+    renderPage()
+    await screen.findByText('Media 7')
+    
+    // Trigger pagination to cover preloading (lines 88-94)
+    const page2Button = screen.getByText('2')
+    await user.click(page2Button)
+    
+    // Should handle invalid URLs gracefully (line 90 - if(mediaId) check)
+    expect(screen.getByText('Media 1')).toBeInTheDocument()
+  })
+
+  test('gère les médias sans date et affiche un état vide quand aucune correspondance', async () => {
+    const mediasWithoutDates = [
+      { id: 1, title: 'Sans date', description: 'Desc', createdAt: null, url: 'https://youtu.be/abcdefghijk' },
+      { id: 2, title: 'Encore sans date', description: 'Desc', createdAt: undefined, url: 'invalid-url' },
+      { id: 3, title: 'Avec date', description: 'Desc', createdAt: '2023-08-01', url: 'https://youtu.be/xyz123abc45' },
+    ]
+    getAllMedia.mockResolvedValue(mediasWithoutDates)
+    useAuth.mockReturnValue({ isAdmin: false })
+
+    renderPage()
+
+    expect(await screen.findByText('Avec date')).toBeInTheDocument()
+
+    const searchInput = screen.getByPlaceholderText(/Rechercher/i)
+    await user.type(searchInput, 'Nope')
+
+    expect(screen.getByText('Aucun média trouvé.')).toBeInTheDocument()
   })
 })

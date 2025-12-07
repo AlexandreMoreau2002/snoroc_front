@@ -55,9 +55,13 @@ export default function MediaDetails() {
               <div className="media-detail__header">
                 <div className="media-detail__intro">
                   <h1 className="media-detail__title">{media.title}</h1>
-                  {mediaDate && (
+                  {mediaDate ? (
                     <div className="media-detail__meta">
                       <p className="media-detail__date">{mediaDate}</p>
+                    </div>
+                  ) : (
+                    <div className="media-detail__meta">
+                      <p className="media-detail__date">Date inconnue</p>
                     </div>
                   )}
                 </div>
