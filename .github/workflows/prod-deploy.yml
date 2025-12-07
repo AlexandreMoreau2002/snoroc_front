@@ -1,9 +1,9 @@
-name: Build, Test and Deploy to Develop
+name: Build, Test and Deploy to Production
 
 on:
   push:
     branches:
-      - develop
+      - main
 
 permissions:
   contents: read
@@ -12,7 +12,7 @@ jobs:
   build:
     name: Build front
     runs-on: ubuntu-latest
-    environment: snoroc-front-develop
+    environment: snoroc-front
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -71,11 +71,41 @@ jobs:
           path: snoroc_front.tar.gz
           if-no-files-found: error
 
+  test:
+    name: Test front
+    runs-on: ubuntu-latest
+    needs: build
+    environment: snoroc-front
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Clean install
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install --legacy-peer-deps
+
+      - name: Run tests with coverage
+        run: npm run test:coverage -- --watchAll=false
+        env:
+          CI: true
+          REACT_APP_API_URL: ${{ vars.REACT_APP_API_URL }}
+          REACT_APP_ENV: ${{ vars.REACT_APP_ENV }}
+
   deploy:
     name: Deploy front
     runs-on: ubuntu-latest
     needs: test
-    environment: snoroc-front-develop
+    environment: snoroc-front
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -110,8 +140,8 @@ jobs:
           key: ${{ vars.SSH_KEY }}
           script: |
             set -euxo pipefail
-            echo "🚀 Déploiement du front en cours..."
-            REMOTE_ROOT="/srv/snoroc-dev"
+            echo "🚀 Déploiement du front production en cours..."
+            REMOTE_ROOT="/srv/snoroc"
             PROJECT_DIR="${REMOTE_ROOT}/snoroc_front"
             ARCHIVE="/tmp/snoroc_front.tar.gz"
 
@@ -136,34 +166,4 @@ jobs:
             ls -lh "$PROJECT_DIR"
 
             sudo systemctl reload nginx
-            echo "✅ Front déployé et Nginx rechargé"
-
-  test:
-    name: Test front
-    runs-on: ubuntu-latest
-    needs: build
-    environment: snoroc-front-develop
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: package-lock.json
-
-      - name: Clean install
-        run: |
-          rm -rf node_modules package-lock.json
-          npm install --legacy-peer-deps
-
-      - name: Run tests with coverage
-        run: npm run test:coverage -- --watchAll=false
-        env:
-          CI: true
-          REACT_APP_API_URL: ${{ vars.REACT_APP_API_URL }}
-          REACT_APP_ENV: ${{ vars.REACT_APP_ENV }}
+            echo "✅ Production front déployé et Nginx rechargé"
