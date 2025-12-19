@@ -13,6 +13,7 @@
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.9.5",
     "react-scripts": "^5.0.1",
+    "react-snowfall": "^2.4.0",
     "sweetpagination": "^2.0.1",
     "web-vitals": "^5.1.0"
   },
@@ -43,7 +44,8 @@
       "^punycode$": "punycode/",
       "^react-router-dom$": "<rootDir>/node_modules/react-router-dom/dist/index.js",
       "^react-router$": "<rootDir>/node_modules/react-router/dist/development/index.js",
-      "^react-router/dom$": "<rootDir>/node_modules/react-router/dist/development/dom-export.js"
+      "^react-router/dom$": "<rootDir>/node_modules/react-router/dist/development/dom-export.js",
+      "^react-snowfall$": "<rootDir>/src/__mocks__/react-snowfall.js"
     }
   },
   "browserslist": {
