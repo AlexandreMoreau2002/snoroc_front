@@ -1,15 +1,12 @@
-// front/src/Router.js
 import { HelmetProvider } from 'react-helmet-async'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
-// imports des composants
+import Snowfall from 'react-snowfall'
 import { useLoading } from './context/LoadingContext'
 import { Header, Footer, PrivateRoute, Loader } from './components/export'
 
-// Imports des pages admin
 import { CreateEvent, CreateMedia, CreateNews, EditAbout } from './pages/admin/export.js'
 
-// Imports des pages classiques
 import {
   Home,
   Event,
@@ -34,9 +31,21 @@ import {
 export default function Router() {
   const { isLoading } = useLoading()
   const showLoader = isLoading
+  const isDecember = new Date().getMonth() === 11
 
   return (
     <HelmetProvider>
+      {isDecember && (
+        <Snowfall
+          style={{
+            position: 'fixed',
+            width: '100vw',
+            height: '100vh',
+            zIndex: 9999,
+            pointerEvents: 'none'
+          }}
+        />
+      )}
       <BrowserRouter>
         <Header />
         {/* <div className="debug-center-line" /> */}
